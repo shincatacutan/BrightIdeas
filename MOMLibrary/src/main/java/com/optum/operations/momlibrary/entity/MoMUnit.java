@@ -1,8 +1,8 @@
-package com.optum.operations.momlibrary.model;
+package com.optum.operations.momlibrary.entity;
 
 import java.util.List;
 
-public class Update {
+public class MoMUnit {
 	private int id;
 	private String title;
 	private String description;
