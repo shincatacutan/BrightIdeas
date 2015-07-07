@@ -2,6 +2,7 @@ package com.optum.operations.momlibrary.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ public class BaseMoMController {
 	private MoMService momservice;
 	private static int counter = 0;
 	private static final String VIEW_INDEX = "index";
-	private final static org.slf4j.Logger logger = LoggerFactory
+	private final static Logger logger = LoggerFactory
 			.getLogger(BaseMoMController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)

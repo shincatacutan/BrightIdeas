@@ -31,18 +31,6 @@
 				<span id="fullname"></span> | <span id="empID"></span>
 			</div>
 			<div class="info">
-<!-- 				<span class="emp-info-space">Employee ID : 
-					<span id="emp-id-info" class="emp-info"></span>
-				</span> 
-				<span class="emp-info-space">Employee Name : 
-					<span id="emp-name-info" class="emp-info"></span>
-				</span> 
-				<span class="emp-info-space">Project : 
-					<span id="emp-proj-info" class="emp-info"></span>
-				</span> 
-				<span class="emp-info-space">Manager : 
-					<span id="emp-manager-info" class="emp-info"></span>
-				</span> -->
 				<h1 class="title">MOM Library</h1>
 			</div>
 		</div>
@@ -137,6 +125,10 @@
 						convallis. Maecenas feugiat, tellus pellentesque pretium posuere,
 						felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris
 						consectetur tortor et purus.</p>
+						<div id="inqTableSpace">
+							<table cellpadding="0" cellspacing="0" border="0" class="display"
+									id="inquiry_grid"></table>
+						</div>
 				</div>
 				<div id="tabs-4" class="tab_div">
 					<form id="view_tab">
@@ -150,7 +142,7 @@
 							<textarea cols="40" rows="5" id="inq_in"></textarea></span>
 						</fieldset> 
 						<br class="clearfix" /> 
-						<input type="button" value="Add" />
+						<input type="button" id="add_inq_btn" value="Add" />
 						<input type="reset"/>
 					</form>
 					

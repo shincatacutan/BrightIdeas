@@ -33,14 +33,11 @@ div#header_user span {
 	color: #e87722;
 }
 
-.login a:hover {
-	color: rgb(232, 119, 34);
+.ui-tabs-nav {
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !importantt;
 }
 
-.login a {
-	color: #8E8574;
-	text-decoration: none;
-}
 
 h1.title {
 	color: #FFF;
@@ -59,7 +56,7 @@ div.info {
 	clear: both;
 }
 
-div#tableSpace {
+div#tableSpace, div#inqTableSpace {
 	padding: 1em;
 }
 
