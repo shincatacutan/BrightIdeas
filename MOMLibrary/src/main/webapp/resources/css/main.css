@@ -29,7 +29,7 @@ div#header_user {
 	font-size: 1.1em;
 }
 
-div#header_user .name {
+div#header_user span {
 	color: #e87722;
 }
 

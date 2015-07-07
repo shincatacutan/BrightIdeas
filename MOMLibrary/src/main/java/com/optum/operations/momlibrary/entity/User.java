@@ -1,12 +1,25 @@
 package com.optum.operations.momlibrary.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Users")
 public class User {
-	
-	private String lanID;
-	private String firstName;
-	private String lastName;
-	private String access;
+
+	@Id
+	@Column(name = "userID")
 	private String empID;
+	@Column(name = "userName", nullable = false)
+	private String lanID;
+	@Column(name = "firstName", nullable = false)
+	private String firstName;
+	@Column(name = "lastName", nullable = false)
+	private String lastName;
+	@Column(name = "roleType", nullable = false)
+	private String access;
 
 	public String getLanID() {
 		return lanID;

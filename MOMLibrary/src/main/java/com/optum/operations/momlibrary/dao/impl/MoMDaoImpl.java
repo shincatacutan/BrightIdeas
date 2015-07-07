@@ -9,7 +9,7 @@ import com.optum.operations.momlibrary.dao.MoMDAO;
 import com.optum.operations.momlibrary.entity.MoMUnit;
 import com.optum.operations.momlibrary.entity.User;
 @Repository
-public class MoMDAOImpl implements MoMDAO {
+public class MoMDaoImpl implements MoMDAO {
 
 	@Override
 	public List<MoMUnit> searchMoM(MoMUnit mom) {

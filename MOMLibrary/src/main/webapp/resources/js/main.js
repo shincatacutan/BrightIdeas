@@ -1,5 +1,6 @@
 $(function() {
 	console.log("ready!");
+	getUser();
 	initButtons();
 	$("#search_btn").click(function(event) {
 		// alert("Handler for .click() called.");
@@ -26,6 +27,23 @@ $(function() {
 	initUpdateDialog();
 	
 });
+
+var getUser = function(){
+	$.ajax({
+		url : "/MOMLibrary/getUser",
+		type : "POST",
+		accept : 'application/json',
+		success : function(emp) {
+			console.log(emp);
+			$("#fullname").html(emp.firstName +" "+emp.lastName);
+			$("#empID").html(emp.empID);
+		},
+		error : function(e) {
+			console.log(e);
+		}
+
+	});
+}
 
 var loadDataToUpdate = function(){
 	var selected = $('#resultGrid').DataTable().rows('.selected').data();

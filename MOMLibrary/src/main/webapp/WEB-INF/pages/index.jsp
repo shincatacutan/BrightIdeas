@@ -28,8 +28,7 @@
 			<img alt="Optum Logo"
 				src="<c:url value="/resources/images/optumlogo.png" />">
 			<div id="header_user">
-				<span class="name">Sheena Catacutan</span> | <span class="login"><a
-					href="#">Logout</a></span>
+				<span id="fullname"></span> | <span id="empID"></span>
 			</div>
 			<div class="info">
 <!-- 				<span class="emp-info-space">Employee ID : 
