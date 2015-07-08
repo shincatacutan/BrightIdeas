@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.optum.operations.momlibrary.dao.MoMDAO;
 import com.optum.operations.momlibrary.entity.MoMUnit;
+import com.optum.operations.momlibrary.entity.Role;
 import com.optum.operations.momlibrary.entity.User;
 @Repository
 public class MoMDaoImpl implements MoMDAO {
@@ -24,7 +25,9 @@ public class MoMDaoImpl implements MoMDAO {
 		tags.add("tag3");
 		update.setTags(tags);
 		User user = new User();
-		user.setAccess("admin");
+		Role role = new Role();
+		role.setName("admin");
+		user.setAccess(role);
 		user.setLanID("kperry");
 		user.setFirstName("Katy");
 		user.setLastName("Perry");
@@ -43,7 +46,7 @@ public class MoMDaoImpl implements MoMDAO {
 		tags2.add("tag3");
 		update2.setTags(tags2);
 		User user2 = new User();
-		user2.setAccess("admin");
+		user2.setAccess(role);
 		user2.setLanID("scatacut");
 		user2.setFirstName("Shin");
 		user2.setLastName("Catacutan");
@@ -62,7 +65,7 @@ public class MoMDaoImpl implements MoMDAO {
 		tags3.add("tag3");
 		update3.setTags(tags3);
 		User user3 = new User();
-		user3.setAccess("user");
+		user3.setAccess(role);
 		user3.setLanID("tswift");
 		user3.setFirstName("Taytay");
 		user3.setLastName("Swift");
