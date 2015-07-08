@@ -3,10 +3,12 @@ package com.optum.operations.momlibrary.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "User_")
 public class User {
 
 	@Id
@@ -18,8 +20,10 @@ public class User {
 	private String firstName;
 	@Column(name = "lastName", nullable = false)
 	private String lastName;
-	@Column(name = "roleType", nullable = false)
-	private String access;
+
+	@OneToOne
+	@JoinColumn(name = "roleType")
+	private Role access;
 
 	public String getLanID() {
 		return lanID;
@@ -45,19 +49,19 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getAccess() {
-		return access;
-	}
-
-	public void setAccess(String access) {
-		this.access = access;
-	}
-
 	public String getEmpID() {
 		return empID;
 	}
 
 	public void setEmpID(String empID) {
 		this.empID = empID;
+	}
+
+	public Role getAccess() {
+		return access;
+	}
+
+	public void setAccess(Role access) {
+		this.access = access;
 	}
 }

@@ -1,20 +1,52 @@
 $(function() {
-	console.log("ready!");
 	getUser();
 	initButtons();
 	handleSearch();
 	handleAddInq();
 	initUpdateDialog();
+	handleViewInquiries();
+	initAdminAddUser();
+});
 
+var initAdminAddUser = function() {
+	$("#addUser_btn").click(function(event) {
+		var username = $("#uname_user").val();
+		var empID = $("#empID_user").val();
+		var firstname = $("#firstname_user").val();
+		var lastname = $("#lastname_user").val();
+		var role = $("#role_user").val();
+
+		$.ajax({
+			url : "/MOMLibrary/addUser",
+			type : "POST",
+			accept : 'application/json',
+			data : {
+				'lanID' : username,
+				'empID' : empID,
+				'firstName' : firstname,
+				'lastName' : lastname,
+				'roleId' : role
+			},
+			success : function(data) {
+				console.log(data);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	});
+
+}
+
+var handleViewInquiries = function() {
 	$("#tabs").tabs({
 		activate : function(event, ui) {
-
 			if (ui.newPanel.selector == "#tabs-3") {
 				loadViewInquiries();
 			}
 		}
 	});
-});
+}
 
 var loadViewInquiries = function() {
 
@@ -24,49 +56,47 @@ var loadViewInquiries = function() {
 		accept : 'application/json',
 		success : function(data) {
 			console.log(data);
-
 			if ($.fn.dataTable.isDataTable('#inquiry_grid')) {
 				var table = $('#inquiry_grid').DataTable();
 				table.clear();
 				table.rows.add(data);
 				table.draw();
 			} else {
-				var table = $('#inquiry_grid').dataTable(
+				var table = $('#inquiry_grid').dataTable({
+					"data" : data,
+					"columns" : [
+				        {
+							"title" : "ID",
+							"data" : "inqId",
+							"class" : "dt-left"
+						},
 						{
-							"data" : data,
-							"columns" : [
-									{
-										"title" : "ID",
-										"data" : "inqId",
-										"class" : "dt-left"
-									},
-									{
-										"title" : "Title",
-										"data" : "title",
-										"class" : "dt-left"
-									},
-									{
-										"title" : "Message",
-										"data" : "body",
-										"class" : "dt-left"
-									},
-									{
-										"title" : "Author",
-										"data" : "createUser",
-										"class" : "dt-left"
-									},
-									{
-										"title" : "Create Date",
-										"data" : "createDate",
-										"class" : "dt-left",
-										"render" : function(obj) {
-											return '<span>' + obj.monthOfYear
-													+ '/' + obj.dayOfMonth
-													+ '/' + obj.year
-													+ '</span>'
-										}
-									} ]
-						});
+							"title" : "Title",
+							"data" : "title",
+							"class" : "dt-left"
+						},
+						{
+							"title" : "Message",
+							"data" : "body",
+							"class" : "dt-left"
+						},
+						{
+							"title" : "Author",
+							"data" : "createUser",
+							"class" : "dt-left"
+						},
+						{
+							"title" : "Create Date",
+							"data" : "createDate",
+							"class" : "dt-left",
+							"render" : function(obj) {
+								return '<span>' + obj.monthOfYear
+										+ '/' + obj.dayOfMonth
+										+ '/' + obj.year
+										+ '</span>'
+							}
+						}]
+				});
 			}
 		},
 		error : function(e) {

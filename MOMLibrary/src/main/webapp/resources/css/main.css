@@ -180,3 +180,10 @@ div.tab_div {
 .ui-widget-content {
 	background: #fff !important;
 }
+
+#adminDiv{
+	margin: 1em;
+	padding: 0.5em;
+	border: 1px solid #8e846b;
+	border-radius: 4px;
+}
