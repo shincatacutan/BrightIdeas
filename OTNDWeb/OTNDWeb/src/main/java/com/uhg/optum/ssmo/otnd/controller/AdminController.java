@@ -1,7 +1,5 @@
 package com.uhg.optum.ssmo.otnd.controller;
 
-import java.awt.print.Paper;
-
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.uhg.optum.ssmo.otnd.entity.Employee;
 import com.uhg.optum.ssmo.otnd.entity.PayrollPeriod;
 import com.uhg.optum.ssmo.otnd.entity.Role;
-import com.uhg.optum.ssmo.otnd.entity.Employee;
 import com.uhg.optum.ssmo.otnd.service.EmployeeService;
 import com.uhg.optum.ssmo.otnd.service.PayrollPeriodService;
 
@@ -59,10 +57,16 @@ public class AdminController {
 	public @ResponseBody String addPayPeriod(@RequestParam String payPeriod,
 			@RequestParam String status) {
 		logger.debug("[addPayPeriod] adding pay period...");
+		logger.debug("[addPayPeriod] payPeriod: "+payPeriod);
+		logger.debug("[addPayPeriod] status: "+status);
 		PayrollPeriod pp = new PayrollPeriod();
 		String date[] = payPeriod.split("/");
-		pp.setPeriod(new LocalDate(Integer.parseInt(date[2]), Integer
-				.parseInt(date[1]), Integer.parseInt(date[0])));
+		logger.debug("[addPayPeriod] payPeriod: "+payPeriod);
+		logger.debug("[addPayPeriod] status: "+status);
+		LocalDate localDate = new LocalDate(Integer.parseInt(date[2]), Integer
+				.parseInt(date[0]), Integer.parseInt(date[1]));
+		logger.debug("[addPayPeriod] localdate: "+localDate.toString());
+		pp.setPeriod(localDate);
 		pp.setStatus(status);
 		periodService.addPayroll(pp);
 		return "Success";
@@ -70,7 +74,6 @@ public class AdminController {
 
 	@RequestMapping(value = "/backdoor/admin", method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
-
 		model.addAttribute("isAdmin", true);
 		logger.debug("[accessing secret admin page...]");
 		return VIEW_INDEX;

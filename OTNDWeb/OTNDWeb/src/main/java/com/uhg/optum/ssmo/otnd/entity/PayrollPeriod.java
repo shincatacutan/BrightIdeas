@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 @Entity
@@ -18,6 +19,7 @@ public class PayrollPeriod {
 	private int id;
 
 	@Column(name = "period", nullable = false, unique = true)
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate period;
 	
 	@Column(name = "status", nullable = false, unique = true)

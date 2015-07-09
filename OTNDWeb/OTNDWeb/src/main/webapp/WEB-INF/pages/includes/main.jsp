@@ -6,14 +6,25 @@
 		<li><a href="#tabs-4">Payroll Report</a></li>
 	</ul>
 	<div id="tabs-1" class="tab_div">
+		<div class="load_pay">
+			<label class="detailsLbl">Payroll Period:</label> 
+			<select id="pp_select">	</select> &nbsp;
+			<input type="button" id="load_payroll" value="Load" />
+		</div>
 		<form id="search_tab">
 			<fieldset>
-				<span class="detailSpan"> <label class="detailsLbl">Title:</label>
-					<input type="text" id="title_in"></input>
-				</span> <span class="detailSpan"> <label class="detailsLbl">Author:</label>
-					<input type="text" id="author_in"></input>
-				</span> <span class="detailSpan"> <label class="detailsLbl">Create
-						Date:</label> <input type="text" id="createDt_in"></input>
+				<span class="detailSpan"> <label class="detailsLbl">Income Type:</label>
+					<select id="income_type">
+						<option>Select Type...</option>
+					</select>
+				</span> <span class="detailSpan codeSpan"> <label class="detailsLbl">Code:</label>
+					<select id="income_code">
+						<option>Select Code...</option>
+					</select>
+				</span> 
+				<span class="detailSpan"> 
+				<label class="detailsLbl">Amount: </label> 
+				<input type="text" id="createDt_in"></input>
 				</span>
 			</fieldset>
 			<br class="clearfix" /> <input type="button" id="search_btn"
@@ -78,18 +89,16 @@
 		</div>
 	</div>
 	<div id="tabs-3" class="tab_div">
-		<form>
+		<form id="payperiod_form">
 			<fieldset>
-				<span class="addSpan"> <label for="payPeriod" class="addLbl">Pay Period: </label>
-					<input type="text" name="payPeriod" id="payperiod_add" value=""
-					class="text ui-widget-content ui-corner-all">
-				</span> 
-				 <span class="addSpan"> <label class="addLbl">Status</label>
+				<span class="addSpan"> <label for="payPeriod" class="addLbl">Pay
+						Period: </label> <input type="text" name="payPeriod" id="payperiod_add"">
+				</span> <span class="addSpan"> <label class="addLbl">Status</label>
 					<select id="pp_status">
-						<option value="1">Open</option>
-						<option value="2">Close</option>
+						<option value="Open">Open</option>
+						<option value="Closed">Closed</option>
 				</select>
-				</span> 
+				</span>
 				<!-- Allow form submission with keyboard without duplicating the dialog button -->
 				<input type="button" id="add_pperiod_btn" value="Add" />
 			</fieldset>

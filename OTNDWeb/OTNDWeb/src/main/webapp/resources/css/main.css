@@ -8,7 +8,7 @@ body {
 
 #body_container {
 	margin: 0 auto;
-	width: 75%;
+	width: 85%;
 	text-align: left;
 	background-color: #fff;
 	border-top: #CBCACA solid thin;
@@ -36,7 +36,7 @@ div#header_user span {
 
 .ui-tabs-nav {
     border-bottom-right-radius: 0px !important;
-    border-bottom-left-radius: 0px !importantt;
+    border-bottom-left-radius: 0px !important;
 }
 
 
@@ -93,12 +93,15 @@ label.detailsLbl {
 
 span.detailSpan {
 	display: block;
-	width: 30%;
+	width: 28%;
 	padding: 0.5em;
 	float: left;
 	min-height: 2em;
 }
 
+span.detailSpan.codeSpan {
+  width: 27em;
+}
 span.addSpan {
 	display: block;
 	margin: 1em;
@@ -123,11 +126,9 @@ div#ui-datepicker-div, div.ui-spinner {
 }
 
 input.ui-button {
-	padding: .5em;
-	font-size: 1em;
-	margin: 0 0.3em;
+  padding: 0.2em 1em !important;
+  margin: 0px 0.3em 0.4em !important;
 }
-
 select {
 	font-family: Tahoma;
 	padding: 2px;
@@ -193,4 +194,8 @@ div.tab_div {
     border: 1px solid #ffb73d;
     background: #d34d17 url(images/ui-bg_diagonals-medium_20_d34d17_40x40.png) 50% 50% repeat;
     color: red !important;
+}
+
+div.load_pay{
+	padding: 0.5 em;
 }

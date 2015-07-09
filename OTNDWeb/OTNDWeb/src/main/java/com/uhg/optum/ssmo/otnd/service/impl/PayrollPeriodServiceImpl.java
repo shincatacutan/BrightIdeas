@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.uhg.optum.ssmo.otnd.dao.PayrollPeriodDao;
 import com.uhg.optum.ssmo.otnd.entity.PayrollPeriod;
 import com.uhg.optum.ssmo.otnd.service.PayrollPeriodService;
 @Service
@@ -13,7 +14,7 @@ import com.uhg.optum.ssmo.otnd.service.PayrollPeriodService;
 public class PayrollPeriodServiceImpl implements PayrollPeriodService {
 
 	@Autowired
-	private PayrollPeriodService periodService;
+	private PayrollPeriodDao periodDao;
 
 	@Override
 	public PayrollPeriod getPayroll(PayrollPeriod pp) {
@@ -22,9 +23,8 @@ public class PayrollPeriodServiceImpl implements PayrollPeriodService {
 	}
 
 	@Override
-	public List<PayrollPeriod> getPayroll(String status) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PayrollPeriod> getPayrolls(String status) {
+		return periodDao.getPayrolls(status);
 	}
 
 	@Override
@@ -41,7 +41,12 @@ public class PayrollPeriodServiceImpl implements PayrollPeriodService {
 
 	@Override
 	public void addPayroll(PayrollPeriod pp) {
-		periodService.addPayroll(pp);
+		periodDao.addPayroll(pp);
+	}
+
+	@Override
+	public List<PayrollPeriod> getAllPeriods() {
+		return periodDao.getAllPeriods();
 	}
 
 }

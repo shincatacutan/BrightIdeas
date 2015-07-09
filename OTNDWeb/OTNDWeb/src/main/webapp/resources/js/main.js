@@ -1,12 +1,40 @@
 $(function() {
 	getUser();
 	initButtons();
-	handleSearch();
+	getPayPeriods();
 	handleAddInq();
 	initUpdateDialog();
 	handleViewInquiries();
 	initAdminAddUser();
+	initAddPayPeriod();
 });
+
+var initAddPayPeriod = function(){
+	$("#add_pperiod_btn").click(function(event) {
+		var payperiod = $("#payperiod_add").val();
+		var status = $("#pp_status").val();
+		console.log(event);
+		$.ajax({
+			url : "/OTNDWeb/addPayPeriod",
+			type : "POST",
+			data : {
+				'payPeriod' : payperiod,
+				'status' : status
+			},
+			accept : 'application/json',
+			success : function(data) {
+				console.log(data);
+				$("#payperiod_form")[0].reset();
+			},
+			error : function(e) {
+				console.log(e);
+			}
+
+		});
+		event.preventDefault();
+	});
+
+}
 
 var initAdminAddUser = function() {
 	$("#addUser_btn").click(function(event) {
@@ -136,31 +164,74 @@ var handleAddInq = function() {
 	});
 }
 
-var handleSearch = function() {
-	$("#search_btn").click(function(event) {
-		// alert("Handler for .click() called.");
+var getPayPeriods = function() {
 		var title = $("#title_in").val();
 		var author = $("#author_in").val();
 		var date = $("#createDt_in").val();
 		$.ajax({
-			url : "/OTNDWeb/searchMOM",
+			url : "/OTNDWeb/getPayPeriods",
 			type : "POST",
-			data : {
-				'title' : title,
-				'author' : author,
-				'createDate' : date
-			},
 			accept : 'application/json',
 			success : function(data) {
-				console.log(data);
-				paintTable(data)
+				$.each(data, function (i, data) {
+				    $('#pp_select').append($('<option>', { 
+				        value: data.period,
+				        text : data.period  +" : "+ data.status
+				    }));
+				});
 			},
 			error : function(e) {
 				console.log(e);
 			}
-
 		});
-		event.preventDefault();
+		
+		
+		$.ajax({
+			url : "/OTNDWeb/getIncomeTypes",
+			type : "POST",
+			accept : 'application/json',
+			success : function(data) {
+				$.each(data, function (i, data) {
+				    $('#income_type').append($('<option>', { 
+				        value: data,
+				        text : data
+				    }));
+				});
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+		
+		$('#income_type').change(function(event){
+			console.log(this.value)
+			loadIncomeCodesByType(this.value);
+			//load per type selected
+		})
+}
+
+var loadIncomeCodesByType = function(incomeType){
+	$.ajax({
+		url : "/OTNDWeb/getCodesByType",
+		type : "POST",
+		accept : 'application/json',
+		data: {'incomeType':incomeType},
+		success : function(data) {
+			var codeInput = $('#income_code');
+			codeInput.empty();
+			codeInput.append($('<option>', { 
+		        text : "Select..."
+		    }));
+			$.each(data, function (i, data) {
+			    $('#income_code').append($('<option>', { 
+			        value: data.id,
+			        text : data.desc
+			    }));
+			});
+		},
+		error : function(e) {
+			console.log(e);
+		}
 	});
 }
 var getUser = function() {
