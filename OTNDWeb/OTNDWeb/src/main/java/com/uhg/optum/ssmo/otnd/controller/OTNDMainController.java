@@ -71,9 +71,8 @@ public class OTNDMainController {
 				new LocalDate(Integer.parseInt(localDate[0]),
 						Integer.parseInt(localDate[1]),
 						Integer.parseInt(localDate[2]))));
-		
-		PayrollDetails payDetails = new PayrollDetails(new Employee(
-				System.getProperty("user.name")), new IncomeType(incomeCode),
+		String uname = System.getProperty("user.name");
+		PayrollDetails payDetails = new PayrollDetails(new Employee(uname), new IncomeType(incomeCode),
 				detailValue, remarks, new LocalDate(),pp);
 		payrollDetailsService.savePayrollDetail(payDetails);
 		return "SUCCESS";
@@ -81,8 +80,8 @@ public class OTNDMainController {
 
 	@RequestMapping(value = "/getIncomeDetails", method = RequestMethod.POST)
 	public @ResponseBody List<PayrollDetails> getIncomeDetails(
-			@RequestParam String payPeriod) {
-		logger.debug("[getIncomeDetails] getting payroll income details: " +payPeriod);
+			@RequestParam String payPeriod,@RequestParam String isAdmin) {
+		logger.debug("[getIncomeDetails] getting payroll income details: " +isAdmin);
 		String[] localDate = payPeriod.split("-");
 		PayrollPeriod pp = periodService.getPayroll(new PayrollPeriod(
 				new LocalDate(Integer.parseInt(localDate[0]),
@@ -90,7 +89,11 @@ public class OTNDMainController {
 						Integer.parseInt(localDate[2]))));
 		PayrollDetails detail = new PayrollDetails();
 		detail.setPayrollPeriod(pp);
-		detail.setEmpId(new Employee(System.getProperty("user.name")));
+		if("true".equals(isAdmin)){
+			detail.setEmpId(null);
+		}else{
+			detail.setEmpId(new Employee(System.getProperty("user.name")));
+		}
 		return payrollDetailsService.getPayrollDetails(detail);
 	};
 	

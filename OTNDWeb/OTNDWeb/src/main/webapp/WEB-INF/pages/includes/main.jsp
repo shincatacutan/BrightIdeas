@@ -8,44 +8,48 @@
 	<div id="tabs-1" class="tab_div">
 		<div class="load_pay">
 			<label class="detailsLbl">Payroll Period</label> 
-			<select id="pp_select">	</select> &nbsp;
+			<select id="pp_select">
+				<option>Select Period...</option>
+			</select> &nbsp;
 			<input type="button" id="load_payroll" value="Load" />
 		</div>
 		<form id="income-form">
 			<fieldset>
 				<span class="detailSpan"> <label class="detailsLbl">Income Type</label>
-					<select id="income_type">
+					<select id="income_type" disabled="disabled">
 						<option>Select Type...</option>
 					</select>
 				</span> <span class="detailSpan codeSpan"> <label class="detailsLbl">Code</label>
-					<select id="income_code">
+					<select id="income_code"  disabled="disabled">
 						<option>Select Code...</option>
 					</select>
 				</span> 
 				<span class="detailSpan"> 
 					<span id="amountSpan">
 						<label class="detailsLbl" id="amtHrLbl">Amount </label> 
-						<input id="amount_in" type="text"/></span>
+						<input id="amount_in" type="text"  disabled="disabled"/></span>
 					<span id="dateSpan">
 						<label class="detailsLbl">Date </label> 
-						<input type="text" id="createDt_in"></input>
+						<input type="text" id="createDt_in"  disabled="disabled"/>
 					</span>
 				</span> 
 				<span class="detailSpan detailRemarks">
 					<label class="detailsLbl">Remarks </label> 
-					<textarea id="txtRemarks" class="text ui-widget-content" rows="3" cols="38"></textarea>
+					<textarea id="txtRemarks" class="text ui-widget-content" rows="3" cols="38"  disabled="disabled"></textarea>
 				</span> 
+				<br class="clearfix" /> 
 			</fieldset>
-			<br class="clearfix" /> 
-			<input type="button" id="addPay_btn"
-				value="Add" /> <input type="reset" />
+		</form>
+			<div id="action_btn">
+				<input type="button" id="addPay_btn" value="Add" disabled="disabled"/> 
+				<input type="reset" id="resetPay_btn" disabled="disabled"/>
+			</div>
 			<hr class="seperator">
 
 			<div id="tableSpace">
 				<table class="display" id="resultGrid"></table>
 				<input type="button" id="delete_btn" value="Delete" />
 			</div>
-		</form>
 	</div>
 	<div id="tabs-2" class="tab_div">
 		<form id="addUser_form">
@@ -106,7 +110,7 @@
 		<form id="payperiod_form">
 			<fieldset>
 				<span class="addSpan"> <label for="payPeriod" class="addLbl">Pay
-						Period </label> <input type="text" name="payPeriod" id="payperiod_add"">
+						Period </label> <input type="text" name="payPeriod" id="payperiod_add">
 				</span> <span class="addSpan"> <label class="addLbl">Status</label>
 					<select id="pp_status">
 						<option value="Open">Open</option>
@@ -117,26 +121,18 @@
 				<input type="button" id="add_pperiod_btn" value="Add" />
 			</fieldset>
 		</form>
-		<div id="inqTableSpace">
-			<table class="display" id="inquiry_grid"></table>
-		</div>
+		
 	</div>
 	<div id="tabs-4" class="tab_div">
-		<h4>Under Construction</h4>
-		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus
-			gravida ante, ut pharetra massa metus id nunc. Duis scelerisque
-			molestie turpis. Sed fringilla, massa eget luctus malesuada, metus
-			eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet
-			fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam.
-			Praesent in eros vestibulum mi adipiscing adipiscing. Morbi
-			facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut
-			posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis.
-			Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem
-			euismod felis, eu ornare leo nisi vel felis. Mauris consectetur
-			tortor et purus.</p>
+		<div class="load_pay">
+			<label class="detailsLbl">Payroll Period</label> <select
+				id="pp_select_admin">
+				<option>Select Period...</option>
+			</select> &nbsp; <input type="button" id="load_payroll_admin" value="Load" />
+		</div>
 		<div id="inqTableSpace">
-			<table cellpadding="0" cellspacing="0" border="0" class="display"
-				id="inquiry_grid"></table>
+			<table class="display" id="inquiry_grid"></table>
+			<input type="button" id="generate_btn" value="Generate Excel Report" />
 		</div>
 	</div>
 </div>

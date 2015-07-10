@@ -16,7 +16,9 @@ public class PayrollDetailsDaoImpl extends AbstractDao implements
 	@Override
 	public List<PayrollDetails> getPayrollDetails(PayrollDetails payroll) {
 		Criteria criteria = getSession().createCriteria(PayrollDetails.class);
-		criteria.add(Restrictions.eq("empId",payroll.getEmpId()));
+		if(null!=payroll.getEmpId()){
+			criteria.add(Restrictions.eq("empId",payroll.getEmpId()));
+		}
 		criteria.add(Restrictions.eq("payrollPeriod", payroll.getPayrollPeriod()));
 		return (List<PayrollDetails>)criteria.list();
 	}
