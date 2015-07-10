@@ -29,11 +29,11 @@
 			<img alt="Optum Logo"
 				src="<c:url value="/resources/images/optumlogo.png" />">
 			<div id="header_user">
-				Employee Name: <span id="fullname"></span><br/>
-				Employee ID: <span id="empID"></span><br/>
-				Network ID: <span id="ntid"></span><br/>
-				Manager: <span id="manager"></span><br/>
-				Project: <span id="project"></span><br/>
+				<label>Employee Name:</label><span id="fullname"></span><br/>
+				<label>Employee ID:</label><span id="empID"></span><br/>
+				<label>Network ID:</label><span id="ntid"></span><br/>
+				<label>Manager:</label><span id="manager"></span><br/>
+				<label>Project:</label><span id="project"></span><br/>
 			</div>
 			<div class="info">
 				<h1 class="title">Overtime and Night Differential</h1>
