@@ -19,7 +19,7 @@ public class PayrollPeriodServiceImpl implements PayrollPeriodService {
 	@Override
 	public PayrollPeriod getPayroll(PayrollPeriod pp) {
 		// TODO Auto-generated method stub
-		return null;
+		return periodDao.getPayroll(pp);
 	}
 
 	@Override

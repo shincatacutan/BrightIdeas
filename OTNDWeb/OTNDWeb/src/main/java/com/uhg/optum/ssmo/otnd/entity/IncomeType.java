@@ -9,6 +9,14 @@ import javax.persistence.Table;
 @Table(name = "Income_Type")
 public class IncomeType {
 
+	public IncomeType() {
+		super();
+	}
+
+	public IncomeType(String id) {
+		this.id = id;
+	}
+
 	@Id
 	@Column(name = "id")
 	private String id;

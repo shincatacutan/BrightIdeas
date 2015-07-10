@@ -16,7 +16,7 @@ public class PayrollPeriodDaoImpl extends AbstractDao implements
 	@Override
 	public PayrollPeriod getPayroll(PayrollPeriod pp) {
 		Criteria criteria = getSession().createCriteria(PayrollPeriod.class);
-		criteria.add(Restrictions.eq("id", pp.getId()));
+		criteria.add(Restrictions.eq("period", pp.getPeriod()));
 		return (PayrollPeriod) criteria.uniqueResult();
 	}
 

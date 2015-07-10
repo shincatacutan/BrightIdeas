@@ -7,33 +7,38 @@
 	</ul>
 	<div id="tabs-1" class="tab_div">
 		<div class="load_pay">
-			<label class="detailsLbl">Payroll Period:</label> 
+			<label class="detailsLbl">Payroll Period</label> 
 			<select id="pp_select">	</select> &nbsp;
 			<input type="button" id="load_payroll" value="Load" />
 		</div>
-		<form id="search_tab">
+		<form id="income-form">
 			<fieldset>
-				<span class="detailSpan"> <label class="detailsLbl">Income Type:</label>
+				<span class="detailSpan"> <label class="detailsLbl">Income Type</label>
 					<select id="income_type">
 						<option>Select Type...</option>
 					</select>
-				</span> <span class="detailSpan codeSpan"> <label class="detailsLbl">Code:</label>
+				</span> <span class="detailSpan codeSpan"> <label class="detailsLbl">Code</label>
 					<select id="income_code">
 						<option>Select Code...</option>
 					</select>
 				</span> 
 				<span class="detailSpan"> 
-				<label class="detailsLbl">Amount: </label> 
-				<input type="text" id="createDt_in"></input>
+					<span id="amountSpan">
+						<label class="detailsLbl">Amount </label> 
+						<input id="amount_in" type="text"/></span>
+					<span id="dateSpan">
+						<label class="detailsLbl">Date </label> 
+						<input type="text" id="createDt_in"></input>
+					</span>
 				</span> 
-				<span class="detailSpan detailRemarks"><label
-					class="detailsLbl">Remarks :</label> <input name="txtRemarks"
-					id="txtRemarks" type="text" style="width: 85%;"
-					maxlength="150" /> </span> 
-				
+				<span class="detailSpan detailRemarks">
+					<label class="detailsLbl">Remarks </label> 
+					<textarea id="txtRemarks" class="text ui-widget-content" rows="3" cols="38"></textarea>
+				</span> 
 			</fieldset>
-			<br class="clearfix" /> <input type="button" id="search_btn"
-				value="Filter" /> <input type="reset" />
+			<br class="clearfix" /> 
+			<input type="button" id="addPay_btn"
+				value="Add" /> <input type="reset" />
 			<hr class="seperator">
 
 			<div id="tableSpace">
@@ -56,15 +61,20 @@
 				</span> <span class="addSpan"> <label for="lastname" class="addLbl">Last
 						Name</label> <input type="text" name="lastname" id="lastname_user"
 					value="" />
-				</span> <span class="addSpan"> <label for="role" class="addLbl">Role</label>
+				</span> 
+				<span class="addSpan"> <label for="role" class="addLbl">Role</label>
 					<select id="role_user">
 						<option value="1">Admin</option>
 						<option value="2">Regular</option>
-				</select>
-				</span> <span class="addSpan"> <label for="project" class="addLbl">Last
-						Name</label> <input type="text" name="project" id="project_user" value="" />
-				</span> <span class="addSpan"> <label for="manager" class="addLbl">Last
-						Name</label> <input type="text" name="manager" id="manager_user" value="" />
+					</select>
+				</span> 
+				<span class="addSpan"> 
+					<label for="project" class="addLbl">Project</label> 
+					<input type="text" name="project" id="project_user" value="" />
+				</span> 
+				<span class="addSpan"> 
+					<label for="manager" class="addLbl">Manager</label> 
+					<input type="text" name="manager" id="manager_user" value="" />
 				</span>
 
 
@@ -87,7 +97,7 @@
 						</span>
 						<!-- Allow form submission with keyboard without duplicating the dialog button -->
 						<input type="submit" tabindex="-1"
-							style="position: absolute; top: -1000px">
+							style="position absolute; top -1000px">
 					</fieldset>
 				</form>
 			</div>
@@ -97,7 +107,7 @@
 		<form id="payperiod_form">
 			<fieldset>
 				<span class="addSpan"> <label for="payPeriod" class="addLbl">Pay
-						Period: </label> <input type="text" name="payPeriod" id="payperiod_add"">
+						Period </label> <input type="text" name="payPeriod" id="payperiod_add"">
 				</span> <span class="addSpan"> <label class="addLbl">Status</label>
 					<select id="pp_status">
 						<option value="Open">Open</option>

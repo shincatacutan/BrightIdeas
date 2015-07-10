@@ -25,6 +25,16 @@ public class PayrollPeriod {
 	@Column(name = "status", nullable = false, unique = true)
 	private String status;
 
+	public PayrollPeriod() {
+		super();
+	}
+
+
+	public PayrollPeriod(LocalDate period) {
+		this.period = period;
+	}
+
+
 	public int getId() {
 		return id;
 	}

@@ -14,77 +14,105 @@ import org.joda.time.LocalDate;
 
 @Entity
 @Table(name = "Payroll_Details")
-public class Payroll_Details {
-	
+public class PayrollDetails {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
+
+	public PayrollDetails() {
+		super();
+	}
+
+	public PayrollDetails( Employee empId, IncomeType incomeType,
+			String prodHrsAmt, String remarks, LocalDate createDate,
+			PayrollPeriod payrollPeriod) {
+		super();
+		this.empId = empId;
+		this.incomeType = incomeType;
+		this.prodHrsAmt = prodHrsAmt;
+		this.remarks = remarks;
+		this.createDate = createDate;
+		this.payrollPeriod = payrollPeriod;
+	}
+
 	@OneToOne
-	@JoinColumn(name = "networkID")
+	@JoinColumn(name = "empID")
 	private Employee empId;
-	
+
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "incomeId")
 	private IncomeType incomeType;
-	
+
 	@Column(name = "prodHrsAmt")
 	private String prodHrsAmt;
 
 	@Column(name = "remarks")
 	private String remarks;
-	
+
 	@Column(name = "createDate")
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate createDate;
-	
+
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "payID")
 	private PayrollPeriod payrollPeriod;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public Employee getEmpId() {
 		return empId;
 	}
+
 	public void setEmpId(Employee empId) {
 		this.empId = empId;
 	}
+
 	public IncomeType getIncomeType() {
 		return incomeType;
 	}
+
 	public void setIncomeType(IncomeType incomeType) {
 		this.incomeType = incomeType;
 	}
+
 	public String getProdHrsAmt() {
 		return prodHrsAmt;
 	}
+
 	public void setProdHrsAmt(String prodHrsAmt) {
 		this.prodHrsAmt = prodHrsAmt;
 	}
+
 	public String getRemarks() {
 		return remarks;
 	}
+
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
 	public LocalDate getCreateDate() {
 		return createDate;
 	}
+
 	public void setCreateDate(LocalDate createDate) {
 		this.createDate = createDate;
 	}
+
 	public PayrollPeriod getPayrollPeriod() {
 		return payrollPeriod;
 	}
+
 	public void setPayrollPeriod(PayrollPeriod payrollPeriod) {
 		this.payrollPeriod = payrollPeriod;
 	}
-	
-	
 
 }

@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Table(name = "Employee")
 public class Employee {
 	
+
 	@Id
 	@Column(name = "ntID")
 	private String networkID;
@@ -23,7 +24,7 @@ public class Employee {
 	
 	@Column(name = "firstName")
 	private String firstName;
-	
+
 	@OneToOne
 	@JoinColumn(name = "roleType")
 	private Role roleType;
@@ -34,6 +35,13 @@ public class Employee {
 	@Column(name = "manager")
 	private String manager;
 	
+	public Employee(String networkID) {
+		super();
+		this.networkID = networkID;
+	}
+	public Employee() {
+		super();
+	}
 	
 	public String getNetworkID() {
 		return networkID;
