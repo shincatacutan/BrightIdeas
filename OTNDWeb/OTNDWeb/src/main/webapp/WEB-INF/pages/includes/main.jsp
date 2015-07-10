@@ -25,7 +25,12 @@
 				<span class="detailSpan"> 
 				<label class="detailsLbl">Amount: </label> 
 				<input type="text" id="createDt_in"></input>
-				</span>
+				</span> 
+				<span class="detailSpan detailRemarks"><label
+					class="detailsLbl">Remarks :</label> <input name="txtRemarks"
+					id="txtRemarks" type="text" style="width: 85%;"
+					maxlength="150" /> </span> 
+				
 			</fieldset>
 			<br class="clearfix" /> <input type="button" id="search_btn"
 				value="Filter" /> <input type="reset" />

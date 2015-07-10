@@ -2,9 +2,10 @@ $(function() {
 	getUser();
 	initButtons();
 	getPayPeriods();
-	handleAddInq();
 	initUpdateDialog();
 	handleViewInquiries();
+	
+	/*Admin Functions*/
 	initAdminAddUser();
 	initAddPayPeriod();
 });
@@ -139,30 +140,6 @@ var loadViewInquiries = function() {
 	});
 }
 
-var handleAddInq = function() {
-	$("#add_inq_btn").click(function(event) {
-		var title = $("#inq_title_in").val();
-		var body = $("#inq_in").val();
-		$.ajax({
-			url : "/OTNDWeb/addInquiry",
-			type : "POST",
-			data : {
-				'title' : title,
-				'body' : body
-			},
-			accept : 'application/json',
-			success : function(data) {
-				console.log(data);
-				$("#view_tab")[0].reset();
-			},
-			error : function(e) {
-				console.log(e);
-			}
-
-		});
-		event.preventDefault();
-	});
-}
 
 var getPayPeriods = function() {
 		var title = $("#title_in").val();

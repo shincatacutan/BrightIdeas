@@ -7,8 +7,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.uhg.optum.ssmo.otnd.dao.PayrollPeriodDao;
-import com.uhg.optum.ssmo.otnd.entity.Employee;
-import com.uhg.optum.ssmo.otnd.entity.Inquiry;
 import com.uhg.optum.ssmo.otnd.entity.PayrollPeriod;
 
 @Repository
