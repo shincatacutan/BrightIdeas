@@ -43,8 +43,7 @@
 
 			<div id="tableSpace">
 				<table class="display" id="resultGrid"></table>
-				<input type="button" id="update_btn" value="Update" /> <input
-					type="button" id="delete_btn" value="Delete" />
+				<input type="button" id="delete_btn" value="Delete" />
 			</div>
 		</form>
 	</div>

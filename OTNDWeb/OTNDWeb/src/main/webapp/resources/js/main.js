@@ -4,6 +4,7 @@ $(function() {
 	getPayPeriods();
 	
 	initAddPayDetails();
+	initLoadPayrollBtn();
 	
 	initUpdateDialog();
 	
@@ -11,6 +12,30 @@ $(function() {
 	initAdminAddUser();
 	initAddPayPeriod();
 });
+
+var initLoadPayrollBtn = function(){
+	
+	$("#load_payroll").click(function(event) {
+		loadIncomePeriodDetails();
+	});
+}
+
+var loadIncomePeriodDetails = function(){
+	var payperiod = $("#pp_select").val();
+	$.ajax({
+		url : "/OTNDWeb/getIncomeDetails",
+		type : "POST",
+		data : {'payPeriod' : payperiod},
+		accept : 'application/json',
+		success : function(data) {
+			console.log(data);
+			paintTable(data);
+		},
+		error : function(e) {
+			//console.log(e);
+		}
+	});
+}
 
 var initAddPayDetails = function(){
 	$("#addPay_btn").click(function(event) {
@@ -357,29 +382,46 @@ var paintTable = function(oData) {
 		var table = $('#resultGrid').dataTable({
 			"data" : oData,
 			"columns" : [ {
-				"title" : "ID",
-				"data" : "id",
-				"class" : "dt-left"
+				"title" : "Pay Period",
+				"data" : "payrollPeriod",
+				"class" : "dt-left",
+				"render" : function(obj) {
+					return '<span>' + obj.period.monthOfYear
+					+ '/' + obj.period.dayOfMonth
+					+ '/' + obj.period.year
+					+ '</span>'
+				}
 			}, {
-				"title" : "Title",
-				"data" : "title",
-				"class" : "dt-left"
+				"title" : "Type",
+				"class" : "dt-left",
+				"data" : "incomeType.id"
 			}, {
 				"title" : "Description",
-				"data" : "description",
-				"class" : "dt-left"
+				"class" : "dt-left",
+				"data" : "incomeType.desc"
 			}, {
-				"title" : "Author",
-				"data" : "user.ntID",
-				"class" : "dt-left"
+				"title" : "Remarks",
+				"class" : "dt-left",
+				"data" : "remarks",
+				
+			}, {
+				"title" : "Hours/Amount/Date",
+				"class" : "dt-left",
+				"data" : "prodHrsAmt"
 			}, {
 				"title" : "Create Date",
-				"data" : "createDate",
 				"class" : "dt-left",
-				"type" : "date"
-			} ]
+				"data" : "createDate",
+				"render":function(obj) {
+					return '<span>' + obj.monthOfYear
+					+ '/' + obj.dayOfMonth
+					+ '/' + obj.year
+					+ '</span>'
+				}
+			}]
 		});
 
+		
 		$('#resultGrid tbody').on('click', 'tr', function() {
 			if ($(this).hasClass('selected')) {
 				$(this).removeClass('selected');

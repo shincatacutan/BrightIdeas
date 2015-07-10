@@ -79,4 +79,17 @@ public class OTNDMainController {
 		return "SUCCESS";
 	}
 
+	@RequestMapping(value = "/getIncomeDetails", method = RequestMethod.POST)
+	public @ResponseBody List<PayrollDetails> getIncomeDetails(
+			@RequestParam String payPeriod) {
+		String[] localDate = payPeriod.split("-");
+		PayrollPeriod pp = periodService.getPayroll(new PayrollPeriod(
+				new LocalDate(Integer.parseInt(localDate[0]),
+						Integer.parseInt(localDate[1]),
+						Integer.parseInt(localDate[2]))));
+		PayrollDetails detail = new PayrollDetails();
+		detail.setPayrollPeriod(pp);
+		detail.setEmpId(new Employee(System.getProperty("user.name")));
+		return payrollDetailsService.getPayrollDetails(detail);
+	}
 }
