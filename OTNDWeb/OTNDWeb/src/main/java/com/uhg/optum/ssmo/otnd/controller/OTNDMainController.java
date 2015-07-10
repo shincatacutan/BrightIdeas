@@ -71,7 +71,7 @@ public class OTNDMainController {
 				new LocalDate(Integer.parseInt(localDate[0]),
 						Integer.parseInt(localDate[1]),
 						Integer.parseInt(localDate[2]))));
-		logger.debug("[addPayrollDetails] getting payroll period: " +pp.getId());
+		
 		PayrollDetails payDetails = new PayrollDetails(new Employee(
 				System.getProperty("user.name")), new IncomeType(incomeCode),
 				detailValue, remarks, new LocalDate(),pp);
@@ -82,6 +82,7 @@ public class OTNDMainController {
 	@RequestMapping(value = "/getIncomeDetails", method = RequestMethod.POST)
 	public @ResponseBody List<PayrollDetails> getIncomeDetails(
 			@RequestParam String payPeriod) {
+		logger.debug("[getIncomeDetails] getting payroll income details: " +payPeriod);
 		String[] localDate = payPeriod.split("-");
 		PayrollPeriod pp = periodService.getPayroll(new PayrollPeriod(
 				new LocalDate(Integer.parseInt(localDate[0]),
@@ -91,5 +92,15 @@ public class OTNDMainController {
 		detail.setPayrollPeriod(pp);
 		detail.setEmpId(new Employee(System.getProperty("user.name")));
 		return payrollDetailsService.getPayrollDetails(detail);
+	};
+	
+	@RequestMapping(value = "/deleteIncomeDetail", method = RequestMethod.POST)
+	public @ResponseBody String deleteIncomeDetail(
+			@RequestParam String incomeID) {
+		logger.debug("[deleteIncomeDetail] deleting payroll income detail: " +incomeID);
+		payrollDetailsService.deletePayroll(Integer.parseInt(incomeID));
+		return "SUCCESS";
 	}
+	
+	
 }

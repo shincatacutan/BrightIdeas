@@ -24,7 +24,7 @@
 				</span> 
 				<span class="detailSpan"> 
 					<span id="amountSpan">
-						<label class="detailsLbl">Amount </label> 
+						<label class="detailsLbl" id="amtHrLbl">Amount </label> 
 						<input id="amount_in" type="text"/></span>
 					<span id="dateSpan">
 						<label class="detailsLbl">Date </label> 

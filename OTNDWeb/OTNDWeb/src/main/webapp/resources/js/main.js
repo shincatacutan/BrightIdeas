@@ -28,7 +28,6 @@ var loadIncomePeriodDetails = function(){
 		data : {'payPeriod' : payperiod},
 		accept : 'application/json',
 		success : function(data) {
-			console.log(data);
 			paintTable(data);
 		},
 		error : function(e) {
@@ -57,7 +56,9 @@ var initAddPayDetails = function(){
 			accept : 'application/json',
 			success : function(data) {
 				//console.log(data);
+				alert("Income detail is saved")
 				$("#income-form")[0].reset();
+				loadIncomePeriodDetails();
 			},
 			error : function(e) {
 				//console.log(e);
@@ -185,6 +186,12 @@ var changeInputByIncomeType = function(incomeType){
 	}else{
 		hideDetailInput("amountSpan");
 		isDateEntry = false;
+		var amtHrLbl = document.getElementById("amtHrLbl");
+		if(incomeType=="OT"){
+			amtHrLbl.innerHTML = "Hours";
+		}else{
+			amtHrLbl.innerHTML = "Amount";
+		}
 	}
 }
 
@@ -232,7 +239,6 @@ var getUser = function() {
 		type : "POST",
 		accept : 'application/json',
 		success : function(emp) {
-//			//console.log(emp);
 			$("#fullname").html(emp.firstName + " " + emp.lastName);
 			$("#empID").html(emp.empID);
 			$("#ntid").html(emp.networkID);
@@ -240,9 +246,8 @@ var getUser = function() {
 			$("#project").html(emp.project);
 		},
 		error : function(e) {
-			//console.log(e);
+			alert("Error encountered. Please refresh browser.");
 		}
-
 	});
 }
 
@@ -436,8 +441,7 @@ var paintTable = function(oData) {
 			var deletePayIds = newInstance.rows('.selected').data();
 			if (confirm("Delete selected item?")) {
 				$.each(deletePayIds, function(key, value) {
-					// deletePayrollDetail(value["payid"]); ajax call here!
-					//console.log("deleting..." + value["id"]);
+					deletePayrollDetail(value["id"]); 
 					newInstance.row('.selected').remove().draw();
 				});
 			}
@@ -446,3 +450,18 @@ var paintTable = function(oData) {
 
 	showHideButtons(true);
 };
+
+var deletePayrollDetail = function(incomeId){
+	$.ajax({
+		url : "/OTNDWeb/deleteIncomeDetail",
+		type : "POST",
+		data : {"incomeID": incomeId },
+		accept : 'application/json',
+		success : function(msg) {
+			console.log(msg)
+		},
+		error : function(e) {
+			alert("Error encountered. Please refresh browser.");
+		}
+	});
+}
