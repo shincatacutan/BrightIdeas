@@ -1,5 +1,15 @@
 package com.uhg.optum.ssmo.otnd.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.uhg.optum.ssmo.otnd.entity.Employee;
 import com.uhg.optum.ssmo.otnd.entity.PayrollPeriod;
 import com.uhg.optum.ssmo.otnd.entity.Role;
+import com.uhg.optum.ssmo.otnd.io.ExcelGenerator;
 import com.uhg.optum.ssmo.otnd.service.EmployeeService;
 import com.uhg.optum.ssmo.otnd.service.PayrollPeriodService;
 
 @Controller
 public class AdminController {
-
+	@Autowired
+	ServletContext context;
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -57,15 +69,15 @@ public class AdminController {
 	public @ResponseBody String addPayPeriod(@RequestParam String payPeriod,
 			@RequestParam String status) {
 		logger.debug("[addPayPeriod] adding pay period...");
-		logger.debug("[addPayPeriod] payPeriod: "+payPeriod);
-		logger.debug("[addPayPeriod] status: "+status);
+		logger.debug("[addPayPeriod] payPeriod: " + payPeriod);
+		logger.debug("[addPayPeriod] status: " + status);
 		PayrollPeriod pp = new PayrollPeriod();
 		String date[] = payPeriod.split("/");
-		logger.debug("[addPayPeriod] payPeriod: "+payPeriod);
-		logger.debug("[addPayPeriod] status: "+status);
-		LocalDate localDate = new LocalDate(Integer.parseInt(date[2]), Integer
-				.parseInt(date[0]), Integer.parseInt(date[1]));
-		logger.debug("[addPayPeriod] localdate: "+localDate.toString());
+		logger.debug("[addPayPeriod] payPeriod: " + payPeriod);
+		logger.debug("[addPayPeriod] status: " + status);
+		LocalDate localDate = new LocalDate(Integer.parseInt(date[2]),
+				Integer.parseInt(date[0]), Integer.parseInt(date[1]));
+		logger.debug("[addPayPeriod] localdate: " + localDate.toString());
 		pp.setPeriod(localDate);
 		pp.setStatus(status);
 		periodService.addPayroll(pp);
@@ -91,5 +103,4 @@ public class AdminController {
 		model.addAttribute("isAdmin", false);
 		return VIEW_INDEX;
 	}
-
 }

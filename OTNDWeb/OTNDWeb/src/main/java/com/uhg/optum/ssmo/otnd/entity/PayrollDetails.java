@@ -1,11 +1,13 @@
 package com.uhg.optum.ssmo.otnd.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,13 +18,14 @@ import org.joda.time.LocalDate;
 @Table(name = "Payroll_Details")
 public class PayrollDetails {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
 
 	public PayrollDetails() {
 		super();
+	}
+
+	public PayrollDetails(PayrollPeriod payrollPeriod) {
+		super();
+		this.payrollPeriod = payrollPeriod;
 	}
 
 	public PayrollDetails( Employee empId, IncomeType incomeType,
@@ -37,11 +40,17 @@ public class PayrollDetails {
 		this.payrollPeriod = payrollPeriod;
 	}
 
-	@OneToOne
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+
+
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "empID")
 	private Employee empId;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "incomeId")
 	private IncomeType incomeType;
 
@@ -55,7 +64,7 @@ public class PayrollDetails {
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate createDate;
 
-	@OneToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "payID")
 	private PayrollPeriod payrollPeriod;
 
