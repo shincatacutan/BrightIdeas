@@ -147,27 +147,35 @@ var initAddPayDetails = function() {
 
 }
 var initAddPayPeriod = function() {
-	$("#add_pperiod_btn").click(function(event) {
-		var payperiod = $("#payperiod_add").val();
-		var status = $("#pp_status").val();
-		// console.log(event);
-		$.ajax({
-			url : "/OTNDWeb/addPayPeriod",
-			type : "POST",
-			data : {
-				'payPeriod' : payperiod,
-				'status' : status
-			},
-			accept : 'application/json',
-			success : function(data) {
-				// console.log(data);
-				$("#payperiod_form")[0].reset();
-			},
-			error : function(e) {
-				// console.log(e);
-			}
 
-		});
+	$("#add_pperiod_btn").click(function(event) {
+		var payPeriodForm = $('#payperiod_form');
+		payPeriodForm.validate();
+		
+		if(payPeriodForm.valid()){
+			var payperiod = $("#payperiod_add").val();
+			var status = $("#pp_status").val();
+			// console.log(event);
+			$.ajax({
+				url : "/OTNDWeb/addPayPeriod",
+				type : "POST",
+				data : {
+					'payPeriod' : payperiod,
+					'status' : status
+				},
+				accept : 'application/json',
+				success : function(data) {
+					// console.log(data);
+					alert("Payperiod added.")
+					$("#payperiod_form")[0].reset();
+				},
+				error : function(e) {
+					// console.log(e);
+				}
+
+			});
+		}
+		
 		event.preventDefault();
 	});
 }
@@ -187,35 +195,42 @@ var initLoadPayperiodsAdmin = function() {
 
 var initAdminAddUser = function() {
 	$("#addUser_btn").click(function(event) {
-		var username = $("#uname_user").val();
-		var empID = $("#empID_user").val();
-		var firstname = $("#firstname_user").val();
-		var lastname = $("#lastname_user").val();
-		var role = $("#role_user").val();
-		var project = $("#project_user").val();
-		var manager = $("#manager_user").val();
+		var addUserForm = $('#addUser_form');
+		addUserForm.validate();
 
-		$.ajax({
-			url : "/OTNDWeb/addUser",
-			type : "POST",
-			accept : 'application/json',
-			data : {
-				'ntID' : username,
-				'empID' : empID,
-				'firstName' : firstname,
-				'lastName' : lastname,
-				'roleId' : role,
-				'project' : project,
-				'manager' : manager
-			},
-			success : function(data) {
-				// console.log(data);
-				$('#addUser_form')[0].reset();
-			},
-			error : function(e) {
-				// console.log(e);
-			}
-		});
+		if (addUserForm.valid()) {
+			var username = $("#uname_user").val();
+			var empID = $("#empID_user").val();
+			var firstname = $("#firstname_user").val();
+			var lastname = $("#lastname_user").val();
+			var role = $("#role_user").val();
+			var project = $("#project_user").val();
+			var manager = $("#manager_user").val();
+
+			$.ajax({
+				url : "/OTNDWeb/addUser",
+				type : "POST",
+				accept : 'application/json',
+				data : {
+					'ntID' : username,
+					'empID' : empID,
+					'firstName' : firstname,
+					'lastName' : lastname,
+					'roleId' : role,
+					'project' : project,
+					'manager' : manager
+				},
+				success : function(data) {
+					// console.log(data);
+					alert("User added.")
+					$('#addUser_form')[0].reset();
+				},
+				error : function(e) {
+					// console.log(e);
+				}
+			});
+		}
+
 	});
 
 }

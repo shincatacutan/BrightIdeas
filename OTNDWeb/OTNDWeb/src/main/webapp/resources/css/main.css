@@ -35,10 +35,9 @@ div#header_user span {
 }
 
 .ui-tabs-nav {
-    border-bottom-right-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;
+	border-bottom-left-radius: 0px !important;
 }
-
 
 h1.title {
 	color: #FFF;
@@ -73,7 +72,6 @@ hr.seperator {
 	width: 95%
 }
 
-
 span.emp-info-span {
 	display: block;
 	float: left;
@@ -92,11 +90,11 @@ label.detailsLbl {
 }
 
 span.detailSpan {
-  display: block;
-  /* width: 28%; */
-  padding: 0.5em;
-  /* float: left; */
-  /* min-height: 2em; */
+	display: block;
+	/* width: 28%; */
+	padding: 0.5em;
+	/* float: left; */
+	/* min-height: 2em; */
 }
 
 /* span.detailSpan.codeSpan {
@@ -126,9 +124,10 @@ div#ui-datepicker-div, div.ui-spinner {
 }
 
 input.ui-button {
-  padding: 0.2em 1em !important;
-  margin: 0px 0.3em 0.4em !important;
+	padding: 0.2em 1em !important;
+	margin: 0px 0.3em 0.4em !important;
 }
+
 select {
 	font-family: Tahoma;
 	padding: 2px;
@@ -144,12 +143,12 @@ div#tabs {
 	background: none !important;
 }
 
-.ui-dialog{
+.ui-dialog {
 	text-align: left;
 }
 
 div#dialog-form {
-  min-height: 250px !important;
+	min-height: 250px !important;
 }
 
 .ui-tabs-panel {
@@ -171,22 +170,23 @@ table.dataTable th.dt-left, table.dataTable td.dt-left {
 	padding-left: 0.5em;
 }
 
-td.dt-longer{
+td.dt-longer {
 	text-align: left;
 	padding-left: 0.5em;
 	width: 30%;
 }
 
-th.dt-longer.sorting,th.dt-longer.sorting_asc,th.dt-longer.sorting_desc{
-  padding-left: 10px;
-  text-align:left;
+th.dt-longer.sorting, th.dt-longer.sorting_asc, th.dt-longer.sorting_desc
+	{
+	padding-left: 10px;
+	text-align: left;
 }
 
 div#header_user label {
-  display: inline-block;
-  width: 7em;
-  text-align:right;
-  margin: 0 0.5em;
+	display: inline-block;
+	width: 7em;
+	text-align: right;
+	margin: 0 0.5em;
 }
 
 div.tab_div {
@@ -197,7 +197,7 @@ div.tab_div {
 	background: #fff !important;
 }
 
-#adminDiv{
+#adminDiv {
 	margin: 1em;
 	padding: 0.5em;
 	border: 1px solid #8e846b;
@@ -205,17 +205,22 @@ div.tab_div {
 }
 
 .ui-widget-content .ui-state-error {
-    border: 1px solid #ffb73d;
-    background: #d34d17 url(images/ui-bg_diagonals-medium_20_d34d17_40x40.png) 50% 50% repeat;
-    color: red !important;
+	border: 1px solid #ffb73d;
+	background: #d34d17
+		url(images/ui-bg_diagonals-medium_20_d34d17_40x40.png) 50% 50% repeat;
+	color: red !important;
 }
 
-div.load_pay{
+div.load_pay {
 	padding: 0.5 em;
 }
 
+select#income_code {
+	width: 15em;
+}
+
 label.error {
-  color: red;
-  margin: 1em;
-  vertical-align: top;
+	color: red;
+	margin: 1em;
+	vertical-align: top;
 }
