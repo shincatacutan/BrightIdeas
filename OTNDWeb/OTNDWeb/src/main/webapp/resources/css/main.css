@@ -92,16 +92,16 @@ label.detailsLbl {
 }
 
 span.detailSpan {
-	display: block;
-	width: 28%;
-	padding: 0.5em;
-	float: left;
-	min-height: 2em;
+  display: block;
+  /* width: 28%; */
+  padding: 0.5em;
+  /* float: left; */
+  /* min-height: 2em; */
 }
 
-span.detailSpan.codeSpan {
+/* span.detailSpan.codeSpan {
   width: 27em;
-}
+} */
 span.addSpan {
 	display: block;
 	margin: 1em;
@@ -212,4 +212,10 @@ div.tab_div {
 
 div.load_pay{
 	padding: 0.5 em;
+}
+
+label.error {
+  color: red;
+  margin: 1em;
+  vertical-align: top;
 }

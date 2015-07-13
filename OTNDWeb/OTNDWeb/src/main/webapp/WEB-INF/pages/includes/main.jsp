@@ -9,41 +9,42 @@
 		<div class="load_pay">
 			<label class="detailsLbl">Payroll Period</label> 
 			<select id="pp_select">
-				<option>Select Period...</option>
+				<option></option>
 			</select> &nbsp;
 			<input type="button" id="load_payroll" value="Load" />
 		</div>
 		<form id="income-form">
 			<fieldset>
 				<span class="detailSpan"> <label class="detailsLbl">Income Type</label>
-					<select id="income_type" disabled="disabled">
-						<option>Select Type...</option>
+					<select id="income_type" name="income_type" disabled="disabled" required>
+						<option></option>
 					</select>
 				</span> <span class="detailSpan codeSpan"> <label class="detailsLbl">Code</label>
-					<select id="income_code"  disabled="disabled">
-						<option>Select Code...</option>
+					<select id="income_code" name="income_code" disabled="disabled" required>
+						<option></option>
 					</select>
 				</span> 
 				<span class="detailSpan"> 
 					<span id="amountSpan">
 						<label class="detailsLbl" id="amtHrLbl">Amount </label> 
-						<input id="amount_in" type="text"  disabled="disabled"/></span>
+						<input id="amount_in" type="text" name="amount_in"  disabled="disabled" required/></span>
 					<span id="dateSpan">
 						<label class="detailsLbl">Date </label> 
-						<input type="text" id="createDt_in"  disabled="disabled"/>
+						<input type="text" id="createDt_in" name="createDt_in" disabled="disabled" required/>
 					</span>
 				</span> 
 				<span class="detailSpan detailRemarks">
 					<label class="detailsLbl">Remarks </label> 
-					<textarea id="txtRemarks" class="text ui-widget-content" rows="3" cols="38"  disabled="disabled"></textarea>
+					<textarea id="txtRemarks" name="txtRemarks" class="text ui-widget-content" rows="3" cols="38"  disabled="disabled" required></textarea>
 				</span> 
 				<br class="clearfix" /> 
-			</fieldset>
-		</form>
-			<div id="action_btn">
+				<div id="action_btn">
 				<input type="button" id="addPay_btn" value="Add" disabled="disabled"/> 
 				<input type="reset" id="resetPay_btn" disabled="disabled"/>
 			</div>
+			</fieldset>
+		</form>
+			
 			<hr class="seperator">
 
 			<div id="tableSpace">
@@ -85,26 +86,7 @@
 				<input type="button" id="addUser_btn" value="Submit" />
 			</fieldset>
 		</form>
-		<div class="dialog-fix">
-			<div id="dialog-form" title="Update Details">
-				<p class="validateTips">All form fields are required.</p>
-
-				<form>
-					<fieldset>
-						<span class="addSpan"> <label for="name" class="addLbl">Title</label>
-							<input type="text" name="title" id="title_modal" value=""
-							class="text ui-widget-content ui-corner-all">
-						</span> <span class="addSpan"> <label for="email" class="addLbl">Description</label>
-							<textarea name="desc" id="desc_modal"
-								class="text ui-widget-content ui-corner-all" rows="3" cols="38"></textarea>
-						</span>
-						<!-- Allow form submission with keyboard without duplicating the dialog button -->
-						<input type="submit" tabindex="-1"
-							style="position absolute; top -1000px">
-					</fieldset>
-				</form>
-			</div>
-		</div>
+	
 	</div>
 	<div id="tabs-3" class="tab_div">
 		<form id="payperiod_form">
@@ -127,7 +109,7 @@
 		<div class="load_pay">
 			<label class="detailsLbl">Payroll Period</label> <select
 				id="pp_select_admin">
-				<option>Select Period...</option>
+				<option></option>
 			</select> &nbsp; <input type="button" id="load_payroll_admin" value="Load" />
 		</div>
 		<div id="inqTableSpace">

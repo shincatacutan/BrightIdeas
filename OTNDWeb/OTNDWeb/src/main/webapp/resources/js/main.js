@@ -6,8 +6,6 @@ $(function() {
 	initAddPayDetails();
 	initLoadPayrollBtn();
 
-	initUpdateDialog();
-
 	/* Admin Functions */
 	initAdminAddUser();
 	initAddPayPeriod();
@@ -18,26 +16,26 @@ $(function() {
 var initGenerateExcelBtn = function() {
 	var payperiod = $("#pp_select_admin");
 	var generateBtn = $('#generate_btn');
-	
-	generateBtn.on('click', function(){
-	     window.location = "/OTNDWeb/download.do?payPeriod="+payperiod.val();    
+
+	generateBtn.on('click', function() {
+		window.location = "/OTNDWeb/download.do?payPeriod=" + payperiod.val();
 	});
-//	generateBtn.click(function(event) {
-//		$.ajax({
-//			url : "/OTNDWeb/generateExcel",
-//			type : "POST",
-//			data : {
-//				'payPeriod' : payperiod
-//			},
-//			accept : 'application/json',
-//			success : function(data) {
-//				console.log(data)
-//			},
-//			error : function(e) {
-//				// console.log(e);
-//			}
-//		});
-//	});
+	// generateBtn.click(function(event) {
+	// $.ajax({
+	// url : "/OTNDWeb/generateExcel",
+	// type : "POST",
+	// data : {
+	// 'payPeriod' : payperiod
+	// },
+	// accept : 'application/json',
+	// success : function(data) {
+	// console.log(data)
+	// },
+	// error : function(e) {
+	// // console.log(e);
+	// }
+	// });
+	// });
 }
 
 var initLoadPayrollBtn = function() {
@@ -101,36 +99,49 @@ var loadIncomePeriodDetails = function(isAdmin, tableID) {
 }
 
 var initAddPayDetails = function() {
+	jQuery.validator.setDefaults({
+		debug : true,
+		success : "valid"
+	});
 	$("#addPay_btn").click(
 			function(event) {
-				var payperiod = $("#pp_select").val();
-				var incomeType = $("#income_type").val();
-				var incomeCode = $("#income_code").val();
-				var detailValue = isDateEntry == true ? $("#createDt_in").val()
-						: $("#amount_in").val();
-				var remarks = $("#txtRemarks").val();
-				$.ajax({
-					url : "/OTNDWeb/addPayrollDetails",
-					type : "POST",
-					data : {
-						'payPeriod' : payperiod,
-						'incomeType' : incomeType,
-						'incomeCode' : incomeCode,
-						'detailValue' : detailValue,
-						'remarks' : remarks
-					},
-					accept : 'application/json',
-					success : function(data) {
-						// console.log(data);
-						alert("Income detail is saved")
-						$("#income-form")[0].reset();
-						loadIncomePeriodDetails(false, '#resultGrid');
-					},
-					error : function(e) {
-						// console.log(e);
-					}
+				var incomeDetailsIds = [ "#income_type", "#income_code",
+						"#amount_in", "#txtRemarks", "#createDt_in" ];
+				// validateForm()
+				var incomeForm = $("#income-form")
+				incomeForm.validate();
+				console.log(incomeForm.valid());
+				if (incomeForm.valid()) {
+					var payperiod = $("#pp_select").val();
+					var incomeType = $("#income_type").val();
+					var incomeCode = $("#income_code").val();
+					var detailValue = isDateEntry == true ? $("#createDt_in")
+							.val() : $("#amount_in").val();
+					var remarks = $("#txtRemarks").val();
+					$.ajax({
+						url : "/OTNDWeb/addPayrollDetails",
+						type : "POST",
+						data : {
+							'payPeriod' : payperiod,
+							'incomeType' : incomeType,
+							'incomeCode' : incomeCode,
+							'detailValue' : detailValue,
+							'remarks' : remarks
+						},
+						accept : 'application/json',
+						success : function(data) {
+							// console.log(data);
+							alert("Income detail is saved")
+							$("#income-form")[0].reset();
+							loadIncomePeriodDetails(false, '#resultGrid');
+						},
+						error : function(e) {
+							// console.log(e);
+						}
 
-				});
+					});
+				}
+
 				event.preventDefault();
 			});
 
@@ -236,8 +247,13 @@ var getPayPeriods = function(id) {
 		type : "POST",
 		accept : 'application/json',
 		success : function(data) {
+			var incomeTypeInput = $('#income_type');
+			incomeTypeInput.empty();
+			incomeTypeInput.append($('<option>', {
+				text : ""
+			}));
 			$.each(data, function(i, data) {
-				$('#income_type').append($('<option>', {
+				incomeTypeInput.append($('<option>', {
 					value : data,
 					text : data
 				}));
@@ -298,7 +314,7 @@ var loadIncomeCodesByType = function(incomeType) {
 			var codeInput = $('#income_code');
 			codeInput.empty();
 			codeInput.append($('<option>', {
-				text : "Select..."
+				text : ""
 			}));
 			$.each(data, function(i, data) {
 				$('#income_code').append($('<option>', {
@@ -327,109 +343,6 @@ var getUser = function() {
 		error : function(e) {
 			alert("Error encountered. Please refresh browser.");
 		}
-	});
-}
-
-var loadDataToUpdate = function() {
-	var selected = $('#resultGrid').DataTable().rows('.selected').data();
-	var rowData = selected[0];
-
-	$("#title_modal").val(rowData["title"])
-	$("#desc_modal").val(rowData["description"])
-}
-
-function updateTips(t) {
-	tips.text(t).addClass("ui-state-highlight");
-	setTimeout(function() {
-		tips.removeClass("ui-state-highlight", 1500);
-	}, 500);
-}
-
-function checkLength(o, n, min, max) {
-	if (o.val().length > max || o.val().length < min) {
-		o.addClass("ui-state-error");
-		updateTips("Length of " + n + " must be between " + min + " and "
-				+ max + ".");
-		return false;
-	} else {
-		return true;
-	}
-}
-
-function checkRegexp(o, regexp, n) {
-	if (!(regexp.test(o.val()))) {
-		o.addClass("ui-state-error");
-		updateTips(n);
-		return false;
-	} else {
-		return true;
-	}
-}
-
-
-var initUpdateDialog = function() {
-	var dialog, form,
-	// From
-	// http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
-	emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/, title = $("#title_modal"), desc = $("#desc_modal"), allFields = $(
-			[]).add(title).add(desc), tips = $(".validateTips");
-
-	
-
-
-
-	function updateLine() {
-		// console.log("update user...")
-		var valid = true;
-		allFields.removeClass("ui-state-error");
-
-		valid = valid && checkLength(title, "title", 3, 50);
-		valid = valid && checkLength(desc, "desc", 6, 200);
-
-		// valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i,
-		// "Username may consist of a-z, 0-9, underscores, spaces and must begin
-		// with a letter." );
-		// valid = valid && checkRegexp( email, emailRegex, "eg. ui@jquery.com"
-		// );
-		// valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password
-		// field only allow : a-z 0-9" );
-
-		if (valid) {
-			$("#users tbody").append(
-					"<tr>" + "<td>" + title.val() + "</td>" + "<td>"
-							+ desc.val() + "</td>" +
-							// "<td>" + password.val() + "</td>" +
-							"</tr>");
-			dialog.dialog("close");
-		}
-		return valid;
-	}
-
-	dialog = $("#dialog-form").dialog({
-		autoOpen : false,
-		height : 300,
-		width : 350,
-		modal : true,
-		buttons : {
-			"Update" : updateLine,
-			Cancel : function() {
-				dialog.dialog("close");
-			}
-		},
-		close : function() {
-			form[0].reset();
-			allFields.removeClass("ui-state-error");
-		}
-	});
-
-	form = dialog.find("form").on("submit", function(event) {
-		event.preventDefault();
-		updateLine();
-	});
-
-	$("#update_btn").button().on("click", function() {
-		loadDataToUpdate();
-		dialog.dialog("open");
 	});
 }
 

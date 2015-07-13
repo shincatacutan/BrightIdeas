@@ -1,13 +1,11 @@
 package com.uhg.optum.ssmo.otnd.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -46,11 +44,11 @@ public class PayrollDetails {
 	private int id;
 
 
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne()
 	@JoinColumn(name = "empID")
 	private Employee empId;
 
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne()
 	@JoinColumn(name = "incomeId")
 	private IncomeType incomeType;
 
@@ -64,7 +62,7 @@ public class PayrollDetails {
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate createDate;
 
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@OneToOne()
 	@JoinColumn(name = "payID")
 	private PayrollPeriod payrollPeriod;
 

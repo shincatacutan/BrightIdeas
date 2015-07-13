@@ -19,6 +19,8 @@
 	
 	<script src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
 	<script src="<c:url value="/resources/js/jquery-ui-min.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery-validate-min.js" />"></script>
+	<script src="<c:url value="/resources/js/additional-methods.min.js" />"></script>
 	<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 	<script src="<c:url value="/resources/js/main.js" />"></script>
 </head>
