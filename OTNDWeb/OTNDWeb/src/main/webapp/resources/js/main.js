@@ -12,7 +12,7 @@ $(function() {
 	initPayrollTabs();
 });
 
-var initPayrollTabs = function(){
+var initPayrollTabs = function() {
 	$("#tabs").tabs({
 		activate : function(event, ui) {
 			if (ui.newPanel.selector == "#tabs-4") {
@@ -63,41 +63,42 @@ var loadToPayrollGrid = function(data, tableID) {
 				"data" : "status"
 			} ]
 		});
+
+		$(tableID + ' tbody').on('click', 'tr', function() {
+			if ($(this).hasClass('selected')) {
+				$(this).removeClass('selected');
+			} else {
+				table.$('tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+			}
+		});
+
+		$('#close_pperiod_btn').click(function() {
+			var newInstance = $(tableID).DataTable();
+			var closeMe = newInstance.row('.selected').data();
+			if (confirm("Close selected period?")) {
+				var period = closeMe.period;
+
+				$.ajax({
+					url : "/OTNDWeb/closePayrollPeriod",
+					type : "GET",
+					data : {
+						'payPeriod' : period
+					},
+					accept : 'application/json',
+					success : function(data) {
+						console.log(data)
+						// paintTable(data, tableID);
+						newInstance.row('.selected').remove().draw();
+					},
+					error : function(e) {
+						// console.log(e);
+					}
+				});
+			}
+		});
 	}
 
-	$(tableID + ' tbody').on('click', 'tr', function() {
-		if ($(this).hasClass('selected')) {
-			$(this).removeClass('selected');
-		} else {
-			table.$('tr.selected').removeClass('selected');
-			$(this).addClass('selected');
-		}
-	});
-
-	$('#close_pperiod_btn').click(function() {
-		var newInstance = $(tableID).DataTable();
-		var closeMe = newInstance.row('.selected').data();
-		if (confirm("Close selected period?")) {
-			var period = closeMe.period;
-
-			$.ajax({
-				url : "/OTNDWeb/closePayrollPeriod",
-				type : "GET",
-				data : {
-					'payPeriod' : period
-				},
-				accept : 'application/json',
-				success : function(data) {
-					console.log(data)
-//					paintTable(data, tableID);
-					newInstance.row('.selected').remove().draw();
-				},
-				error : function(e) {
-					// console.log(e);
-				}
-			});
-		}
-	});
 }
 
 var initGenerateExcelBtn = function() {
