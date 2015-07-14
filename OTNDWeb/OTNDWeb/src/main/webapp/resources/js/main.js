@@ -107,9 +107,15 @@ var initAddPayDetails = function() {
 			function(event) {
 				var incomeDetailsIds = [ "#income_type", "#income_code",
 						"#amount_in", "#txtRemarks", "#createDt_in" ];
-				// validateForm()
 				var incomeForm = $("#income-form")
-				incomeForm.validate();
+				incomeForm.validate({
+					rules:{
+						amount_in:{
+							required: true,
+							number: true
+						}
+					}
+				});
 				console.log(incomeForm.valid());
 				if (incomeForm.valid()) {
 					var payperiod = $("#pp_select").val();
