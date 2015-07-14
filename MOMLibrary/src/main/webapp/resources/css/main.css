@@ -3,7 +3,7 @@ body {
 	margin: 0.5em;
 	font-size: 12px;
 	text-align: center;
-	background: #EFF0F0;
+	background: #B3B3B3;
 }
 
 #body_container {
@@ -35,7 +35,7 @@ div#header_user span {
 
 .ui-tabs-nav {
     border-bottom-right-radius: 0px !important;
-    border-bottom-left-radius: 0px !importantt;
+    border-bottom-left-radius: 0px !important;
 }
 
 
@@ -100,7 +100,6 @@ span.detailSpan {
 
 span.addSpan {
 	display: block;
-	margin: 1em;
 }
 
 label.addLbl {
@@ -186,4 +185,20 @@ div.tab_div {
 	padding: 0.5em;
 	border: 1px solid #8e846b;
 	border-radius: 4px;
+}
+
+.ui-widget-content .ui-state-error {
+    border: 1px solid #ffb73d;
+    background: #d34d17 url(images/ui-bg_diagonals-medium_20_d34d17_40x40.png) 50% 50% repeat;
+    color: red !important;
+}
+
+.two_column {
+  width: 50%;
+  float: left;
+}
+
+.error {
+	color:red;
+	padding-left: 1em;
 }

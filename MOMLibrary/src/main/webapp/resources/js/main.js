@@ -6,8 +6,16 @@ $(function() {
 	initUpdateDialog();
 	handleViewInquiries();
 	initAdminAddUser();
+	initAddUpdate();
 });
 
+
+var initAddUpdate = function(){
+	$("#add_btn").click(function(event) {
+		$("#add_tab").validate();
+		console.log($("#add_tab").valid())
+	});
+}
 var initAdminAddUser = function() {
 	$("#addUser_btn").click(function(event) {
 		var username = $("#uname_user").val();
@@ -224,7 +232,7 @@ var initUpdateDialog = function() {
 		var valid = true;
 		allFields.removeClass("ui-state-error");
 
-		valid = valid && checkLength(title, "title", 3, 16);
+		valid = valid && checkLength(title, "title", 3, 50);
 		valid = valid && checkLength(desc, "desc", 6, 200);
 
 		// valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i,
