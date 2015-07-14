@@ -30,8 +30,11 @@ public class PayrollPeriodDaoImpl extends AbstractDao implements
 
 	@Override
 	public void updatePayrollStatus(PayrollPeriod pp) {
-		// TODO Auto-generated method stub
-
+		Criteria criteria = getSession().createCriteria(PayrollPeriod.class);
+		criteria.add(Restrictions.eq("period", pp.getPeriod()));
+		PayrollPeriod period = (PayrollPeriod) criteria.uniqueResult();
+		period.setStatus("Closed");
+		getSession().update(period);
 	}
 
 	@Override

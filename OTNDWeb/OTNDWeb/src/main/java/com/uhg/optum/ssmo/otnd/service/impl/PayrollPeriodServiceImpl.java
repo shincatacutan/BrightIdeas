@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.uhg.optum.ssmo.otnd.dao.PayrollPeriodDao;
 import com.uhg.optum.ssmo.otnd.entity.PayrollPeriod;
 import com.uhg.optum.ssmo.otnd.service.PayrollPeriodService;
+
 @Service
 @Transactional
 public class PayrollPeriodServiceImpl implements PayrollPeriodService {
@@ -29,8 +30,7 @@ public class PayrollPeriodServiceImpl implements PayrollPeriodService {
 
 	@Override
 	public void updatePayrollStatus(PayrollPeriod pp) {
-		// TODO Auto-generated method stub
-
+		periodDao.updatePayrollStatus(pp);
 	}
 
 	@Override

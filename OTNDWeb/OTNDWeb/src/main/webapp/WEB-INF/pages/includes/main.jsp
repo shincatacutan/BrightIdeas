@@ -3,8 +3,8 @@
 	<ul>
 		<li><a href="#tabs-1">Income Details</a></li>
 		<c:if test="${isAdmin}">
-		<li><a href="#tabs-2">Add Employee</a></li>
-		<li><a href="#tabs-3">Add Pay Period</a></li>
+		<li><a href="#tabs-2">Employee</a></li>
+		<li><a href="#tabs-3">Payroll Period</a></li>
 		<li><a href="#tabs-4">Payroll Report</a></li>
 		</c:if>
 	</ul>
@@ -57,6 +57,7 @@
 	</div>
 <c:if test="${isAdmin}">
 	<div id="tabs-2" class="tab_div">
+		<h2>Add Employee</h2>
 		<form id="addUser_form">
 			<fieldset>
 				<span class="addSpan"> <label for="username" class="addLbl">Username</label>
@@ -94,22 +95,34 @@
 	
 	</div>
 	<div id="tabs-3" class="tab_div">
+		<div class="two_column_left two_column">
+		<h2>Add Payroll Period</h2>
 		<form id="payperiod_form">
 			<fieldset>
-				<span class="addSpan"> <label for="payPeriod" class="addLbl">Pay
-						Period </label> <input type="text" name="payPeriod" id="payperiod_add" required>
-				</span> <span class="addSpan"> <label class="addLbl">Status</label>
+				<span class="addSpan"> 
+					<label for="payPeriod" class="addLbl">Payroll Period </label> 
+					<input type="text" name="payPeriod" id="payperiod_add" required>
+				</span> 
+				<span class="addSpan"> 
+					<label class="addLbl">Status</label>
 					<select id="pp_status" name="pp_status" required>
 						<option></option>
 						<option value="Open">Open</option>
 						<option value="Closed">Closed</option>
-				</select>
+					</select>
 				</span>
 				<!-- Allow form submission with keyboard without duplicating the dialog button -->
-				<input type="button" id="add_pperiod_btn" value="Add" />
+				<input type="button" id="add_pperiod_btn" name="add_pperiod_btn" value="Add" />
 			</fieldset>
 		</form>
 		
+		</div>
+		<div class="two_column_right two_column">
+		<h2>Close Payroll Period</h2>
+
+		<table class="display" id="openPayrollGrid"></table>
+		<input type="button" id="close_pperiod_btn" value="Close" />
+		</div>
 	</div>
 	<div id="tabs-4" class="tab_div">
 		<div class="load_pay">

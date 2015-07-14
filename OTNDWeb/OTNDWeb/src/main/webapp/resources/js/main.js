@@ -9,9 +9,96 @@ $(function() {
 	/* Admin Functions */
 	initAdminAddUser();
 	initAddPayPeriod();
-	initLoadPayperiodsAdmin();
-	initGenerateExcelBtn();
+	initPayrollTabs();
 });
+
+var initPayrollTabs = function(){
+	$("#tabs").tabs({
+		activate : function(event, ui) {
+			if (ui.newPanel.selector == "#tabs-4") {
+				initLoadPayperiodsAdmin();
+				initGenerateExcelBtn();
+			}
+			if (ui.newPanel.selector == "#tabs-3") {
+				loadOpenPeriods();
+			}
+			if (ui.newPanel.selector == "#tabs-1") {
+				getPayPeriods("#pp_select");
+			}
+		}
+	});
+}
+
+var loadOpenPeriods = function() {
+	$.ajax({
+		url : "/OTNDWeb/getOpenPayrolls",
+		type : "POST",
+		accept : 'application/json',
+		success : function(data) {
+			console.log(data)
+			loadToPayrollGrid(data, "#openPayrollGrid");
+		},
+		error : function(e) {
+			// console.log(e);
+		}
+	});
+}
+
+var loadToPayrollGrid = function(data, tableID) {
+	if ($.fn.dataTable.isDataTable(tableID)) {
+		var table = $(tableID).DataTable();
+		table.clear();
+		table.rows.add(data);
+		table.draw();
+	} else {
+		var table = $(tableID).dataTable({
+			"data" : data,
+			"columns" : [ {
+				"title" : "Payroll Period",
+				"data" : "period",
+				"class" : "dt-left"
+			}, {
+				"title" : "Status",
+				"class" : "dt-left",
+				"data" : "status"
+			} ]
+		});
+	}
+
+	$(tableID + ' tbody').on('click', 'tr', function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			table.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
+
+	$('#close_pperiod_btn').click(function() {
+		var newInstance = $(tableID).DataTable();
+		var closeMe = newInstance.row('.selected').data();
+		if (confirm("Close selected period?")) {
+			var period = closeMe.period;
+
+			$.ajax({
+				url : "/OTNDWeb/closePayrollPeriod",
+				type : "GET",
+				data : {
+					'payPeriod' : period
+				},
+				accept : 'application/json',
+				success : function(data) {
+					console.log(data)
+//					paintTable(data, tableID);
+					newInstance.row('.selected').remove().draw();
+				},
+				error : function(e) {
+					// console.log(e);
+				}
+			});
+		}
+	});
+}
 
 var initGenerateExcelBtn = function() {
 	var payperiod = $("#pp_select_admin");
@@ -20,22 +107,6 @@ var initGenerateExcelBtn = function() {
 	generateBtn.on('click', function() {
 		window.location = "/OTNDWeb/download.do?payPeriod=" + payperiod.val();
 	});
-	// generateBtn.click(function(event) {
-	// $.ajax({
-	// url : "/OTNDWeb/generateExcel",
-	// type : "POST",
-	// data : {
-	// 'payPeriod' : payperiod
-	// },
-	// accept : 'application/json',
-	// success : function(data) {
-	// console.log(data)
-	// },
-	// error : function(e) {
-	// // console.log(e);
-	// }
-	// });
-	// });
 }
 
 var initLoadPayrollBtn = function() {
@@ -109,10 +180,10 @@ var initAddPayDetails = function() {
 						"#amount_in", "#txtRemarks", "#createDt_in" ];
 				var incomeForm = $("#income-form")
 				incomeForm.validate({
-					rules:{
-						amount_in:{
-							required: true,
-							number: true
+					rules : {
+						amount_in : {
+							required : true,
+							number : true
 						}
 					}
 				});
@@ -157,8 +228,8 @@ var initAddPayPeriod = function() {
 	$("#add_pperiod_btn").click(function(event) {
 		var payPeriodForm = $('#payperiod_form');
 		payPeriodForm.validate();
-		
-		if(payPeriodForm.valid()){
+
+		if (payPeriodForm.valid()) {
 			var payperiod = $("#payperiod_add").val();
 			var status = $("#pp_status").val();
 			// console.log(event);
@@ -174,6 +245,7 @@ var initAddPayPeriod = function() {
 					// console.log(data);
 					alert("Payperiod added.")
 					$("#payperiod_form")[0].reset();
+					loadOpenPeriods();
 				},
 				error : function(e) {
 					// console.log(e);
@@ -181,7 +253,7 @@ var initAddPayPeriod = function() {
 
 			});
 		}
-		
+
 		event.preventDefault();
 	});
 }
@@ -250,6 +322,7 @@ var getPayPeriods = function(id) {
 		type : "POST",
 		accept : 'application/json',
 		success : function(data) {
+			$(id).empty();
 			$.each(data, function(i, data) {
 				$(id).append($('<option>', {
 					value : data.period,
@@ -460,7 +533,7 @@ var paintTable = function(oData, tableID) {
 		});
 
 		$('#delete_btn').click(function() {
-			var newInstance = tableID.DataTable();
+			var newInstance = $(tableID).DataTable();
 			var deletePayIds = newInstance.rows('.selected').data();
 			if (confirm("Delete selected item?")) {
 				$.each(deletePayIds, function(key, value) {

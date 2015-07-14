@@ -48,6 +48,19 @@ public class OTNDMainController {
 		}
 		return vos;
 	}
+	
+	
+	@RequestMapping(value = "/getOpenPayrolls", method = RequestMethod.POST)
+	public @ResponseBody List<PayrollPeriodVo> getOpenPayrolls() {
+		List<PayrollPeriod> openPeriods = periodService.getPayrolls("Open");
+		logger.debug("[getPayPeriods] fetched size: " + openPeriods.size());
+		List<PayrollPeriodVo> vos = new ArrayList<PayrollPeriodVo>();
+		for (PayrollPeriod period : openPeriods) {
+			vos.add(new PayrollPeriodVo(period.getPeriod().toString(), period
+					.getStatus()));
+		}
+		return vos;
+	}
 
 	@RequestMapping(value = "/getIncomeTypes", method = RequestMethod.POST)
 	public @ResponseBody List<IncomeType> getIncomeTypes() {
@@ -60,6 +73,20 @@ public class OTNDMainController {
 		return incomeTypeService.getCodesByTypes(incomeType);
 	}
 
+	@RequestMapping(value = "/closePayrollPeriod", method = RequestMethod.GET)
+	public @ResponseBody String closePayrollPeriod(
+			@RequestParam String payPeriod) {
+		String[] localDate = payPeriod.split("-");
+		PayrollPeriod pp = periodService.getPayroll(new PayrollPeriod(
+				new LocalDate(Integer.parseInt(localDate[0]),
+						Integer.parseInt(localDate[1]),
+						Integer.parseInt(localDate[2]))));
+		PayrollDetails detail = new PayrollDetails();
+		detail.setPayrollPeriod(pp);
+		periodService.updatePayrollStatus(pp);
+		return "SUCCESS";
+	}
+	
 	@RequestMapping(value = "/addPayrollDetails", method = RequestMethod.POST)
 	public @ResponseBody String addPayrollDetails(
 			@RequestParam String payPeriod, @RequestParam String incomeType,

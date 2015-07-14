@@ -48,7 +48,10 @@ h1.title {
 
 h2 {
 	font-size: 1.3em;
+	margin: 0;
+	padding: 0 0 0.5em;
 }
+
 
 div.info {
 	background: #e87722;
@@ -137,6 +140,16 @@ div#tabs {
 	margin: 1em;
 }
 
+div#tabs-3 {
+	min-height: 25em;
+}
+
+div.two_column {
+	width: 48%;
+	float: left;
+	margin: 0 1%;
+}
+
 .ui-tabs {
 	border: 1px solid #8e846b;
 	color: #383838;
@@ -212,9 +225,10 @@ div.tab_div {
 }
 
 div.load_pay {
-	padding: 0.5 em;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
 }
-
 select#income_code {
 	width: 15em;
 }
