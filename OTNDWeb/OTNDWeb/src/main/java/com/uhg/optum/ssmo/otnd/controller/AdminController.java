@@ -1,14 +1,6 @@
 package com.uhg.optum.ssmo.otnd.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -16,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.uhg.optum.ssmo.otnd.entity.Employee;
 import com.uhg.optum.ssmo.otnd.entity.PayrollPeriod;
 import com.uhg.optum.ssmo.otnd.entity.Role;
-import com.uhg.optum.ssmo.otnd.io.ExcelGenerator;
 import com.uhg.optum.ssmo.otnd.service.EmployeeService;
 import com.uhg.optum.ssmo.otnd.service.PayrollPeriodService;
 
@@ -86,21 +76,9 @@ public class AdminController {
 
 	@RequestMapping(value = "/backdoor/admin", method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
-		model.addAttribute("isAdmin", true);
+		model.addAttribute("isBackdoor", true);
 		logger.debug("[accessing secret admin page...]");
 		return VIEW_INDEX;
 
-	}
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String defaultHome(ModelMap model) {
-		model.addAttribute("isAdmin", false);
-		return VIEW_INDEX;
-	}
-
-	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
-	public String welcomeName(@PathVariable String name, ModelMap model) {
-		model.addAttribute("isAdmin", false);
-		return VIEW_INDEX;
 	}
 }

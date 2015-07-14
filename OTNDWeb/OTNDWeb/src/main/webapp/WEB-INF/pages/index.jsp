@@ -41,11 +41,12 @@
 				<h1 class="title">Overtime and Night Differential</h1>
 			</div>
 		</div>
-
+	
+	
 		<div id="body_dv">
-			<c:set var="isAdmin" scope="session" value="${isAdmin}" />
+			<c:set var="isBackdoor" scope="session" value="${isBackdoor}" />
 			<c:choose>
-				<c:when test="${isAdmin==true}">
+				<c:when test="${isBackdoor==true}">
 			        <%@ include file="includes/admin.jsp"%>
 				</c:when>
 				<c:otherwise>

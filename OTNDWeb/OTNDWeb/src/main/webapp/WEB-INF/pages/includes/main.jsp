@@ -1,9 +1,12 @@
+<c:set var="isAdmin" scope="session" value="${isAdmin}" />
 <div id="tabs">
 	<ul>
 		<li><a href="#tabs-1">Income Details</a></li>
+		<c:if test="${isAdmin}">
 		<li><a href="#tabs-2">Add Employee</a></li>
 		<li><a href="#tabs-3">Add Pay Period</a></li>
 		<li><a href="#tabs-4">Payroll Report</a></li>
+		</c:if>
 	</ul>
 	<div id="tabs-1" class="tab_div">
 		<div class="load_pay">
@@ -52,6 +55,7 @@
 				<input type="button" id="delete_btn" value="Delete" />
 			</div>
 	</div>
+<c:if test="${isAdmin}">
 	<div id="tabs-2" class="tab_div">
 		<form id="addUser_form">
 			<fieldset>
@@ -119,4 +123,5 @@
 			<input type="button" id="generate_btn" value="Generate Excel Report" />
 		</div>
 	</div>
+	</c:if>
 </div>

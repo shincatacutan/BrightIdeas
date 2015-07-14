@@ -349,6 +349,7 @@ var getUser = function() {
 		type : "POST",
 		accept : 'application/json',
 		success : function(emp) {
+			console.log(emp)
 			$("#fullname").html(emp.firstName + " " + emp.lastName);
 			$("#empID").html(emp.empID);
 			$("#ntid").html(emp.networkID);
