@@ -184,7 +184,7 @@ var initLoadPayperiodsAdmin = function() {
 	getPayPeriods("#pp_select_admin");
 	$('#load_payroll_admin').click(function(event) {
 		var selectedOption = $('#pp_select_admin option:selected').text();
-		if (selectedOption == "Select Period...") {
+		if (selectedOption == "") {
 			alert("Please select a period.");
 			return;
 		}
