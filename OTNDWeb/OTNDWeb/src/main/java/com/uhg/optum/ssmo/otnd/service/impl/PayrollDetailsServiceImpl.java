@@ -28,7 +28,14 @@ public class PayrollDetailsServiceImpl implements PayrollDetailsService {
 
 	@Override
 	public void savePayrollDetail(PayrollDetails payroll) {
+		payroll.setStatus("pending");
 		payrollDetailsDao.savePayrollDetail(payroll);
 	}
 
+	@Override
+	public void approvePayrollDetail(int payrollId) {
+		payrollDetailsDao.approvePayrollDetail(payrollId);
+	}
+
+	
 }

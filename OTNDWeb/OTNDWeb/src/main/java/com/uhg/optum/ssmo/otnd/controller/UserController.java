@@ -1,5 +1,7 @@
 package com.uhg.optum.ssmo.otnd.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uhg.optum.ssmo.otnd.entity.Employee;
@@ -24,10 +27,11 @@ public class UserController {
 	private static final String VIEW_INDEX = "index";
 
 	@RequestMapping(value = "/getUser", method = RequestMethod.POST)
-	public @ResponseBody Employee getUser(ModelMap model) {
-		String user = System.getProperty("user.name");
+	public @ResponseBody Employee getUser(@RequestParam String empID, HttpServletRequest request) {
+		String user = empID;
 		logger.debug(" [getUser] == ntID: " + user);
 		Employee employee = employeeService.getEmployee(user);
+		request.getSession().setAttribute("employee", employee);
 		logger.debug(" [getUser] == user full name: " + employee.getFullName());
 		return employee;
 	}

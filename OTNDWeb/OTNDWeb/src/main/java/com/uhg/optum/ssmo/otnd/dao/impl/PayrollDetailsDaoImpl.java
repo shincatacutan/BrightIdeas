@@ -19,6 +19,9 @@ public class PayrollDetailsDaoImpl extends AbstractDao implements
 		if(null!=payroll.getEmpId()){
 			criteria.add(Restrictions.eq("empId",payroll.getEmpId()));
 		}
+		if(null!=payroll.getStatus()){
+			criteria.add(Restrictions.eq("status",payroll.getStatus()));
+		}
 		criteria.add(Restrictions.eq("payrollPeriod", payroll.getPayrollPeriod()));
 		return (List<PayrollDetails>)criteria.list();
 	}
@@ -33,6 +36,19 @@ public class PayrollDetailsDaoImpl extends AbstractDao implements
 	@Override
 	public void savePayrollDetail(PayrollDetails payroll) {
 		persist(payroll);
+	}
+
+	@Override
+	public void approvePayrollDetail(int payrollId) {
+		PayrollDetails pd = getPayrollDetail(payrollId);
+		pd.setStatus("approved");
+		getSession().update(pd);
+	}
+
+	@Override
+	public PayrollDetails getPayrollDetail(int payrollId) {
+		PayrollDetails detail =  (PayrollDetails) getSession().get(PayrollDetails.class, payrollId);
+		return detail;
 	}
 
 }

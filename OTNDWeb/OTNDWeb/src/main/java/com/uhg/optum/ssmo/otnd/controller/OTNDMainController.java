@@ -3,6 +3,8 @@ package com.uhg.optum.ssmo.otnd.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +50,7 @@ public class OTNDMainController {
 		}
 		return vos;
 	}
-	
-	
+
 	@RequestMapping(value = "/getOpenPayrolls", method = RequestMethod.POST)
 	public @ResponseBody List<PayrollPeriodVo> getOpenPayrolls() {
 		List<PayrollPeriod> openPeriods = periodService.getPayrolls("Open");
@@ -77,60 +78,78 @@ public class OTNDMainController {
 	public @ResponseBody String closePayrollPeriod(
 			@RequestParam String payPeriod) {
 		String[] localDate = payPeriod.split("-");
-		PayrollPeriod pp = periodService.getPayroll(new PayrollPeriod(
-				new LocalDate(Integer.parseInt(localDate[0]),
-						Integer.parseInt(localDate[1]),
-						Integer.parseInt(localDate[2]))));
+		PayrollPeriod pp = periodService
+				.getPayroll(new PayrollPeriod(new LocalDate(Integer
+						.parseInt(localDate[0]),
+						Integer.parseInt(localDate[1]), Integer
+								.parseInt(localDate[2]))));
 		PayrollDetails detail = new PayrollDetails();
 		detail.setPayrollPeriod(pp);
 		periodService.updatePayrollStatus(pp);
 		return "SUCCESS";
 	}
-	
+
 	@RequestMapping(value = "/addPayrollDetails", method = RequestMethod.POST)
 	public @ResponseBody String addPayrollDetails(
 			@RequestParam String payPeriod, @RequestParam String incomeType,
 			@RequestParam String incomeCode, @RequestParam String detailValue,
-			@RequestParam String remarks) {
-		logger.debug("[addPayrollDetails] period: " +payPeriod);
+			@RequestParam String remarks, HttpServletRequest request) {
+		logger.debug("[addPayrollDetails] period: " + payPeriod);
 		String[] localDate = payPeriod.split("-");
-		PayrollPeriod pp = periodService.getPayroll(new PayrollPeriod(
-				new LocalDate(Integer.parseInt(localDate[0]),
-						Integer.parseInt(localDate[1]),
-						Integer.parseInt(localDate[2]))));
-		String uname = System.getProperty("user.name");
-		PayrollDetails payDetails = new PayrollDetails(new Employee(uname), new IncomeType(incomeCode),
-				detailValue, remarks, new LocalDate(),pp);
+		PayrollPeriod pp = periodService
+				.getPayroll(new PayrollPeriod(new LocalDate(Integer
+						.parseInt(localDate[0]),
+						Integer.parseInt(localDate[1]), Integer
+								.parseInt(localDate[2]))));
+		String uname = ((Employee) request.getSession().getAttribute("employee")).getNetworkID();
+		PayrollDetails payDetails = new PayrollDetails(new Employee(uname),
+				new IncomeType(incomeCode), detailValue, remarks,
+				new LocalDate(), pp);
 		payrollDetailsService.savePayrollDetail(payDetails);
 		return "SUCCESS";
 	}
 
 	@RequestMapping(value = "/getIncomeDetails", method = RequestMethod.POST)
 	public @ResponseBody List<PayrollDetails> getIncomeDetails(
-			@RequestParam String payPeriod,@RequestParam String isAdmin) {
-		logger.debug("[getIncomeDetails] getting payroll income details: " +isAdmin);
+			@RequestParam String payPeriod, @RequestParam String detailLevel,
+			HttpServletRequest request) {
+		logger.debug("[getIncomeDetails] getting payroll income details: "
+				+ detailLevel);
 		String[] localDate = payPeriod.split("-");
-		PayrollPeriod pp = periodService.getPayroll(new PayrollPeriod(
-				new LocalDate(Integer.parseInt(localDate[0]),
-						Integer.parseInt(localDate[1]),
-						Integer.parseInt(localDate[2]))));
+		PayrollPeriod pp = periodService
+				.getPayroll(new PayrollPeriod(new LocalDate(Integer
+						.parseInt(localDate[0]),
+						Integer.parseInt(localDate[1]), Integer
+								.parseInt(localDate[2]))));
 		PayrollDetails detail = new PayrollDetails();
 		detail.setPayrollPeriod(pp);
-		if("true".equals(isAdmin)){
+		if ("1".equals(detailLevel)) {
 			detail.setEmpId(null);
+			detail.setStatus("approved");
+		} else if("0".equals(detailLevel)){
+			detail.setEmpId((Employee) request.getSession().getAttribute(
+					"employee"));
 		}else{
-			detail.setEmpId(new Employee(System.getProperty("user.name")));
+			detail.setEmpId(null);
+			detail.setStatus("pending");
 		}
 		return payrollDetailsService.getPayrollDetails(detail);
 	};
-	
+
 	@RequestMapping(value = "/deleteIncomeDetail", method = RequestMethod.POST)
-	public @ResponseBody String deleteIncomeDetail(
-			@RequestParam String incomeID) {
-		logger.debug("[deleteIncomeDetail] deleting payroll income detail: " +incomeID);
+	public @ResponseBody String deleteIncomeDetail(@RequestParam String incomeID) {
+		logger.debug("[deleteIncomeDetail] deleting payroll income detail: "
+				+ incomeID);
 		payrollDetailsService.deletePayroll(Integer.parseInt(incomeID));
 		return "SUCCESS";
 	}
 	
-	
+	@RequestMapping(value = "/approveIncomeDetail", method = RequestMethod.POST)
+	public @ResponseBody String approveIncomeDetail(@RequestParam String incomeID) {
+		logger.debug("[approveIncomeDetail] approving pending payroll "
+				+ incomeID);
+		payrollDetailsService.approvePayrollDetail(Integer.parseInt(incomeID));
+		return "SUCCESS";
+	}
+
 }

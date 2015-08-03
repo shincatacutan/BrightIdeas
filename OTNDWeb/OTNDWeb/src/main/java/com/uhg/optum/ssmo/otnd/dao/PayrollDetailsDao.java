@@ -8,5 +8,7 @@ public interface PayrollDetailsDao {
 	public List<PayrollDetails> getPayrollDetails(PayrollDetails payroll);
 	public void deletePayroll(int payrollId);
 	public void savePayrollDetail(PayrollDetails payroll);
+	public void approvePayrollDetail(int payrollId);
+	public PayrollDetails getPayrollDetail(int payrollId);
 
 }

@@ -35,7 +35,7 @@ public class AdminController {
 	private static final String VIEW_INDEX = "index";
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public @ResponseBody String addInquiry(@RequestParam String empID,
+	public @ResponseBody String addUser(@RequestParam String empID,
 			@RequestParam String ntID, @RequestParam String firstName,
 			@RequestParam String lastName, @RequestParam int roleId,
 			@RequestParam String project, @RequestParam String manager) {

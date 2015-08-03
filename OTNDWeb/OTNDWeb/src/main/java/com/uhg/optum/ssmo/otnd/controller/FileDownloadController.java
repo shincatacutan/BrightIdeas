@@ -56,6 +56,7 @@ public class FileDownloadController {
 		PayrollDetails detail = new PayrollDetails();
 		detail.setPayrollPeriod(pp);
 		detail.setEmpId(null);
+		detail.setStatus("approved");
 		
 		List<PayrollDetails> details = detailsService.getPayrollDetails(detail);
 		

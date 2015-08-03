@@ -2,30 +2,52 @@ $(function() {
 	getUser();
 	initButtons();
 	getPayPeriods("#pp_select");
-
+	
 	initAddPayDetails();
 	initLoadPayrollBtn();
+	initFunctionBtns()
 
 	/* Admin Functions */
 	initAdminAddUser();
 	initAddPayPeriod();
 	initPayrollTabs();
+	initPendingApprovals();
 });
 
 var initPayrollTabs = function() {
 	$("#tabs").tabs({
 		activate : function(event, ui) {
-			if (ui.newPanel.selector == "#tabs-4") {
-				initLoadPayperiodsAdmin();
+			switch(ui.newPanel.selector) {
+		    case "#tabs-4":
+		    	initLoadPayperiodsAdmin();
 				initGenerateExcelBtn();
-			}
-			if (ui.newPanel.selector == "#tabs-3") {
-				loadOpenPeriods();
-			}
-			if (ui.newPanel.selector == "#tabs-1") {
-				getPayPeriods("#pp_select");
+		        break;
+		    case "#tabs-3":
+		    	loadOpenPeriods();
+		        break;
+		    case "#tabs-1":
+		    	getPayPeriods("#pp_select");
+		    	
+		        break;
+		    case "#tabs-5":
+		    	getPayPeriods("#pa_select_admin");
+		        break;
+		    default:
+		        
 			}
 		}
+	});
+}
+
+var initPendingApprovals = function(){
+	$('#load_pa_admin').click(function(event) {
+		var selectedOption = $('#pa_select_admin option:selected').text();
+		if (selectedOption == "") {
+			alert("Please select a period.");
+			return;
+		}
+		loadIncomePeriodDetails(2, '#pa_grid');
+		$('#approve_btn').css("visibility", "visible");
 	});
 }
 
@@ -35,7 +57,7 @@ var loadOpenPeriods = function() {
 		type : "POST",
 		accept : 'application/json',
 		success : function(data) {
-			console.log(data)
+			//console.log(data)
 			loadToPayrollGrid(data, "#openPayrollGrid");
 		},
 		error : function(e) {
@@ -87,8 +109,6 @@ var loadToPayrollGrid = function(data, tableID) {
 					},
 					accept : 'application/json',
 					success : function(data) {
-						console.log(data)
-						// paintTable(data, tableID);
 						newInstance.row('.selected').remove().draw();
 					},
 					error : function(e) {
@@ -114,6 +134,36 @@ var initLoadPayrollBtn = function() {
 	var payrollBtn = $('#load_payroll');
 
 	payrollBtn.click(function(event) {
+		
+		// add button event onclick for load//
+		$.ajax({
+			url : "/OTNDWeb/getIncomeTypes",
+			type : "POST",
+			accept : 'application/json',
+			success : function(data) {
+				var incomeTypeInput = $('#income_type');
+				incomeTypeInput.empty();
+				incomeTypeInput.append($('<option>', {
+					text : ""
+				}));
+				$.each(data, function(i, data) {
+					incomeTypeInput.append($('<option>', {
+						value : data,
+						text : data
+					}));
+				});
+			},
+			error : function(e) {
+				// console.log(e);
+			}
+		});
+
+		$('#income_type').change(function(event) {
+			// console.log(this.value)
+			loadIncomeCodesByType(this.value);
+			changeInputByIncomeType(this.value);
+		})
+		
 		if (typeof String.prototype.trim !== 'function') {
 			String.prototype.trim = function() {
 				return this.replace(/^\s+|\s+$/g, '');
@@ -122,7 +172,7 @@ var initLoadPayrollBtn = function() {
 		var selectedOption = $('#pp_select option:selected').text();
 		var status = selectedOption.split(':')[0].trim();
 		if (status == "Open") {
-			loadIncomePeriodDetails(false, '#resultGrid');
+			loadIncomePeriodDetails(0, '#resultGrid');
 			enableIncomeDetailForm(true);
 		} else {
 			alert("Please choose an valid payroll period.");
@@ -145,20 +195,28 @@ var enableIncomeDetailForm = function(boolean) {
 	});
 }
 
-var loadIncomePeriodDetails = function(isAdmin, tableID) {
+var loadIncomePeriodDetails = function(detailLevel, tableID) {
 	var payperiod;
-	if (isAdmin) {
-		payperiod = $("#pp_select_admin").val();
-	} else {
-		payperiod = $("#pp_select").val();
+	switch(detailLevel) {
+		case 0: //regular user
+			payperiod = $("#pp_select").val();
+			break;
+		case 1: //admin report generate
+			payperiod = $("#pp_select_admin").val();
+			break;
+		case 2: //admin pending approvals
+			payperiod = $("#pa_select_admin").val();
+			break;
+		default:
+        
 	}
-
+	
 	$.ajax({
 		url : "/OTNDWeb/getIncomeDetails",
 		type : "POST",
 		data : {
 			'payPeriod' : payperiod,
-			'isAdmin' : isAdmin
+			'detailLevel' : detailLevel
 		},
 		accept : 'application/json',
 		success : function(data) {
@@ -188,7 +246,7 @@ var initAddPayDetails = function() {
 						}
 					}
 				});
-				console.log(incomeForm.valid());
+				//console.log(incomeForm.valid());
 				if (incomeForm.valid()) {
 					var payperiod = $("#pp_select").val();
 					var incomeType = $("#income_type").val();
@@ -211,7 +269,7 @@ var initAddPayDetails = function() {
 							// console.log(data);
 							alert("Income detail is saved")
 							$("#income-form")[0].reset();
-							loadIncomePeriodDetails(false, '#resultGrid');
+							loadIncomePeriodDetails(0, '#resultGrid');
 						},
 						error : function(e) {
 							// console.log(e);
@@ -267,7 +325,7 @@ var initLoadPayperiodsAdmin = function() {
 			alert("Please select a period.");
 			return;
 		}
-		loadIncomePeriodDetails(true, '#inquiry_grid');
+		loadIncomePeriodDetails(1, '#report_grid');
 		$('#generate_btn').css("visibility", "visible");
 	});
 }
@@ -315,9 +373,6 @@ var initAdminAddUser = function() {
 }
 
 var getPayPeriods = function(id) {
-	var title = $("#title_in").val();
-	var author = $("#author_in").val();
-	var date = $("#createDt_in").val();
 	$.ajax({
 		url : "/OTNDWeb/getPayPeriods",
 		type : "POST",
@@ -336,34 +391,6 @@ var getPayPeriods = function(id) {
 		}
 	});
 
-	// add button event onclick for load//
-	$.ajax({
-		url : "/OTNDWeb/getIncomeTypes",
-		type : "POST",
-		accept : 'application/json',
-		success : function(data) {
-			var incomeTypeInput = $('#income_type');
-			incomeTypeInput.empty();
-			incomeTypeInput.append($('<option>', {
-				text : ""
-			}));
-			$.each(data, function(i, data) {
-				incomeTypeInput.append($('<option>', {
-					value : data,
-					text : data
-				}));
-			});
-		},
-		error : function(e) {
-			// console.log(e);
-		}
-	});
-
-	$('#income_type').change(function(event) {
-		// console.log(this.value)
-		loadIncomeCodesByType(this.value);
-		changeInputByIncomeType(this.value);
-	})
 }
 var isDateEntry;
 
@@ -424,12 +451,20 @@ var loadIncomeCodesByType = function(incomeType) {
 	});
 }
 var getUser = function() {
+	var network = new ActiveXObject("WScript.Network");
+	var networkId = network.UserName;
+	
+	//console.log(network.UserName);
+
 	$.ajax({
 		url : "/OTNDWeb/getUser",
 		type : "POST",
 		accept : 'application/json',
+		data : {
+			"empID" : networkId
+		},
 		success : function(emp) {
-			console.log(emp)
+			//console.log(emp)
 			$("#fullname").html(emp.firstName + " " + emp.lastName);
 			$("#empID").html(emp.empID);
 			$("#ntid").html(emp.networkID);
@@ -437,7 +472,7 @@ var getUser = function() {
 			$("#project").html(emp.project);
 		},
 		error : function(e) {
-			alert("Error encountered. Please refresh browser.");
+			alert("Error registering user.");
 		}
 	});
 }
@@ -454,6 +489,7 @@ var initButtons = function() {
 	showHideButtonDelete(false);
 	hideDetailInput("amountSpan");
 	$('#generate_btn').css("visibility", "hidden");
+	$('#approve_btn').css("visibility", "hidden");
 }
 
 var showHideButtonDelete = function(show) {
@@ -521,6 +557,11 @@ var paintTable = function(oData, tableID) {
 											+ obj.dayOfMonth + '/' + obj.year
 											+ '</span>'
 								}
+							},
+							{
+								"title" : "Approval Status",
+								"class" : "dt-left",
+								"data" : "status"
 							} ]
 				});
 
@@ -532,21 +573,51 @@ var paintTable = function(oData, tableID) {
 				$(this).addClass('selected');
 			}
 		});
-
-		$('#delete_btn').click(function() {
-			var newInstance = $(tableID).DataTable();
-			var deletePayIds = newInstance.rows('.selected').data();
-			if (confirm("Delete selected item?")) {
-				$.each(deletePayIds, function(key, value) {
-					deletePayrollDetail(value["id"]);
-					newInstance.row('.selected').remove().draw();
-				});
-			}
-		});
 	}
 
 	showHideButtonDelete(true);
 };
+
+var initFunctionBtns = function(){
+	$('#delete_btn').click(function() {
+		var newInstance = $("#resultGrid").DataTable();
+		var deletePayIds = newInstance.rows('.selected').data();
+		if (confirm("Delete selected item?")) {
+			$.each(deletePayIds, function(key, value) {
+				deletePayrollDetail(value["id"]);
+				newInstance.row('.selected').remove().draw();
+			});
+		}
+	});
+	
+	$('#approve_btn').click(function() {
+		var newInstance = $("#pa_grid").DataTable();
+		var approveIDs = newInstance.rows('.selected').data();
+		if (confirm("Approve selected item?")) {
+			$.each(approveIDs, function(key, value) {
+				approvePayrollDetail(value["id"]);
+				newInstance.row('.selected').remove().draw();
+			});
+		}
+	});
+}
+
+var approvePayrollDetail = function(incomeId) {
+	$.ajax({
+		url : "/OTNDWeb/approveIncomeDetail",
+		type : "POST",
+		data : {
+			"incomeID" : incomeId
+		},
+		accept : 'application/json',
+		success : function(msg) {
+			console.log(msg)
+		},
+		error : function(e) {
+			alert("Error encountered during detail approval.");
+		}
+	});
+}
 
 var deletePayrollDetail = function(incomeId) {
 	$.ajax({

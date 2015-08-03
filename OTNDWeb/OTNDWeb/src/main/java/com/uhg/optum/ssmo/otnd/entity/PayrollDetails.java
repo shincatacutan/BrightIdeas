@@ -66,6 +66,8 @@ public class PayrollDetails {
 	@JoinColumn(name = "payID")
 	private PayrollPeriod payrollPeriod;
 
+	@Column(name = "approvalStatus")
+	private String status;
 	public int getId() {
 		return id;
 	}
@@ -120,6 +122,14 @@ public class PayrollDetails {
 
 	public void setPayrollPeriod(PayrollPeriod payrollPeriod) {
 		this.payrollPeriod = payrollPeriod;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

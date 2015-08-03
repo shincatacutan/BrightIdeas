@@ -3,9 +3,11 @@
 	<ul>
 		<li><a href="#tabs-1">Income Details</a></li>
 		<c:if test="${isAdmin}">
-		<li><a href="#tabs-2">Employee</a></li>
+		<li><a href="#tabs-5">Pending Approvals</a></li>
 		<li><a href="#tabs-3">Payroll Period</a></li>
 		<li><a href="#tabs-4">Payroll Report</a></li>
+		<li><a href="#tabs-2">Employee</a></li>
+
 		</c:if>
 	</ul>
 	<div id="tabs-1" class="tab_div">
@@ -132,8 +134,21 @@
 			</select> &nbsp; <input type="button" id="load_payroll_admin" value="Load" />
 		</div>
 		<div id="inqTableSpace">
-			<table class="display" id="inquiry_grid"></table>
+			<table class="display" id="report_grid"></table>
 			<input type="button" id="generate_btn" value="Generate Excel Report" />
+		</div>
+	</div>
+	
+	<div id="tabs-5" class="tab_div">
+		<div class="load_pay">
+			<label class="detailsLbl">Payroll Period</label> 
+			<select	id="pa_select_admin">
+				<option></option>
+			</select> &nbsp; <input type="button" id="load_pa_admin" value="Load" />
+		</div>
+		<div id="paTableSpace">
+			<table class="display" id="pa_grid"></table>
+			<input type="button" id="approve_btn" value="Approve" />
 		</div>
 	</div>
 	</c:if>
