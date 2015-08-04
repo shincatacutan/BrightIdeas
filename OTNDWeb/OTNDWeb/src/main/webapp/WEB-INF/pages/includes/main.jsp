@@ -4,8 +4,8 @@
 		<li><a href="#tabs-1">Income Details</a></li>
 		<c:if test="${isAdmin}">
 		<li><a href="#tabs-5">Pending Approvals</a></li>
-		<li><a href="#tabs-3">Payroll Period</a></li>
 		<li><a href="#tabs-4">Payroll Report</a></li>
+		<li><a href="#tabs-3">Payroll Period</a></li>
 		<li><a href="#tabs-2">Employee</a></li>
 
 		</c:if>

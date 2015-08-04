@@ -20,44 +20,49 @@ import com.uhg.optum.ssmo.otnd.service.EmployeeService;
 public class UserController {
 	@Autowired
 	private EmployeeService employeeService;
-	
+
 	private final static Logger logger = LoggerFactory
 			.getLogger(UserController.class);
 
 	private static final String VIEW_INDEX = "index";
 
 	@RequestMapping(value = "/getUser", method = RequestMethod.POST)
-	public @ResponseBody Employee getUser(@RequestParam String empID, HttpServletRequest request) {
+	public String getUser(@RequestParam String empID, ModelMap model,
+			HttpServletRequest request) {
 		String user = empID;
 		logger.debug(" [getUser] == ntID: " + user);
 		Employee employee = employeeService.getEmployee(user);
+		if(null == employee){
+			logger.debug(" [getUser] employee not found!");
+			return null;
+		}
 		request.getSession().setAttribute("employee", employee);
 		logger.debug(" [getUser] == user full name: " + employee.getFullName());
-		return employee;
+		model.addAttribute("employee", employee);
+		getUserRole(model);
+		return VIEW_INDEX;
 	}
-
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String defaultHome(ModelMap model) {
-		getUserRole(model);
 		return VIEW_INDEX;
 	}
 
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
 	public String welcomeName(@PathVariable String name, ModelMap model) {
-		getUserRole(model);
-
 		return VIEW_INDEX;
 	}
 
 	private void getUserRole(ModelMap model) {
 		model.addAttribute("isBackdoor", false);
-		String user = System.getProperty("user.name");
-		Employee employee = employeeService.getEmployee(user);
+		Employee employee = employeeService.getEmployee(((Employee) (model
+				.get("employee"))).getNetworkID());
+
 		if (employee.getRoleType().getId() == 1) {
 			model.addAttribute("isAdmin", true);
 		} else {
 			model.addAttribute("isAdmin", false);
 		}
+		logger.debug(" [getUser] user role: "+employee.getRoleType().getId());
 	}
 }

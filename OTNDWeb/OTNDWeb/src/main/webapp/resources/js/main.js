@@ -424,6 +424,7 @@ var hideDetailInput = function(id) {
 		$('#amountSpan').css("display", "inline");
 	}
 }
+
 var loadIncomeCodesByType = function(incomeType) {
 	$.ajax({
 		url : "/OTNDWeb/getCodesByType",
@@ -453,8 +454,8 @@ var loadIncomeCodesByType = function(incomeType) {
 var getUser = function() {
 	var network = new ActiveXObject("WScript.Network");
 	var networkId = network.UserName;
-	
-	//console.log(network.UserName);
+//	var networkId = "asanju3";
+	console.log(networkId);
 
 	$.ajax({
 		url : "/OTNDWeb/getUser",
@@ -465,14 +466,17 @@ var getUser = function() {
 		},
 		success : function(emp) {
 			//console.log(emp)
-			$("#fullname").html(emp.firstName + " " + emp.lastName);
-			$("#empID").html(emp.empID);
-			$("#ntid").html(emp.networkID);
-			$("#manager").html(emp.manager);
-			$("#project").html(emp.project);
+//			$("#fullname").html(emp.firstName + " " + emp.lastName);
+//			$("#empID").html(emp.empID);
+//			$("#ntid").html(emp.networkID);
+//			$("#manager").html(emp.manager);
+//			$("#project").html(emp.project);
+//			$('#load_payroll').button("option", "disabled", false);
 		},
 		error : function(e) {
-			alert("Error registering user.");
+			alert("User is not yet in the database. Please contact administrator.");
+			$('#load_payroll').button("option", "disabled", true);
+			
 		}
 	});
 }
