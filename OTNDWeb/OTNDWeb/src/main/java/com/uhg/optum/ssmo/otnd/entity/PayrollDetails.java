@@ -68,6 +68,8 @@ public class PayrollDetails {
 
 	@Column(name = "approvalStatus")
 	private String status;
+	
+	
 	public int getId() {
 		return id;
 	}

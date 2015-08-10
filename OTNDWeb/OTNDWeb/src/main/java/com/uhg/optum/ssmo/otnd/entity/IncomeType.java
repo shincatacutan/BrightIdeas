@@ -20,12 +20,14 @@ public class IncomeType {
 	@Id
 	@Column(name = "id")
 	private String id;
-	@Column(name = "desc_" )
+	@Column(name = "desc_")
 	private String desc;
 	@Column(name = "type_")
 	private String type;
 	@Column(name = "input_type")
 	private String inputType;
+	@Column(name = "full_desc")
+	private String fullDesc;
 
 	public String getId() {
 		return id;
@@ -57,6 +59,14 @@ public class IncomeType {
 
 	public void setInputType(String inputType) {
 		this.inputType = inputType;
+	}
+
+	public String getFullDesc() {
+		return fullDesc;
+	}
+
+	public void setFullDesc(String fullDesc) {
+		this.fullDesc = fullDesc;
 	}
 
 }

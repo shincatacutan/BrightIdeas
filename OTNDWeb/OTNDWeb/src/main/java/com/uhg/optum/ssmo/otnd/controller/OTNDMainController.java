@@ -47,7 +47,8 @@ public class OTNDMainController {
 		for (PayrollPeriod period : openPeriods) {
 			vos.add(new PayrollPeriodVo(period.getPeriod().toString(), period
 					.getStatus()));
-		}
+		} 
+				
 		return vos;
 	}
 
@@ -94,6 +95,7 @@ public class OTNDMainController {
 			@RequestParam String payPeriod, @RequestParam String incomeType,
 			@RequestParam String incomeCode, @RequestParam String detailValue,
 			@RequestParam String remarks, HttpServletRequest request) {
+
 		logger.debug("[addPayrollDetails] period: " + payPeriod);
 		String[] localDate = payPeriod.split("-");
 		PayrollPeriod pp = periodService

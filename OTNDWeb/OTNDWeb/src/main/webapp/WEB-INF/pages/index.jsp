@@ -41,7 +41,7 @@
 				<label>Project:</label><span id="project"><c:out value="${employee.project}" /></span><br/>
 			</div>
 			<div class="info">
-				<h1 class="title">Overtime and Night Differential</h1>
+				<h1 class="title">eVariable Input</h1>
 			</div>
 		</div>
 	

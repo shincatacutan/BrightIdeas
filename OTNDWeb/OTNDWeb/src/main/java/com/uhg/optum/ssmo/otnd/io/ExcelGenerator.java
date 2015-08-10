@@ -11,41 +11,28 @@ import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 
 import com.uhg.optum.ssmo.otnd.entity.PayrollDetails;
+import com.uhg.optum.ssmo.otnd.entity.VariableInputReport;
+import com.uhg.optum.ssmo.otnd.excel.helper.ExcelGeneratorHelperImpl;
+import com.uhg.ssmo.otnd.excel.decorator.OTNDReportSheet;
+import com.uhg.ssmo.otnd.excel.decorator.ReportSheet;
 
 public class ExcelGenerator {
 	public String generate(List<PayrollDetails> details) {
 		HSSFWorkbook workbook = new HSSFWorkbook();
-		HSSFSheet sheet = workbook.createSheet("OTND");
+//		HSSFSheet otnd = workbook.createSheet("OT_ND");
+	
 
-		int rownum = 0;
-
-		// Sheet Header
-
-		Row header = sheet.createRow(rownum++);
-		String headers[] = { "Pay Period", "Income Type", "Description",
-				"Remarks", "Value", "Employee", "Create Date" };
-		int headerCtr = 0;
-		for (String headerName : headers) {
-			Cell headerCell = header.createCell(headerCtr++);
-			headerCell.setCellValue(headerName);
-		}
+		List<VariableInputReport> items = ExcelGeneratorHelperImpl.consolidate(details, "OT_ND");
+		ReportSheet otndSheet = new OTNDReportSheet();
+		otndSheet.generate(workbook, items);
 		
-		for(PayrollDetails detail:details){
-			int cellCtr=0;
-			Row row = sheet.createRow(rownum++);
-			createRow(row, rownum, detail.getPayrollPeriod().getPeriod().toString(), cellCtr++);
-			createRow(row, rownum, detail.getIncomeType().getId(), cellCtr++);
-			createRow(row, rownum, detail.getIncomeType().getDesc(), cellCtr++);
-			createRow(row, rownum, detail.getRemarks(), cellCtr++);
-			createRow(row, rownum, detail.getProdHrsAmt(), cellCtr++);
-			createRow(row, rownum, detail.getEmpId().getFullName(), cellCtr++);
-			createRow(row, rownum, detail.getCreateDate().toString(), cellCtr++);
-		}
-
+		HSSFSheet earnings = workbook.createSheet("EARNINGS");
+		HSSFSheet taxableMeal = workbook.createSheet("TAXABLE MEAL");
+		HSSFSheet lwop = workbook.createSheet("LWOP");
+		HSSFSheet tardy = workbook.createSheet("TARDY");
+		
 		Date date = new Date();
 		String timestamp = new Timestamp(date.getTime()).toString()
 				.replace(".", "-").replace(":", "-").replace(" ", "_")
@@ -70,12 +57,25 @@ public class ExcelGenerator {
 		return fileName;
 	}
 
-	private void createRow(Row row , int rownum, String detail,
-			int cellCtr) {
-		
-		Cell pperiod = row.createCell(cellCtr);
-		pperiod.setCellValue(detail);
-	}
+
+
+//	private int addBodyDetails(List<PayrollDetails> details, HSSFSheet otnd,
+//			int rownum) {
+//		for(PayrollDetails detail:details){
+//			int cellCtr=0;
+//			Row row = otnd.createRow(rownum++);
+//			ReportSheetUtils.createRow(row, rownum, detail.getPayrollPeriod().getPeriod().toString(), cellCtr++);
+//			ReportSheetUtils.createRow(row, rownum, detail.getIncomeType().getId(), cellCtr++);
+//			ReportSheetUtils.createRow(row, rownum, detail.getIncomeType().getDesc(), cellCtr++);
+//			ReportSheetUtils.createRow(row, rownum, detail.getRemarks(), cellCtr++);
+//			ReportSheetUtils.createRow(row, rownum, detail.getProdHrsAmt(), cellCtr++);
+//			ReportSheetUtils.createRow(row, rownum, detail.getEmpId().getFullName(), cellCtr++);
+//			ReportSheetUtils.createRow(row, rownum, detail.getCreateDate().toString(), cellCtr++);
+//		}
+//		return rownum;
+//	}
+//
+//	
 
 	public static void main(String[] args) {
 		List<PayrollDetails> details = new ArrayList<PayrollDetails>();

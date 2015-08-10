@@ -158,11 +158,7 @@ var initLoadPayrollBtn = function() {
 			}
 		});
 
-		$('#income_type').change(function(event) {
-			// console.log(this.value)
-			loadIncomeCodesByType(this.value);
-			changeInputByIncomeType(this.value);
-		})
+
 		
 		if (typeof String.prototype.trim !== 'function') {
 			String.prototype.trim = function() {
@@ -179,6 +175,13 @@ var initLoadPayrollBtn = function() {
 			enableIncomeDetailForm(false);
 		}
 	});
+	
+	$('#income_type').change(function(event) {
+		// console.log(this.value)
+		loadIncomeCodesByType(this.value);
+		changeInputByIncomeType(this.value);
+		 $("#full-desc").html("");
+	})
 }
 
 var enableIncomeDetailForm = function(boolean) {
@@ -403,7 +406,7 @@ var changeInputByIncomeType = function(incomeType) {
 		hideDetailInput("amountSpan");
 		isDateEntry = false;
 		var amtHrLbl = document.getElementById("amtHrLbl");
-		if (incomeType == "OT") {
+		if (incomeType == "OT_ND") {
 			amtHrLbl.innerHTML = "Hours";
 		} else {
 			amtHrLbl.innerHTML = "Amount";
@@ -445,6 +448,19 @@ var loadIncomeCodesByType = function(incomeType) {
 					text : data.desc
 				}));
 			});
+			
+			 $('#income_code').change(function(){
+				 var val = this.value;
+				 var result = $.grep(data, function(e){ 
+					 return e.id == val; 
+					 });
+				 if(val != "" || null != val){
+					if(result.length != 0){
+					 var fullDesc = null==result[0].fullDesc?"":result[0].fullDesc;
+					 $("#full-desc").html(fullDesc);
+					}
+				 }
+			 });
 		},
 		error : function(e) {
 			// console.log(e);
@@ -452,9 +468,9 @@ var loadIncomeCodesByType = function(incomeType) {
 	});
 }
 var getUser = function() {
-	var network = new ActiveXObject("WScript.Network");
-	var networkId = network.UserName;
-//	var networkId = "asanju3";
+//	var network = new ActiveXObject("WScript.Network");
+//	var networkId = network.UserName;
+	var networkId = "asanju3";
 	console.log(networkId);
 
 	$.ajax({

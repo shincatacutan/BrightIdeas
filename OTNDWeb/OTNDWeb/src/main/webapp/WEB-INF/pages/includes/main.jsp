@@ -28,11 +28,13 @@
 					<select id="income_code" name="income_code" disabled="disabled" required>
 						<option></option>
 					</select>
+					
 				</span> 
 				<span class="detailSpan"> 
 					<span id="amountSpan">
 						<label class="detailsLbl" id="amtHrLbl">Amount </label> 
 						<input id="amount_in" type="text" name="amount_in"  disabled="disabled" required/></span>
+						<span id="full-desc"></span>
 					<span id="dateSpan">
 						<label class="detailsLbl">Date </label> 
 						<input type="text" id="createDt_in" name="createDt_in" disabled="disabled" required/>
@@ -44,7 +46,7 @@
 				</span> 
 				<br class="clearfix" /> 
 				<div id="action_btn">
-				<input type="button" id="addPay_btn" value="Add" disabled="disabled"/> 
+				<input type="button" name="addPay_btn" id="addPay_btn" value="Add" disabled="disabled"/> 
 				<input type="reset" id="resetPay_btn" disabled="disabled"/>
 			</div>
 			</fieldset>
