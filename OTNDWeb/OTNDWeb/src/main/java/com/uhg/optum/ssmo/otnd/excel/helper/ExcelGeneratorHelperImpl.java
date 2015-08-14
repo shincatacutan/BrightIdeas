@@ -21,7 +21,8 @@ public class ExcelGeneratorHelperImpl {
 				inputReport.setProcess("TECHNOLOGY");
 				inputReport.setOtndCode(payrollDetail.getIncomeType().getId());
 				inputReport.setHours(payrollDetail.getProdHrsAmt());
-
+				inputReport.setAmount(payrollDetail.getProdHrsAmt());
+				inputReport.setRemarks(payrollDetail.getRemarks());
 				list.add(inputReport);
 			}
 			

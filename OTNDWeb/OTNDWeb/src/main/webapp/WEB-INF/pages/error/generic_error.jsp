@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-	<title>OTND Web - Home</title>
+	<title>OTND Web - Error</title>
 	<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
 	<meta name="vs_targetSchema"
 		content="http://schemas.microsoft.com/intellisense/ie5">
@@ -27,22 +27,15 @@
 
 <body>
 	<div id="body_container">
-		<jsp:include page="includes/header.jsp" />
+		<jsp:include page="../includes/header.jsp" />
 			
 		<div id="body_dv">
-			<c:set var="isBackdoor" scope="session" value="${isBackdoor}" />
-			<c:choose>
-				<c:when test="${isBackdoor==true}">
-			        <%@ include file="includes/admin.jsp"%>
-				</c:when>
-				<c:otherwise>
-			        <%@ include file="includes/main.jsp"%>
-				</c:otherwise>
-			</c:choose>
-			
+			<div class="error_dv">
+			Error Code:<br/> <span>${errCode}</span><br/><br/>
+			Error Message:<br/> <span>${errMsg}</span></div>
 		</div>
 
-		<jsp:include page="includes/footer.jsp" />
+		<jsp:include page="../includes/footer.jsp" />
 	</div>
 </body>
 </html>

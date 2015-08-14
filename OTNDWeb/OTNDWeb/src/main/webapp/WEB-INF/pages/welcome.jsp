@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-	<title>OTND Web - Home</title>
+	<title>OTND Web</title>
 	<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
 	<meta name="vs_targetSchema"
 		content="http://schemas.microsoft.com/intellisense/ie5">
@@ -22,27 +24,19 @@
 	<script src="<c:url value="/resources/js/jquery-validate-min.js" />"></script>
 	<script src="<c:url value="/resources/js/additional-methods.min.js" />"></script>
 	<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
-	<script src="<c:url value="/resources/js/main.js" />"></script>
+	<script src="<c:url value="/resources/js/welcome.js" />"></script>
 </head>
+<div id="body_container">
+	<jsp:include page="includes/header.jsp" />
 
-<body>
-	<div id="body_container">
-		<jsp:include page="includes/header.jsp" />
-			
-		<div id="body_dv">
-			<c:set var="isBackdoor" scope="session" value="${isBackdoor}" />
-			<c:choose>
-				<c:when test="${isBackdoor==true}">
-			        <%@ include file="includes/admin.jsp"%>
-				</c:when>
-				<c:otherwise>
-			        <%@ include file="includes/main.jsp"%>
-				</c:otherwise>
-			</c:choose>
-			
-		</div>
 
-		<jsp:include page="includes/footer.jsp" />
+	<div id="body_dv">
+	<form action="/OTNDWeb/home" method="POST" id="userForm">
+		<input type="hidden" id="empID" name="empID"/>
+	</form>
 	</div>
-</body>
+	<div class="modal"><!-- Place at bottom of page --></div>
+	<jsp:include page="includes/footer.jsp" />
+	
+	</div>
 </html>

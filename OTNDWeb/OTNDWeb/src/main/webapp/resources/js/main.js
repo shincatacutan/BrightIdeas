@@ -1,5 +1,5 @@
 $(function() {
-	getUser();
+//	getUser();
 	initButtons();
 	getPayPeriods("#pp_select");
 	

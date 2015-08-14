@@ -1,21 +1,21 @@
 body {
-	font-family: Calibri, sans-serif;
-	margin: 0.5em;
+	font-family: "Segoe UI","Segoe",Tahoma,Calibri,Helvetica,Arial,sans-serif;
+	margin: 0;
 	font-size: 12px;
 	text-align: center;
-	background: #EFF0F0;
+	background: #E8E8E7;
 }
 
 #body_container {
-	margin: 0 auto;
-	width: 85%;
-	text-align: left;
-	background-color: #fff;
-	border-top: #CBCACA solid thin;
+  margin: 0 auto;
+  width: 90%;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid #999;
 }
 
 #body_dv {
-	min-height: 500px;
+	min-height: 450px;
 }
 
 #header_dv img {
@@ -26,7 +26,7 @@ body {
 div#header_user {
 	padding: 1em;
 	text-align: left;
-	font-size: 1.1em;
+	font-size: 1em;
 	margin-left: 70%;
 }
 
@@ -40,18 +40,26 @@ div#header_user span {
 }
 
 h1.title {
-	color: #FFF;
-	margin: 0;
-	font-size: 2em;
-	padding: 0;
+  color: #FFF;
+  margin: 0;
+  font-size: 2em;
+  padding: 0 0.5em;
+  font-weight: 300;
 }
 
 h2 {
 	font-size: 1.3em;
 	margin: 0;
 	padding: 0 0 0.5em;
+	font-weight:500;
 }
 
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+  float: left;
+  padding: .5em 1em;
+  text-decoration: none;
+  font-weight: 600;
+}
 
 div.info {
 	background: #e87722;
@@ -64,10 +72,12 @@ div#tableSpace, div#inqTableSpace {
 }
 
 div.footer {
-	background: #d45d00;
-	color: #fff;
-	font-size: 1em;
-	padding: 1em;
+  background: #B6B8B9;
+  color: #484848;
+  border-top: 2px solid rgb(110, 113, 116);
+  font-size: 1em;
+  padding: 1em;
+  text-align: right;
 }
 
 hr.seperator {
@@ -197,7 +207,7 @@ th.dt-longer.sorting, th.dt-longer.sorting_asc, th.dt-longer.sorting_desc
 
 div#header_user label {
 	display: inline-block;
-	width: 7em;
+	width: 8em;
 	text-align: right;
 	margin: 0 0.5em;
 }
@@ -224,11 +234,16 @@ div.tab_div {
 	color: red !important;
 }
 
-div.load_pay {
-  margin-left: 1em;
-  margin-bottom: 0.5em;
-  margin-top: 0.5em;
+input[type="button"],input[type="submit"],input[type="reset"]{
+	font-weight: 500!important;
 }
+
+div.load_pay {
+	margin-left: 1em;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+}
+
 select#income_code {
 	width: 15em;
 }
@@ -237,4 +252,29 @@ label.error {
 	color: red;
 	margin: 1em;
 	vertical-align: top;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(255, 255, 255, .8)
+		url('images/ajax-loader.gif') 50% 50% no-repeat;
+}
+body.loading {
+    overflow: hidden;   
+}
+
+.error_dv{
+	margin: 2em;
+	font-size: 2em;
+}
+
+.error_dv span{
+	font-weight: 600;
+	color: #e87722;
 }

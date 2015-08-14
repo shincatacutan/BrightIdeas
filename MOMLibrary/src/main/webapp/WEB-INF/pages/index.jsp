@@ -1,10 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/transitional.dtd">
+<!DOCTYPE HTML>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <title>OptumRx MOM Library</title>
-
-
 <link rel="shortcut icon" href="/OTNDWeb/resources/favicon_oh.ico">
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />"
@@ -32,8 +30,9 @@
 		<div id="header_dv">
 			<img alt="Optum Logo"
 				src="<c:url value="/resources/images/optumlogo.png" />">
-			<div id="header_user">
-				<span id="fullname"></span> | <span id="empID"></span>
+			<div id="header_user">Welcome,
+				<c:set var="employee" scope="session" value="${employee}" />
+				<span id="fullname">${employee.firstName}&nbsp;${employee.lastName}</span> | <span id="empID">${employee.empID}</span>
 			</div>
 			<div class="info">
 				<h1 class="title">MOM Library</h1>
