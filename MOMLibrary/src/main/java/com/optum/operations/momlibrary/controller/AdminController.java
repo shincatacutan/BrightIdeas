@@ -51,18 +51,5 @@ public class AdminController {
 		return VIEW_INDEX;
 
 	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String defaultHome(ModelMap model) {
-		model.addAttribute("isAdmin", false);
-		return VIEW_INDEX;
-	}
-	
-
-	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
-	public String welcomeName(@PathVariable String name, ModelMap model) {
-		model.addAttribute("isAdmin", false);
-		return VIEW_INDEX;
-	}
 
 }

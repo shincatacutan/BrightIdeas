@@ -9,8 +9,8 @@
 		<form id="search_tab">
 			<fieldset>
 				<span class="addSpan"> 
-					<label class="addLbl">Sender</label>
-					<input type="text" id="sender_search" class="bootstrap-tagsinput"></input>
+					<label class="addLbl">Uploader</label>
+					<input type="text" id="uploader_search" class="bootstrap-tagsinput"></input>
 				</span>
 				<span class="addSpan"> 
 					<label class="addLbl">Author</label>
@@ -22,7 +22,7 @@
 				</span>
 				 
 				<span class="addSpan"> 
-					<label class="addLbl">Keyword</label>
+					<label class="addLbl">Keyword/s</label>
 					<input type="text" id="keywords_search" data-role="tagsinput"/>
 				</span>
 				
@@ -85,8 +85,8 @@
 						class="bootstrap-tagsinput" required />
 				</span>
 				<span class="addSpan"> 
-					<label class="addLbl">Sender</label> 
-					<input type="text" id="sender_in" name="sender_in" 
+					<label class="addLbl">Uploader</label> 
+					<input type="text" id="uploader_in" name="uploader_in" 
 						class="bootstrap-tagsinput" required />
 				</span>
 				
@@ -128,18 +128,7 @@
 		</div>
 	</div>
 	<div id="tabs-3" class="tab_div">
-		<h4>Under Construction</h4>
-		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus
-			gravida ante, ut pharetra massa metus id nunc. Duis scelerisque
-			molestie turpis. Sed fringilla, massa eget luctus malesuada, metus
-			eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet
-			fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam.
-			Praesent in eros vestibulum mi adipiscing adipiscing. Morbi
-			facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut
-			posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis.
-			Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem
-			euismod felis, eu ornare leo nisi vel felis. Mauris consectetur
-			tortor et purus.</p>
+		
 		<div id="inqTableSpace">
 			<table cellpadding="0" cellspacing="0" border="0" class="display"
 				id="inquiry_grid"></table>
@@ -149,9 +138,9 @@
 		<form id="view_tab">
 			<fieldset>
 				<span class="addSpan"> <label class="addLbl">Title</label> <input
-					type="text" id="inq_title_in"></input>
+					type="text" id="inq_title_in" class="bootstrap-tagsinput"></input>
 				</span> <span class="addSpan"> <label class="addLbl">Inquiry</label>
-					<textarea cols="40" rows="5" id="inq_in"></textarea></span>
+					<textarea cols="40" rows="5" id="inq_in" class="bootstrap-tagsinput"></textarea></span>
 			</fieldset>
 			<br class="clearfix" /> <input type="button" id="add_inq_btn"
 				value="Add" /> <input type="reset" />

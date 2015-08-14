@@ -27,17 +27,7 @@
 
 <body>
 	<div id="body_container">
-		<div id="header_dv">
-			<img alt="Optum Logo"
-				src="<c:url value="/resources/images/optumlogo.png" />">
-			<div id="header_user">Welcome,
-				<c:set var="employee" scope="session" value="${employee}" />
-				<span id="fullname">${employee.firstName}&nbsp;${employee.lastName}</span> | <span id="empID">${employee.empID}</span>
-			</div>
-			<div class="info">
-				<h1 class="title">MOM Library</h1>
-			</div>
-		</div>
+		<jsp:include page="includes/header.jsp" />
 		
 		<div id="body_dv">
 			<c:set var="isAdmin" scope="session" value="${isAdmin}" />
@@ -52,7 +42,7 @@
 			
 		</div>
 
-		<div class="footer">&copy; Copyright 2015 Optum</div>
+		<jsp:include page="includes/footer.jsp" />
 	</div>
 </body>
 </html>

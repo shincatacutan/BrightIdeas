@@ -1,5 +1,5 @@
 $(function() {
-	getUser();
+//	getUser();
 	initButtons();
 	handleSearch();
 	handleAddInq();
@@ -7,13 +7,14 @@ $(function() {
 	handleViewInquiries();
 	initAdminAddUser();
 	initAddUpdate();
+
 });
 
 
 var initAddUpdate = function(){
 	$("#add_btn").click(function(event) {
 		$("#add_tab").validate();
-		console.log($("#add_tab").valid())
+		//console.log($("#add_tab").valid())
 	});
 }
 var initAdminAddUser = function() {
@@ -36,11 +37,11 @@ var initAdminAddUser = function() {
 				'roleId' : role
 			},
 			success : function(data) {
-				console.log(data);
+				//console.log(data);
 				$('#addUser_form')[0].reset();
 			},
 			error : function(e) {
-				console.log(e);
+				//console.log(e);
 			}
 		});
 	});
@@ -64,7 +65,7 @@ var loadViewInquiries = function() {
 		type : "POST",
 		accept : 'application/json',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			if ($.fn.dataTable.isDataTable('#inquiry_grid')) {
 				var table = $('#inquiry_grid').DataTable();
 				table.clear();
@@ -109,7 +110,7 @@ var loadViewInquiries = function() {
 			}
 		},
 		error : function(e) {
-			console.log(e);
+			//console.log(e);
 		}
 
 	});
@@ -128,11 +129,12 @@ var handleAddInq = function() {
 			},
 			accept : 'application/json',
 			success : function(data) {
-				console.log(data);
+				//console.log(data);
+				alert("Inquiry successfully added.")
 				$("#view_tab")[0].reset();
 			},
 			error : function(e) {
-				console.log(e);
+				//console.log(e);
 			}
 
 		});
@@ -156,11 +158,11 @@ var handleSearch = function() {
 			},
 			accept : 'application/json',
 			success : function(data) {
-				console.log(data);
+				//console.log(data);
 				paintTable(data)
 			},
 			error : function(e) {
-				console.log(e);
+				//console.log(e);
 			}
 
 		});
@@ -168,19 +170,23 @@ var handleSearch = function() {
 	});
 }
 var getUser = function() {
+	
+//	var WinNetwork = new ActiveXObject("WScript.Network");
+//	var user = WinNetwork.UserName
+	var user = "scatacut";
 	$.ajax({
 		url : "/MOMLibrary/getUser",
 		type : "POST",
 		accept : 'application/json',
+		data: {"username":user},
 		success : function(emp) {
-			console.log(emp);
-			$("#fullname").html(emp.firstName + " " + emp.lastName);
-			$("#empID").html(emp.empID);
+//			//console.log(emp);
+//			$("#fullname").html(emp.firstName + " " + emp.lastName);
+//			$("#empID").html(emp.empID);
 		},
 		error : function(e) {
-			console.log(e);
+			//console.log(e);
 		}
-
 	});
 }
 
@@ -228,7 +234,7 @@ var initUpdateDialog = function() {
 	}
 
 	function updateLine() {
-		console.log("update user...")
+		//console.log("update user...")
 		var valid = true;
 		allFields.removeClass("ui-state-error");
 
@@ -356,7 +362,7 @@ var paintTable = function(oData) {
 			if (confirm("Delete selected item?")) {
 				$.each(deletePayIds, function(key, value) {
 					// deletePayrollDetail(value["payid"]); ajax call here!
-					console.log("deleting..." + value["id"]);
+					//console.log("deleting..." + value["id"]);
 					newInstance.row('.selected').remove().draw();
 				});
 			}

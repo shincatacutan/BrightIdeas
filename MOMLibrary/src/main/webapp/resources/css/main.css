@@ -1,21 +1,22 @@
 body {
-	font-family: Calibri, sans-serif;
-	margin: 0.5em;
+	font-family: "Segoe UI", "Segoe", Tahoma, Calibri, Helvetica, Arial,
+		sans-serif;
+	margin: 0;
 	font-size: 12px;
 	text-align: center;
-	background: #B3B3B3;
+	background: #E8E8E7;
 }
 
 #body_container {
 	margin: 0 auto;
-	width: 75%;
+	width: 85%;
 	text-align: left;
 	background-color: #fff;
-	border-top: #CBCACA solid thin;
+	border: #ACACAC solid thin;
 }
 
 #body_dv {
-	min-height: 500px;
+	min-height: 480px;
 }
 
 #header_dv img {
@@ -26,7 +27,7 @@ body {
 div#header_user {
 	padding: 1em;
 	text-align: right;
-	font-size: 1.1em;
+	font-size: 1em;
 }
 
 div#header_user span {
@@ -34,16 +35,16 @@ div#header_user span {
 }
 
 .ui-tabs-nav {
-    border-bottom-right-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;
+	border-bottom-left-radius: 0px !important;
 }
-
 
 h1.title {
 	color: #FFF;
 	margin: 0;
 	font-size: 2em;
-	padding: 0;
+	padding: 0 0.5em;
+	font-weight: 300;
 }
 
 h2 {
@@ -65,13 +66,13 @@ div.footer {
 	color: #fff;
 	font-size: 1em;
 	padding: 1em;
+	text-align: center;
 }
 
 hr.seperator {
 	background: #E06D13;
 	width: 95%
 }
-
 
 span.emp-info-span {
 	display: block;
@@ -145,12 +146,12 @@ div#tabs {
 	background: none !important;
 }
 
-.ui-dialog{
+.ui-dialog {
 	text-align: left;
 }
 
 div#dialog-form {
-  min-height: 250px !important;
+	min-height: 250px !important;
 }
 
 .ui-tabs-panel {
@@ -180,7 +181,7 @@ div.tab_div {
 	background: #fff !important;
 }
 
-#adminDiv{
+#adminDiv {
 	margin: 1em;
 	padding: 0.5em;
 	border: 1px solid #8e846b;
@@ -188,17 +189,38 @@ div.tab_div {
 }
 
 .ui-widget-content .ui-state-error {
-    border: 1px solid #ffb73d;
-    background: #d34d17 url(images/ui-bg_diagonals-medium_20_d34d17_40x40.png) 50% 50% repeat;
-    color: red !important;
+	border: 1px solid #ffb73d;
+	background: #d34d17
+		url(images/ui-bg_diagonals-medium_20_d34d17_40x40.png) 50% 50% repeat;
+	color: red !important;
 }
 
 .two_column {
-  width: 50%;
-  float: left;
+	width: 50%;
+	float: left;
 }
 
 .error {
-	color:red;
+	color: red;
 	padding-left: 1em;
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+	float: left;
+	padding: .5em 1em;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+	font-weight: 500 !important;
+}
+
+fieldset {
+  padding: 1em;
+}
+
+div#body_dv div {
+  padding-top: 20%;
+  text-align: center;
 }
