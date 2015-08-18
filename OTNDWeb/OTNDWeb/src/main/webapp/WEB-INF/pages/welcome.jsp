@@ -34,8 +34,10 @@
 	<form action="/OTNDWeb/home" method="POST" id="userForm">
 		<input type="hidden" id="empID" name="empID"/>
 	</form>
+	<div class="loading_img">
+		<img alt="" src="<c:url value="/resources/images/ajax-loader.gif" />">
 	</div>
-	<div class="modal"><!-- Place at bottom of page --></div>
+	</div>
 	<jsp:include page="includes/footer.jsp" />
 	
 	</div>

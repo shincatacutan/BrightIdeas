@@ -15,7 +15,7 @@ body {
 }
 
 #body_dv {
-	min-height: 450px;
+	min-height: 460px;
 }
 
 #header_dv img {
@@ -77,7 +77,7 @@ div.footer {
   border-top: 2px solid rgb(110, 113, 116);
   font-size: 1em;
   padding: 1em;
-  text-align: right;
+  text-align: center;
 }
 
 hr.seperator {
@@ -277,4 +277,9 @@ body.loading {
 .error_dv span{
 	font-weight: 600;
 	color: #e87722;
+}
+
+div#body_dv div.loading_img {
+  padding-top: 20%;
+  text-align: center;
 }

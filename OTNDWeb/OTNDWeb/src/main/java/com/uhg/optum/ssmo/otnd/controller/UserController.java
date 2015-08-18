@@ -37,25 +37,35 @@ public class UserController {
 		model.addObject("errMsg", ex.getErrMsg());
 
 		return model;
-
 	}
-	
+
 	@RequestMapping(value = "/home", method = RequestMethod.POST)
 	public String getUser(@RequestParam String empID, ModelMap model,
 			HttpServletRequest request) {
-		String user = empID;
-		logger.debug(" [getUser] == ntID: " + user);
-		Employee employee = employeeService.getEmployee(user);
-		if(null == employee){
-			request.getSession().setAttribute("employee", new Employee());
-//			model.addAttribute("employee", new Employee());
-			logger.debug(" [getUser] employee not found!");
-			throw new GenericException("E001", "Employee is not yet registered to the system. Please contact administrator.");
+		Employee loggedEmp = (Employee) request.getSession().getAttribute(
+				"employee");
+
+		if (null == loggedEmp) {
+			if ("".equals(empID)) {
+				throw new GenericException("E002",
+						"Browser cache error. Please refresh browser.");
+			}
+			String user = empID;
+			logger.debug(" [getUser] == ntID: " + user);
+			Employee employee = employeeService.getEmployee(user);
+			if (null == employee) {
+				request.getSession().setAttribute("employee", new Employee());
+				logger.debug(" [getUser] employee not found!");
+				throw new GenericException("E001",
+						"Employee is not yet registered to the system. Please contact administrator.");
+			}
+			request.getSession().setAttribute("employee", employee);
+			logger.debug(" [getUser] == user full name: "
+					+ employee.getFullName());
+			model.addAttribute("employee", employee);
+			getUserRole(model);
 		}
-		request.getSession().setAttribute("employee", employee);
-		logger.debug(" [getUser] == user full name: " + employee.getFullName());
-		model.addAttribute("employee", employee);
-		getUserRole(model);
+
 		return VIEW_INDEX;
 	}
 
@@ -79,6 +89,6 @@ public class UserController {
 		} else {
 			model.addAttribute("isAdmin", false);
 		}
-		logger.debug(" [getUser] user role: "+employee.getRoleType().getId());
+		logger.debug(" [getUser] user role: " + employee.getRoleType().getId());
 	}
 }
