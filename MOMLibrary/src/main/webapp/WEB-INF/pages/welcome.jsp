@@ -30,7 +30,7 @@
 		<form action="/MOMLibrary/index" method="POST" id="userForm">
 			<input type="hidden" id="username" name="username" />
 		</form>
-		<div>
+		<div class="loading_img">
 			<img alt="" src="<c:url value="/resources/images/ajax-loader.gif" />">
 		</div>
 	</div>

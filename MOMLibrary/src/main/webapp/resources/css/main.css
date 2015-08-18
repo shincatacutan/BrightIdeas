@@ -220,7 +220,7 @@ fieldset {
   padding: 1em;
 }
 
-div#body_dv div {
+div#body_dv div.loading_img {
   padding-top: 20%;
   text-align: center;
 }

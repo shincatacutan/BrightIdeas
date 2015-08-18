@@ -145,20 +145,20 @@ var handleAddInq = function() {
 var handleSearch = function() {
 	$("#search_btn").click(function(event) {
 		// alert("Handler for .click() called.");
-		var title = $("#title_in").val();
-		var author = $("#author_in").val();
-		var date = $("#createDt_in").val();
+//		var title = $("#title_in").val();
+//		var author = $("#author_in").val();
+//		var date = $("#createDt_in").val();
 		$.ajax({
 			url : "/MOMLibrary/searchMOM",
 			type : "POST",
-			data : {
-				'title' : title,
-				'author' : author,
-				'createDate' : date
-			},
+//			data : {
+//				'title' : title,
+//				'author' : author,
+//				'createDate' : date
+//			},
 			accept : 'application/json',
 			success : function(data) {
-				//console.log(data);
+				console.log(data);
 				paintTable(data)
 			},
 			error : function(e) {
