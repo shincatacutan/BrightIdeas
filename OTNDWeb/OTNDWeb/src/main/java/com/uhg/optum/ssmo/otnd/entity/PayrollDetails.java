@@ -43,7 +43,6 @@ public class PayrollDetails {
 	@Column(name = "id")
 	private int id;
 
-
 	@OneToOne()
 	@JoinColumn(name = "empID")
 	private Employee empId;

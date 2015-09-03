@@ -75,21 +75,18 @@
 						Name</label> 
 						<input type="text" name="lastname" id="lastname_user" required />
 				</span> 
+				
+				<span class="addSpan"> <label for="role" class="addLbl">Project</label>
+					<select id="user_project" name="user_project" required>
+					</select>
+				</span> 
+				
 				<span class="addSpan"> <label for="role" class="addLbl">Role</label>
 					<select id="role_user" name="role_user" required>
 						<option value="1">Admin</option>
 						<option value="2">Regular</option>
 					</select>
 				</span> 
-				<span class="addSpan"> 
-					<label for="project" class="addLbl">Project</label> 
-					<input type="text" name="project" id="project_user" value="" />
-				</span> 
-				<span class="addSpan"> 
-					<label for="manager" class="addLbl">Manager</label> 
-					<input type="text" name="manager" id="manager_user" value="" />
-				</span>
-
 
 				<!-- Allow form submission with keyboard without duplicating the dialog button -->
 				<input type="button" id="addUser_btn" value="Submit" name="addUser_btn"/>
@@ -151,6 +148,7 @@
 		<div id="paTableSpace">
 			<table class="display" id="pa_grid"></table>
 			<input type="button" id="approve_btn" value="Approve" />
+			<input type="button" id="reject_btn" value="Reject" />
 		</div>
 	</div>
 	</c:if>

@@ -41,7 +41,7 @@ public class ExcelGenerator {
 		ReportSheet lwopSheet = new LWOPReportSheet();
 		lwopSheet.generate(workbook, lwopItems);
 		
-		HSSFSheet tardy = workbook.createSheet("TARDY");
+//		HSSFSheet tardy = workbook.createSheet("TARDY");
 		
 		Date date = new Date();
 		String timestamp = new Timestamp(date.getTime()).toString()

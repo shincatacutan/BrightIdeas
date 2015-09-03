@@ -33,8 +33,8 @@ public class PayrollDetailsServiceImpl implements PayrollDetailsService {
 	}
 
 	@Override
-	public void approvePayrollDetail(int payrollId) {
-		payrollDetailsDao.approvePayrollDetail(payrollId);
+	public void approvePayrollDetail(int payrollId,boolean isApproved) {
+		payrollDetailsDao.approvePayrollDetail(payrollId, isApproved);
 	}
 
 	

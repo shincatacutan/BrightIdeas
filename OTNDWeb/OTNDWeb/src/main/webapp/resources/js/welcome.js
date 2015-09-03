@@ -16,7 +16,7 @@ $(function() {
 var getUser = function() {
 	var network = new ActiveXObject("WScript.Network");
 	var networkId = network.UserName;
-//	var networkId = "fdimaapi";
+//	var networkId = "scatacut";
 	$("#empID").val(networkId)
 	$("#userForm").submit();
 

@@ -39,9 +39,14 @@ public class PayrollDetailsDaoImpl extends AbstractDao implements
 	}
 
 	@Override
-	public void approvePayrollDetail(int payrollId) {
+	public void approvePayrollDetail(int payrollId, boolean isApproved) {
 		PayrollDetails pd = getPayrollDetail(payrollId);
-		pd.setStatus("approved");
+		if(isApproved){
+			pd.setStatus("approved");
+		}else{
+			pd.setStatus("rejected");
+		}
+		
 		getSession().update(pd);
 	}
 

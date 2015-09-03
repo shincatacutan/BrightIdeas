@@ -29,11 +29,10 @@ public class Employee {
 	@JoinColumn(name = "roleType")
 	private Role roleType;
 	
-	@Column(name = "project")
-	private String project;
+	@OneToOne
+	@JoinColumn(name = "project")
+	private Project project;
 	
-	@Column(name = "manager")
-	private String manager;
 	
 	public Employee(String networkID) {
 		super();
@@ -73,21 +72,15 @@ public class Employee {
 	public void setRoleType(Role roleType) {
 		this.roleType = roleType;
 	}
-	public String getProject() {
-		return project;
-	}
-	public void setProject(String project) {
-		this.project = project;
-	}
-	public String getManager() {
-		return manager;
-	}
-	public void setManager(String manager) {
-		this.manager = manager;
-	}
-	
+
 	public String getFullName() {
 		return  lastName + ", " + firstName;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }

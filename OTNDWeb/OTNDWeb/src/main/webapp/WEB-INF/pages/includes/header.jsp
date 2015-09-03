@@ -11,12 +11,14 @@
 				value="${employee.lastName}" /> </span><br /> <label>Employee ID:</label><span
 			id="empID"><c:out value="${employee.empID}" /></span><br /> <label>Network
 			ID:</label><span id="ntid"><c:out value="${employee.networkID}" /></span><br />
-		<label>Manager:</label><span id="manager"><c:out
-				value="${employee.manager}" /></span><br /> <label>Project:</label><span
-			id="project"><c:out value="${employee.project}" /></span><br />
+		<label>Manager:</label><span id="manager">
+		 <c:out value="${employee.project.manager}" /> </span>
+		 <br /> 
+		 <label>Project:</label>
+		 <span id="project"> <c:out value="${employee.project.code}" /></span><br />
 		</c:if>
 	</div>
 	<div class="info">
-		<h1 class="title">eVariable Input</h1>
+		<h1 class="title">eVariable Payroll Inputs</h1>
 	</div>
 </div>

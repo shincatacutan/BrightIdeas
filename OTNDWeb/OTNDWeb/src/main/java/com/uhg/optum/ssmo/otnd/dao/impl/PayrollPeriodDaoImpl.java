@@ -3,6 +3,7 @@ package com.uhg.optum.ssmo.otnd.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -23,8 +24,8 @@ public class PayrollPeriodDaoImpl extends AbstractDao implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PayrollPeriod> getPayrolls(String status) {
-		Criteria criteria = getSession().createCriteria(PayrollPeriod.class);
-		criteria.add(Restrictions.eq("status", status));
+		Criteria criteria = getSession().createCriteria(PayrollPeriod.class,"pp");
+		criteria.add(Restrictions.eq("status", status)).addOrder(Order.desc("pp.period"));
 		return (List<PayrollPeriod>) criteria.list();
 	}
 
@@ -51,8 +52,8 @@ public class PayrollPeriodDaoImpl extends AbstractDao implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PayrollPeriod> getAllPeriods() {
-		Criteria criteria = getSession().createCriteria(PayrollPeriod.class);
-		return (List<PayrollPeriod>) criteria.list();
+		Criteria criteria = getSession().createCriteria(PayrollPeriod.class,"pp");
+		return (List<PayrollPeriod>) criteria.addOrder(Order.desc("pp.period")).list();
 	}
 
 }

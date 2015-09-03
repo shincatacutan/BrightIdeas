@@ -14,6 +14,19 @@ $(function() {
 	initPendingApprovals();
 });
 
+jQuery.extend(jQuery.fn, {
+	projects: function(data){
+		var input = $(this)
+		$.each(data, function(i, data) {
+			input.append($('<option>', {
+				value : data.id,
+				text : data.code
+			}));
+		});
+		
+	}
+});
+
 var initPayrollTabs = function() {
 	$("#tabs").tabs({
 		activate : function(event, ui) {
@@ -27,14 +40,30 @@ var initPayrollTabs = function() {
 		        break;
 		    case "#tabs-1":
 		    	getPayPeriods("#pp_select");
-		    	
 		        break;
 		    case "#tabs-5":
 		    	getPayPeriods("#pa_select_admin");
 		        break;
 		    default:
-		        
+		    	//tab2
+		    	getProjects();
 			}
+		}
+	});
+}
+
+var getProjects = function(){
+//
+	var select = $("#user_project");
+	$.ajax({
+		url : "/OTNDWeb/getProjects",
+		type : "POST",
+		accept : 'application/json',
+		success : function(data) {
+			select.projects(data);
+		},
+		error : function(e) {
+			// console.log(e);
 		}
 	});
 }
@@ -48,6 +77,7 @@ var initPendingApprovals = function(){
 		}
 		loadIncomePeriodDetails(2, '#pa_grid');
 		$('#approve_btn').css("visibility", "visible");
+		$('#reject_btn').css("visibility", "visible");
 	});
 }
 
@@ -344,8 +374,7 @@ var initAdminAddUser = function() {
 			var firstname = $("#firstname_user").val();
 			var lastname = $("#lastname_user").val();
 			var role = $("#role_user").val();
-			var project = $("#project_user").val();
-			var manager = $("#manager_user").val();
+			var project = $("#user_project").val();
 
 			$.ajax({
 				url : "/OTNDWeb/addUser",
@@ -357,8 +386,7 @@ var initAdminAddUser = function() {
 					'firstName' : firstname,
 					'lastName' : lastname,
 					'roleId' : role,
-					'project' : project,
-					'manager' : manager
+					'project' : project
 				},
 				success : function(data) {
 					// console.log(data);
@@ -510,6 +538,7 @@ var initButtons = function() {
 	hideDetailInput("amountSpan");
 	$('#generate_btn').css("visibility", "hidden");
 	$('#approve_btn').css("visibility", "hidden");
+	$('#reject_btn').css("visibility", "hidden");
 }
 
 var showHideButtonDelete = function(show) {
@@ -611,23 +640,38 @@ var initFunctionBtns = function(){
 	});
 	
 	$('#approve_btn').click(function() {
-		var newInstance = $("#pa_grid").DataTable();
-		var approveIDs = newInstance.rows('.selected').data();
-		if (confirm("Approve selected item?")) {
-			$.each(approveIDs, function(key, value) {
-				approvePayrollDetail(value["id"]);
-				newInstance.row('.selected').remove().draw();
-			});
-		}
+		approvePayroll(true);
+	});
+	
+	$('#reject_btn').click(function() {
+		approvePayroll(false);
 	});
 }
 
-var approvePayrollDetail = function(incomeId) {
+var approvePayroll = function(isApproved){
+	var newInstance = $("#pa_grid").DataTable();
+	var approveIDs = newInstance.rows('.selected').data();
+	var message = '';
+	if(isApproved){
+		message = "Approve selected item?";
+	}else{
+		message = "Reject selected item?";
+	}
+	if (confirm(message)) {
+		$.each(approveIDs, function(key, value) {
+			approvePayrollDetail(value["id"], isApproved);
+			newInstance.row('.selected').remove().draw();
+		});
+	}
+}
+
+var approvePayrollDetail = function(incomeId, isApproved) {
 	$.ajax({
 		url : "/OTNDWeb/approveIncomeDetail",
 		type : "POST",
 		data : {
-			"incomeID" : incomeId
+			"incomeID" : incomeId,
+			"isApproved" : isApproved
 		},
 		accept : 'application/json',
 		success : function(msg) {

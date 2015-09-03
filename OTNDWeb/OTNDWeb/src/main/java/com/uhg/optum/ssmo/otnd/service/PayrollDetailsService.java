@@ -8,6 +8,6 @@ public interface PayrollDetailsService {
 	public List<PayrollDetails> getPayrollDetails(PayrollDetails payroll);
 	public void deletePayroll(int payrollId);
 	public void savePayrollDetail(PayrollDetails payroll);
-	public void approvePayrollDetail(int payrollId);
+	public void approvePayrollDetail(int payrollId, boolean b);
 
 }

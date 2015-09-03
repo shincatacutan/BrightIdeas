@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uhg.optum.ssmo.otnd.entity.Employee;
 import com.uhg.optum.ssmo.otnd.entity.PayrollPeriod;
+import com.uhg.optum.ssmo.otnd.entity.Project;
 import com.uhg.optum.ssmo.otnd.entity.Role;
 import com.uhg.optum.ssmo.otnd.service.EmployeeService;
 import com.uhg.optum.ssmo.otnd.service.PayrollPeriodService;
@@ -38,15 +39,16 @@ public class AdminController {
 	public @ResponseBody String addUser(@RequestParam String empID,
 			@RequestParam String ntID, @RequestParam String firstName,
 			@RequestParam String lastName, @RequestParam int roleId,
-			@RequestParam String project, @RequestParam String manager) {
+			@RequestParam String project) {
 		logger.debug("[addUser] adding employee...");
 		Employee employee = new Employee();
 		employee.setEmpID(empID);
 		employee.setNetworkID(ntID);
 		employee.setFirstName(firstName);
 		employee.setLastName(lastName);
-		employee.setProject(project);
-		employee.setManager(manager);
+		Project p = new Project();
+		p.setId(Integer.parseInt(project));
+		employee.setProject(p);
 		Role role = new Role();
 		role.setId(roleId);
 		employee.setRoleType(role);

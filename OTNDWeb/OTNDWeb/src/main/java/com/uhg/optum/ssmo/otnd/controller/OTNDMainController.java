@@ -19,9 +19,11 @@ import com.uhg.optum.ssmo.otnd.entity.Employee;
 import com.uhg.optum.ssmo.otnd.entity.IncomeType;
 import com.uhg.optum.ssmo.otnd.entity.PayrollDetails;
 import com.uhg.optum.ssmo.otnd.entity.PayrollPeriod;
+import com.uhg.optum.ssmo.otnd.entity.Project;
 import com.uhg.optum.ssmo.otnd.service.IncomeTypeService;
 import com.uhg.optum.ssmo.otnd.service.PayrollDetailsService;
 import com.uhg.optum.ssmo.otnd.service.PayrollPeriodService;
+import com.uhg.optum.ssmo.otnd.service.ProjectService;
 import com.uhg.optum.ssmo.otnd.vo.PayrollPeriodVo;
 
 @Controller
@@ -35,6 +37,9 @@ public class OTNDMainController {
 
 	@Autowired
 	private PayrollDetailsService payrollDetailsService;
+	
+	@Autowired
+	private ProjectService projectService;
 
 	private final static Logger logger = LoggerFactory
 			.getLogger(OTNDMainController.class);
@@ -147,11 +152,18 @@ public class OTNDMainController {
 	}
 	
 	@RequestMapping(value = "/approveIncomeDetail", method = RequestMethod.POST)
-	public @ResponseBody String approveIncomeDetail(@RequestParam String incomeID) {
+	public @ResponseBody String approveIncomeDetail(@RequestParam String incomeID, @RequestParam String isApproved) {
 		logger.debug("[approveIncomeDetail] approving pending payroll "
-				+ incomeID);
-		payrollDetailsService.approvePayrollDetail(Integer.parseInt(incomeID));
+				+ incomeID + " -- "+ isApproved);
+		payrollDetailsService.approvePayrollDetail(Integer.parseInt(incomeID), Boolean.parseBoolean(isApproved));
 		return "SUCCESS";
 	}
-
+	
+	@RequestMapping(value = "/getProjects", method = RequestMethod.POST)
+	public @ResponseBody List<Project> getProjects() {
+		List<Project> projectList = projectService.getProjects();
+		logger.debug("[getProjects] fetched size: " + projectList.size());
+			
+		return projectList;
+	}
 }
