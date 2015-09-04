@@ -5,11 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.uhg.optum.ssmo.otnd.entity.PayrollDetails;
@@ -37,10 +35,10 @@ public class ExcelGenerator {
 		ReportSheet tmaSheet = new TMAReportSheet();
 		tmaSheet.generate(workbook, tmaItems);
 		
-		List<VariableInputReport> lwopItems = ExcelGeneratorHelperImpl.consolidate(details, "LWOP");
-		ReportSheet lwopSheet = new LWOPReportSheet();
-		lwopSheet.generate(workbook, lwopItems);
-		
+//		List<VariableInputReport> lwopItems = ExcelGeneratorHelperImpl.consolidate(details, "LWOP");
+//		ReportSheet lwopSheet = new LWOPReportSheet();
+//		lwopSheet.generate(workbook, lwopItems);
+//		
 //		HSSFSheet tardy = workbook.createSheet("TARDY");
 		
 		Date date = new Date();
