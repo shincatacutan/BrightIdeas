@@ -16,7 +16,7 @@ public class ExcelGeneratorHelperImpl {
 			List<PayrollDetails> details, String code) {
 		List<VariableInputReport> list = new ArrayList<VariableInputReport>();
 		Map<String, VariableInputReport> map = new HashMap<String, VariableInputReport>();
-		System.out.println("details size: "+details.size());
+		
 		for (PayrollDetails payrollDetail : details) {
 			if (code.equals(payrollDetail.getIncomeType().getType())) {
 				VariableInputReport inputReport = new VariableInputReport();
@@ -33,7 +33,6 @@ public class ExcelGeneratorHelperImpl {
 				VariableInputReport value = map.get(key);
 				if (value == null ) {
 					map.put(key, inputReport);
-					System.out.println("MAP SIZE "+map.size());
 				} else {
 					BigDecimal origHours = new BigDecimal(value.getHours());
 					BigDecimal hoursToAdd = new BigDecimal(payrollDetail.getProdHrsAmt());
@@ -42,30 +41,17 @@ public class ExcelGeneratorHelperImpl {
 					BigDecimal origAmt = new BigDecimal(value.getAmount());
 					BigDecimal amtToAdd = new BigDecimal(payrollDetail.getProdHrsAmt());
 					value.setAmount(origAmt.add(amtToAdd).toString());
-					
 					value.setRemarks(value.getRemarks() +", "+payrollDetail.getRemarks());
 				}
 				
 			}
 
 		}
-		System.out.println(map.size());
+		
 		for(Entry<String, VariableInputReport> entry: map.entrySet()){
 			list.add(entry.getValue());
 		}
 		return list;
-	}
-	
-	private static boolean isUserExistNot(Map<String, VariableInputReport> maplist, String empID){
-		for(Entry<String, VariableInputReport> entry: maplist.entrySet()){
-			System.out.println("Map " +entry.getValue().getEmpId());
-			System.out.println("new "+empID);
-			if(entry.getValue().getEmpId().equals(empID)){
-				System.out.println("employee is found.");
-				return false;
-			}
-		}
-		return true;
 	}
 
 }
