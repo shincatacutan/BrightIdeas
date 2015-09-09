@@ -43,6 +43,8 @@ public class ExcelGeneratorHelperImpl {
 					
 					key.setRemarks(key.getRemarks() +", "+payrollDetail.getRemarks());
 				}
+				
+				inputReport.setBusSpocName("Bolivar, Sara Jane");
 			}
 
 		}
