@@ -202,19 +202,12 @@ var initLoadPayrollBtn = function() {
 				return this.replace(/^\s+|\s+$/g, '');
 			}
 		}
-		// var selectedOption = $('#pp_select option:selected').text();
-		// var status = selectedOption.split(':')[0].trim();
-		// if (status == "Open") {
+
 		loadIncomePeriodDetails(0, '#resultGrid');
 		enableIncomeDetailForm(true);
-		// } else {
-		// alert("Please choose an valid payroll period.");
-		// enableIncomeDetailForm(false);
-		// }
 	});
 
 	$('#income_type').change(function(event) {
-		// console.log(this.value)
 		loadIncomeCodesByType(this.value);
 		changeInputByIncomeType(this.value);
 		$("#full-desc").html("");
@@ -286,7 +279,7 @@ var initAddPayDetails = function() {
 						}
 					}
 				});
-				// console.log(incomeForm.valid());
+
 				if (incomeForm.valid()) {
 					var payperiod = $("#pp_select").val();
 					var incomeType = $("#income_type").val();
@@ -331,7 +324,6 @@ var initAddPayPeriod = function() {
 		if (payPeriodForm.valid()) {
 			var payperiod = $("#payperiod_add").val();
 			var status = $("#pp_status").val();
-			// console.log(event);
 			$.ajax({
 				url : "/OTNDWeb/addPayPeriod",
 				type : "POST",
@@ -341,13 +333,11 @@ var initAddPayPeriod = function() {
 				},
 				accept : 'application/json',
 				success : function(data) {
-					// console.log(data);
 					alert("Payperiod added.")
 					$("#payperiod_form")[0].reset();
 					loadOpenPeriods();
 				},
 				error : function(e) {
-					// console.log(e);
 				}
 
 			});
@@ -396,12 +386,10 @@ var initAdminAddUser = function() {
 					'project' : project
 				},
 				success : function(data) {
-					// console.log(data);
 					alert("User added.")
 					$('#addUser_form')[0].reset();
 				},
 				error : function(e) {
-					// console.log(e);
 				}
 			});
 		}
@@ -442,7 +430,6 @@ var getPayPeriods = function(id) {
 var isDateEntry;
 
 var changeInputByIncomeType = function(incomeType) {
-	// console.log(incomeType)
 	if (incomeType == "LWOP") {
 		hideDetailInput("dateSpan");
 		isDateEntry = true;
@@ -494,19 +481,19 @@ var loadIncomeCodesByType = function(incomeType) {
 			});
 
 			$('#income_code').change(
-					function() {
-						var val = this.value;
-						var result = $.grep(data, function(e) {
-							return e.id == val;
-						});
-						if (val != "" || null != val) {
-							if (result.length != 0) {
-								var fullDesc = null == result[0].fullDesc ? ""
-										: result[0].fullDesc;
-								$("#full-desc").html(fullDesc);
-							}
-						}
+				function() {
+					var val = this.value;
+					var result = $.grep(data, function(e) {
+						return e.id == val;
 					});
+					if (val != "" || null != val) {
+						if (result.length != 0) {
+							var fullDesc = null == result[0].fullDesc ? ""
+									: result[0].fullDesc;
+							$("#full-desc").html(fullDesc);
+						}
+					}
+				});
 		},
 		error : function(e) {
 			// console.log(e);
@@ -517,31 +504,29 @@ var getUser = function() {
 	var network = new ActiveXObject("WScript.Network");
 	var networkId = network.UserName;
 	var networkId = "asanju3";
-	// console.log(networkId);
 
-	$
-			.ajax({
-				url : "/OTNDWeb/getUser",
-				type : "POST",
-				accept : 'application/json',
-				data : {
-					"empID" : networkId
-				},
-				success : function(emp) {
-					// console.log(emp)
-					// $("#fullname").html(emp.firstName + " " + emp.lastName);
-					// $("#empID").html(emp.empID);
-					// $("#ntid").html(emp.networkID);
-					// $("#manager").html(emp.manager);
-					// $("#project").html(emp.project);
-					// $('#load_payroll').button("option", "disabled", false);
-				},
-				error : function(e) {
-					alert("User is not yet in the database. Please contact administrator.");
-					$('#load_payroll').button("option", "disabled", true);
+	$.ajax({
+		url : "/OTNDWeb/getUser",
+		type : "POST",
+		accept : 'application/json',
+		data : {
+			"empID" : networkId
+		},
+		success : function(emp) {
+			// console.log(emp)
+			// $("#fullname").html(emp.firstName + " " + emp.lastName);
+			// $("#empID").html(emp.empID);
+			// $("#ntid").html(emp.networkID);
+			// $("#manager").html(emp.manager);
+			// $("#project").html(emp.project);
+			// $('#load_payroll').button("option", "disabled", false);
+		},
+		error : function(e) {
+			alert("User is not yet in the database. Please contact administrator.");
+			$('#load_payroll').button("option", "disabled", true);
 
-				}
-			});
+		}
+	});
 }
 
 var initButtons = function() {
@@ -577,59 +562,59 @@ var paintTable = function(oData, tableID) {
 		table.draw();
 	} else {
 		var table = $(tableID).dataTable(
-				{
-					"data" : oData,
-					"columns" : [
-							{
-								"title" : "Pay Period",
-								"data" : "payrollPeriod",
-								"class" : "dt-left",
-								"render" : function(obj) {
-									return '<span>' + obj.period.monthOfYear
-											+ '/' + obj.period.dayOfMonth + '/'
-											+ obj.period.year + '</span>'
-								}
-							},
-							{
-								"title" : "Type",
-								"class" : "dt-left",
-								"data" : "incomeType.id"
-							},
-							{
-								"title" : "Description",
-								"class" : "dt-left",
-								"data" : "incomeType.desc"
-							},
-							{
-								"title" : "Remarks",
-								"class" : "dt-longer",
-								"data" : "remarks",
+			{
+				"data" : oData,
+				"columns" : [
+					{
+						"title" : "Pay Period",
+						"data" : "payrollPeriod",
+						"class" : "dt-left",
+						"render" : function(obj) {
+							return '<span>' + obj.period.monthOfYear
+									+ '/' + obj.period.dayOfMonth + '/'
+									+ obj.period.year + '</span>'
+						}
+					},
+					{
+						"title" : "Type",
+						"class" : "dt-left",
+						"data" : "incomeType.id"
+					},
+					{
+						"title" : "Description",
+						"class" : "dt-left",
+						"data" : "incomeType.desc"
+					},
+					{
+						"title" : "Remarks",
+						"class" : "dt-longer",
+						"data" : "remarks",
 
-							},
-							{
-								"title" : "Hours/Amount/Date",
-								"class" : "dt-left",
-								"data" : "prodHrsAmt"
-							},
-							{
-								"title" : "Employee",
-								"class" : "dt-left",
-								"data" : "empId.networkID"
-							},
-							{
-								"title" : "Create Date",
-								"class" : "dt-left",
-								"data" : "createDate",
-								"render" : function(obj) {
-									return '<span>' + obj.monthOfYear + '/'
-											+ obj.dayOfMonth + '/' + obj.year
-											+ '</span>'
-								}
-							}, {
-								"title" : "Approval Status",
-								"class" : "dt-left",
-								"data" : "status"
-							} ]
+					},
+					{
+						"title" : "Hours/Amount/Date",
+						"class" : "dt-left",
+						"data" : "prodHrsAmt"
+					},
+					{
+						"title" : "Employee",
+						"class" : "dt-left",
+						"data" : "empId.networkID"
+					},
+					{
+						"title" : "Create Date",
+						"class" : "dt-left",
+						"data" : "createDate",
+						"render" : function(obj) {
+							return '<span>' + obj.monthOfYear + '/'
+									+ obj.dayOfMonth + '/' + obj.year
+									+ '</span>'
+						}
+					}, {
+						"title" : "Approval Status",
+						"class" : "dt-left",
+						"data" : "status"
+					} ]
 				});
 
 		$(tableID + ' tbody').on('click', 'tr', function() {
@@ -708,7 +693,7 @@ var approvePayrollDetail = function(incomeId, isApproved) {
 		},
 		accept : 'application/json',
 		success : function(msg) {
-//			console.log(msg)
+			// console.log(msg)
 		},
 		error : function(e) {
 			alert("Error encountered during detail approval.");
