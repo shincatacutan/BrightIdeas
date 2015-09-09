@@ -16,7 +16,7 @@ public class ExcelGeneratorHelperImpl {
 			List<PayrollDetails> details, String code) {
 		List<VariableInputReport> list = new ArrayList<VariableInputReport>();
 		Map<String, VariableInputReport> map = new HashMap<String, VariableInputReport>();
-
+		System.out.println("details size: "+details.size());
 		for (PayrollDetails payrollDetail : details) {
 			if (code.equals(payrollDetail.getIncomeType().getType())) {
 				VariableInputReport inputReport = new VariableInputReport();
@@ -28,31 +28,44 @@ public class ExcelGeneratorHelperImpl {
 				inputReport.setHours(payrollDetail.getProdHrsAmt());
 				inputReport.setAmount(payrollDetail.getProdHrsAmt());
 				inputReport.setRemarks(payrollDetail.getRemarks());
-				VariableInputReport key = map.get(payrollDetail.getIncomeType()
-						.getId());
-				if (key == null) {
-					map.put(payrollDetail.getIncomeType().getId(), inputReport);
+				inputReport.setBusSpocName("Bolivar, Sara Jane");
+				String key = payrollDetail.getIncomeType().getId() + payrollDetail.getEmpId().getEmpID();
+				VariableInputReport value = map.get(key);
+				if (value == null ) {
+					map.put(key, inputReport);
+					System.out.println("MAP SIZE "+map.size());
 				} else {
-					BigDecimal origHours = new BigDecimal(key.getHours());
+					BigDecimal origHours = new BigDecimal(value.getHours());
 					BigDecimal hoursToAdd = new BigDecimal(payrollDetail.getProdHrsAmt());
-					key.setHours(origHours.add(hoursToAdd).toString());
+					value.setHours(origHours.add(hoursToAdd).toString());
 					
-					BigDecimal origAmt = new BigDecimal(key.getAmount());
+					BigDecimal origAmt = new BigDecimal(value.getAmount());
 					BigDecimal amtToAdd = new BigDecimal(payrollDetail.getProdHrsAmt());
-					key.setAmount(origAmt.add(amtToAdd).toString());
+					value.setAmount(origAmt.add(amtToAdd).toString());
 					
-					key.setRemarks(key.getRemarks() +", "+payrollDetail.getRemarks());
+					value.setRemarks(value.getRemarks() +", "+payrollDetail.getRemarks());
 				}
 				
-				inputReport.setBusSpocName("Bolivar, Sara Jane");
 			}
 
 		}
-		
+		System.out.println(map.size());
 		for(Entry<String, VariableInputReport> entry: map.entrySet()){
 			list.add(entry.getValue());
 		}
 		return list;
+	}
+	
+	private static boolean isUserExistNot(Map<String, VariableInputReport> maplist, String empID){
+		for(Entry<String, VariableInputReport> entry: maplist.entrySet()){
+			System.out.println("Map " +entry.getValue().getEmpId());
+			System.out.println("new "+empID);
+			if(entry.getValue().getEmpId().equals(empID)){
+				System.out.println("employee is found.");
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
