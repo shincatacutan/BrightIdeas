@@ -8,6 +8,13 @@
 	<div id="tabs-1" class="tab_div">
 		<form id="search_tab">
 			<fieldset>
+			<span class="addSpan"> 
+					<label class="addLbl">Category</label> 
+					<select	name="searchCat_in" id="searchCat_in"
+						class="bootstrap-tagsinput" required>
+						<option></option>
+				</select>
+				</span> 
 				<span class="addSpan"> 
 					<label class="addLbl">Uploader</label>
 					<input type="text" id="uploader_search" class="bootstrap-tagsinput"></input>
@@ -21,10 +28,10 @@
 					<input type="text" id="createDt_search" class="bootstrap-tagsinput"></input>
 				</span>
 				 
-				<span class="addSpan"> 
+			<!-- 	<span class="addSpan"> 
 					<label class="addLbl">Keyword/s</label>
 					<input type="text" id="keywords_search" data-role="tagsinput"/>
-				</span>
+				</span> -->
 				
 			</fieldset>
 			<br class="clearfix" /> <input type="button" id="search_btn"
@@ -36,9 +43,7 @@
 				<input type="button" id="update_btn" value="Update" /> <input
 					type="button" id="delete_btn" value="Delete" />
 			</div>
-
 		</form>
-
 
 	</div>
 	<div id="tabs-2" class="tab_div">
@@ -48,45 +53,46 @@
 			<div class="two_column two_column_left">
 				<span class="addSpan"> 
 					<label class="addLbl">Category</label> 
-					<select	name="selectCat_in" id="selectCat_in"
+					<select	name="addCat_in" id="addCat_in"
 						class="bootstrap-tagsinput" required>
 						<option></option>
-						<option>GENI Updates</option>
-						<option>Drug List Matrix</option>
-						<option>Client Specific</option>
-						<option>QR Process</option>
-						<option>QR Inquiry</option>
-						<option>Reserved</option>
-						<option>Reserved</option>
-						<option>Reserved</option>
 				</select>
 				</span> 
 				
+					
 				<span class="addSpan"> 
-					<label class="addLbl">Date Cascaded</label> 
-					<input type="text" id="createDt_in" name="createDt_in" 
+					<label class="addLbl">Title</label> 
+					<input type="text" id="title_in" name="title_in" 
 						class="bootstrap-tagsinput" required />
 				</span>
+			
 				<span class="addSpan"> 
 					<label class="addLbl">Detailed Info</label>
 					<textarea cols="40" rows="5" id="desc_in" name="desc_in" 
 						class="bootstrap-tagsinput" required></textarea>
 				</span> 
+				
+					
+				<span class="addSpan"> 
+					<label class="addLbl">Date Cascaded</label> 
+					<input type="text" id="createDt_in" name="createDt_in" 
+						class="bootstrap-tagsinput" required />
+				</span>
 				</div>
 				<div class="two_column two_column_right">
 				<span class="addSpan"> 
 					<label class="addLbl">Status</label> 
-					<input type="text" id="status_in" name="status_in" 
-						class="bootstrap-tagsinput" required />
+					<select	name="status_in" id="status_in"
+						class="bootstrap-tagsinput" required>
+						<option></option>
+						<option>Open</option>
+						<option>Pending</option>
+						<option>Close</option>
+				</select>
 				</span>
 				<span class="addSpan"> 
 					<label class="addLbl">Link</label> 
-					<input type="text" id="file_in" name="file_in"
-						class="bootstrap-tagsinput" required />
-				</span>
-				<span class="addSpan"> 
-					<label class="addLbl">Uploader</label> 
-					<input type="text" id="uploader_in" name="uploader_in" 
+					<input type="text" id="link_in" name="link_in"
 						class="bootstrap-tagsinput" required />
 				</span>
 				
@@ -97,10 +103,6 @@
 				</span>
 				</div>
 				<br class="clearfix" />
-				<span class="addSpan"> 
-					<label class="addLbl">Keyword</label>
-					<input type="text" id="keywords_in" data-role="tagsinput" required/>
-				</span>
 				</div>
 			</fieldset>
 			<br class="clearfix" /> <input type="button" id="add_btn"

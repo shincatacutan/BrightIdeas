@@ -34,10 +34,11 @@ public class InquiryController {
 		Inquiry inquiry = new Inquiry();
 		inquiry.setBody(body);
 		inquiry.setTitle(title);
-		
-		inquiry.setCreateUser(((User)request.getSession().getAttribute("employee")).getLanID());
+		User employee = ((User)request.getSession().getAttribute("employee"));
+		inquiry.setCreateUser(employee);
 		inquiry.setCreateDate(new LocalDate());
-		
+		inquiry.setUpdateUser(employee);
+		inquiry.setUpdateDate(new LocalDate());
 		inquiryService.addInquiry(inquiry);
 		return "Success";
 	}

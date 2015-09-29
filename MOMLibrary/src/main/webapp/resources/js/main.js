@@ -1,5 +1,4 @@
 $(function() {
-//	getUser();
 	initButtons();
 	handleSearch();
 	handleAddInq();
@@ -7,16 +6,96 @@ $(function() {
 	handleViewInquiries();
 	initAdminAddUser();
 	initAddUpdate();
-
+	initAutoComplete();
+	jQuery.validator.setDefaults({
+		success : "valid"
+	});
 });
-
-
-var initAddUpdate = function(){
+var userList = [];
+var initAddUpdate = function() {
 	$("#add_btn").click(function(event) {
-		$("#add_tab").validate();
-		//console.log($("#add_tab").valid())
+		var addTab = $("#add_tab");
+		addTab.validate();
+		if (addTab.valid()) {
+			$.ajax({
+				url : "/MOMLibrary/addUpdate",
+				type : "POST",
+				accept : 'application/json',
+				data : {
+					'category' : $("#addCat_in").val(),
+					'dateCascaded' : $("#createDt_in").val(),
+					'detailedInfo' : $("#desc_in").val(),
+					'status' : $("#status_in").val(),
+					'title' : $("#title_in").val(),
+					'link' : $("#link_in").val(),
+					'author' : $("#author_in").val()
+				},
+				success : function(data) {
+					alert("Update has been added.");
+					addTab[0].reset();
+				},
+				error : function(e) {
+					// console.log(e);
+				}
+			});
+		}
+
 	});
 }
+
+var initAutoComplete = function() {
+	$.ajax({
+		url : "/MOMLibrary/getAllUsers",
+		type : "POST",
+		accept : 'application/json',
+		success : function(data) {
+			$.each(data, function(i, val) {
+				userList.push(val.lanID)
+				$("#author_in").autocomplete({
+					source : userList
+				});
+				$("#author_search").autocomplete({
+					source : userList
+				});
+				$("#uploader_search").autocomplete({
+					source : userList
+				});
+			});
+		},
+		error : function(e) {
+			// console.log(e);
+		}
+	});
+
+	$.ajax({
+		url : "/MOMLibrary/getCategories",
+		type : "POST",
+		accept : 'application/json',
+		success : function(data) {
+			$('#searchCat_in').categories(data);
+			$('#addCat_in').categories(data);
+		},
+		error : function(e) {
+			// console.log(e);
+		}
+	});
+
+}
+
+jQuery.extend(jQuery.fn, {
+	categories : function(data) {
+		var input = $(this);
+		input.find('option').remove().end();
+		input.append($('<option>', ""));
+		$.each(data, function(i, data) {
+			input.append($('<option>', {
+				value : data.id,
+				text : data.name
+			}));
+		});
+
+	}
+});
 var initAdminAddUser = function() {
 	$("#addUser_btn").click(function(event) {
 		var username = $("#uname_user").val();
@@ -37,11 +116,11 @@ var initAdminAddUser = function() {
 				'roleId' : role
 			},
 			success : function(data) {
-				//console.log(data);
+				// console.log(data);
 				$('#addUser_form')[0].reset();
 			},
 			error : function(e) {
-				//console.log(e);
+				// console.log(e);
 			}
 		});
 	});
@@ -65,55 +144,59 @@ var loadViewInquiries = function() {
 		type : "POST",
 		accept : 'application/json',
 		success : function(data) {
-			//console.log(data);
+			// console.log(data);
 			if ($.fn.dataTable.isDataTable('#inquiry_grid')) {
 				var table = $('#inquiry_grid').DataTable();
 				table.clear();
 				table.rows.add(data);
 				table.draw();
 			} else {
-				var table = $('#inquiry_grid').dataTable({
-					"data" : data,
-					"columns" : [
-				        {
-							"title" : "ID",
-							"data" : "inqId",
-							"class" : "dt-left"
-						},
+				var table = $('#inquiry_grid').dataTable(
 						{
-							"title" : "Title",
-							"data" : "title",
-							"class" : "dt-left"
-						},
-						{
-							"title" : "Message",
-							"data" : "body",
-							"class" : "dt-left"
-						},
-						{
-							"title" : "Author",
-							"data" : "createUser",
-							"class" : "dt-left"
-						},
-						{
-							"title" : "Create Date",
-							"data" : "createDate",
-							"class" : "dt-left",
-							"render" : function(obj) {
-								return '<span>' + obj.monthOfYear
-										+ '/' + obj.dayOfMonth
-										+ '/' + obj.year
-										+ '</span>'
-							}
-						}]
-				});
+							"data" : data,
+							"columns" : [
+									{
+										"title" : "ID",
+										"data" : "inqId",
+										"class" : "dt-left"
+									},
+									{
+										"title" : "Title",
+										"data" : "title",
+										"class" : "dt-left"
+									},
+									{
+										"title" : "Message",
+										"data" : "body",
+										"class" : "dt-left"
+									},
+									{
+										"title" : "Author",
+										"data" : "createUser",
+										"class" : "dt-left"
+									},
+									{
+										"title" : "Create Date",
+										"data" : "createDate",
+										"class" : "dt-left",
+										"type" : "date"
+										}
+									} ]
+						});
 			}
 		},
 		error : function(e) {
-			//console.log(e);
+			// console.log(e);
 		}
 
 	});
+}
+
+var parseDate = function(obj){
+	return '<span>' + obj.monthOfYear
+	+ '/' + obj.dayOfMonth
+	+ '/' + obj.year
+	+ '</span>'
 }
 
 var handleAddInq = function() {
@@ -129,12 +212,12 @@ var handleAddInq = function() {
 			},
 			accept : 'application/json',
 			success : function(data) {
-				//console.log(data);
+				// console.log(data);
 				alert("Inquiry successfully added.")
 				$("#view_tab")[0].reset();
 			},
 			error : function(e) {
-				//console.log(e);
+				// console.log(e);
 			}
 
 		});
@@ -145,24 +228,24 @@ var handleAddInq = function() {
 var handleSearch = function() {
 	$("#search_btn").click(function(event) {
 		// alert("Handler for .click() called.");
-//		var title = $("#title_in").val();
-//		var author = $("#author_in").val();
-//		var date = $("#createDt_in").val();
+		// var title = $("#title_in").val();
+		// var author = $("#author_in").val();
+		// var date = $("#createDt_in").val();
 		$.ajax({
 			url : "/MOMLibrary/searchMOM",
 			type : "POST",
-//			data : {
-//				'title' : title,
-//				'author' : author,
-//				'createDate' : date
-//			},
+			// data : {
+			// 'title' : title,
+			// 'author' : author,
+			// 'createDate' : date
+			// },
 			accept : 'application/json',
 			success : function(data) {
 				console.log(data);
 				paintTable(data)
 			},
 			error : function(e) {
-				//console.log(e);
+				// console.log(e);
 			}
 
 		});
@@ -170,22 +253,24 @@ var handleSearch = function() {
 	});
 }
 var getUser = function() {
-	
-//	var WinNetwork = new ActiveXObject("WScript.Network");
-//	var user = WinNetwork.UserName
+
+	// var WinNetwork = new ActiveXObject("WScript.Network");
+	// var user = WinNetwork.UserName
 	var user = "scatacut";
 	$.ajax({
 		url : "/MOMLibrary/getUser",
 		type : "POST",
 		accept : 'application/json',
-		data: {"username":user},
+		data : {
+			"username" : user
+		},
 		success : function(emp) {
-//			//console.log(emp);
-//			$("#fullname").html(emp.firstName + " " + emp.lastName);
-//			$("#empID").html(emp.empID);
+			// //console.log(emp);
+			// $("#fullname").html(emp.firstName + " " + emp.lastName);
+			// $("#empID").html(emp.empID);
 		},
 		error : function(e) {
-			//console.log(e);
+			// console.log(e);
 		}
 	});
 }
@@ -195,7 +280,7 @@ var loadDataToUpdate = function() {
 	var rowData = selected[0];
 
 	$("#title_modal").val(rowData["title"])
-	$("#desc_modal").val(rowData["description"])
+	$("#desc_modal").val(rowData["detailedInfo"])
 }
 
 var initUpdateDialog = function() {
@@ -234,7 +319,6 @@ var initUpdateDialog = function() {
 	}
 
 	function updateLine() {
-		//console.log("update user...")
 		var valid = true;
 		allFields.removeClass("ui-state-error");
 
@@ -332,18 +416,34 @@ var paintTable = function(oData) {
 				"data" : "title",
 				"class" : "dt-left"
 			}, {
+				"title" : "Category Name",
+				"data" : "categoryName",
+				"class" : "dt-left"
+			}, {
 				"title" : "Description",
-				"data" : "description",
+				"data" : "detailedInfo",
 				"class" : "dt-left"
 			}, {
+				"title" : "Link",
+				"data" : "link",
+				"class" : "dt-left",
+				"render" : function(obj) {
+					return '<a href="http://' + obj + '">' + obj + '</a>'
+				}
+			},{
 				"title" : "Author",
-				"data" : "user.lanID",
-				"class" : "dt-left"
-			}, {
-				"title" : "Create Date",
-				"data" : "createDate",
+				"data" : "author",
 				"class" : "dt-left",
 				"type" : "date"
+			}, {
+				"title" : "Date Cascaded",
+				"data" : "cascadedDate",
+				"class" : "dt-left",
+				"type" : "date"
+			}, {
+				"title" : "Status",
+				"data" : "status",
+				"class" : "dt-left"
 			} ]
 		});
 
@@ -362,7 +462,7 @@ var paintTable = function(oData) {
 			if (confirm("Delete selected item?")) {
 				$.each(deletePayIds, function(key, value) {
 					// deletePayrollDetail(value["payid"]); ajax call here!
-					//console.log("deleting..." + value["id"]);
+					// console.log("deleting..." + value["id"]);
 					newInstance.row('.selected').remove().draw();
 				});
 			}

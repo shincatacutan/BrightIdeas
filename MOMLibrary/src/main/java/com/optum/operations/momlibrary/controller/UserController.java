@@ -1,5 +1,7 @@
 package com.optum.operations.momlibrary.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.optum.operations.momlibrary.entity.User;
 import com.optum.operations.momlibrary.service.UserService;
@@ -46,6 +49,12 @@ public class UserController {
 		model.addAttribute("isAdmin", false);
 		return WELCOME_PAGE;
 	}
+	@RequestMapping(value = "/getAllUsers", method = RequestMethod.POST)
+	public @ResponseBody List<User> getAllInquiry() {
+		logger.debug("[getAllUsers]");
+		return (List<User>) userService.getAllUsers();
+	}
+	
 	private static final String VIEW_INDEX = "index";
 	private static final String WELCOME_PAGE = "welcome";
 }

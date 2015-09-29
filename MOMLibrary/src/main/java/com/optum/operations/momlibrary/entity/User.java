@@ -64,4 +64,11 @@ public class User {
 	public void setAccess(Role access) {
 		this.access = access;
 	}
+
+	@Override
+	public String toString() {
+		return "User [empID=" + empID + ", lanID=" + lanID + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", access=" + access
+				+ "]";
+	}
 }

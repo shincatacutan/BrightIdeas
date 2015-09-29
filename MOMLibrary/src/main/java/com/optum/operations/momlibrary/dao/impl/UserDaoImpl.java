@@ -1,5 +1,7 @@
 package com.optum.operations.momlibrary.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -32,5 +34,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		// TODO Auto-generated method stub
 
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getAllUsers() {
+		Criteria criteria = getSession().createCriteria(User.class);
+		return (List<User>)criteria.list();
+	}
+	
 
 }

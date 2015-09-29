@@ -6,33 +6,32 @@ import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.optum.operations.momlibrary.dao.MoMDAO;
-import com.optum.operations.momlibrary.entity.MoMUnit;
+import com.optum.operations.momlibrary.dao.MoMDao;
+import com.optum.operations.momlibrary.entity.MomUpdate;
 @Transactional
 @Repository
-public class MoMDaoImpl extends AbstractDao implements MoMDAO {
+public class MoMDaoImpl extends AbstractDao implements MoMDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MoMUnit> searchMoM(MoMUnit mom) {
-		Criteria criteria = getSession().createCriteria(MoMUnit.class);
-		return (List<MoMUnit>) criteria.list();
+	public List<MomUpdate> searchMoM(MomUpdate mom) {
+		Criteria criteria = getSession().createCriteria(MomUpdate.class);
+		return (List<MomUpdate>) criteria.list();
 	}
 
 	@Override
-	public void addMoM(MoMUnit mom) {
+	public void addMoM(MomUpdate mom) {
+		persist(mom);
+	}
+
+	@Override
+	public void updateMoM(MomUpdate mom) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateMoM(MoMUnit mom) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteMoM(MoMUnit mom) {
+	public void deleteMoM(MomUpdate mom) {
 		// TODO Auto-generated method stub
 		
 	}

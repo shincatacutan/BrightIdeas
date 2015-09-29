@@ -16,7 +16,7 @@ import org.joda.time.LocalDate;
 
 @Entity
 @Table(name = "MOMUnit")
-public class MoMUnit {
+public class MomUpdate {
 
 	@Id
 	@Column(name = "id", nullable = false)
@@ -39,14 +39,11 @@ public class MoMUnit {
 	@Column(name = "link")
 	private String link;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "author")
 	private User author;
 
-	@Column(name = "keywords")
-	private String tags;
-
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "uploader")
 	private User uploader;
 
@@ -142,13 +139,6 @@ public class MoMUnit {
 		this.author = author;
 	}
 
-	public String getTags() {
-		return tags;
-	}
-
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
 
 	public String getDetailedInfo() {
 		return detailedInfo;

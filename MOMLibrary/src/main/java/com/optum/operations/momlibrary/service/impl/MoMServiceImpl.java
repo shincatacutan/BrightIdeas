@@ -5,37 +5,36 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.optum.operations.momlibrary.dao.MoMDAO;
-import com.optum.operations.momlibrary.entity.MoMUnit;
+import com.optum.operations.momlibrary.dao.MoMDao;
+import com.optum.operations.momlibrary.entity.MomUpdate;
 import com.optum.operations.momlibrary.service.MoMService;
 
 @Service
 public class MoMServiceImpl implements MoMService {
 	
 	@Autowired
-	private MoMDAO momDAO;
+	private MoMDao momDAO;
 	
 	@Override
-	public List<MoMUnit> searchMOM(MoMUnit mom) {
-		List<MoMUnit> updates = momDAO.searchMoM(mom);
+	public List<MomUpdate> searchMOM(MomUpdate mom) {
+		List<MomUpdate> updates = momDAO.searchMoM(mom);
 		
 		return updates;
 	}
 
 	@Override
-	public void addMoM(MoMUnit mom) {
+	public void addMoM(MomUpdate mom) {
+		momDAO.addMoM(mom);
+	}
+
+	@Override
+	public void updateMoM(MomUpdate mom) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateMoM(MoMUnit mom) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteMoM(MoMUnit mom) {
+	public void deleteMoM(MomUpdate mom) {
 		// TODO Auto-generated method stub
 		
 	}

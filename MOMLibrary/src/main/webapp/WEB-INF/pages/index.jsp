@@ -3,7 +3,8 @@
 <html>
 <head>
 <title>OptumRx MOM Library</title>
-<link rel="shortcut icon" href="/OTNDWeb/resources/favicon_oh.ico">
+<link rel="shortcut icon"
+	href="<c:url value="/resources/favicon_oh.ico" />">
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />"
 	rel="stylesheet">
@@ -16,13 +17,13 @@
 <%-- 
     <link href="<c:url value="/resources/css/jquery-ui.structre.css" />" rel="stylesheet"> --%>
 
-<script src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
-<script src="<c:url value="/resources/js/jquery-ui-min.js" />"></script>
-<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery-ui-min.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 	<script src="<c:url value="/resources/js/jquery-validate-min.js" />"></script>
 	<script src="<c:url value="/resources/js/additional-methods.min.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap-tagsinput.js" />"></script>
-<script src="<c:url value="/resources/js/main.js" />"></script>
+	<script src="<c:url value="/resources/js/bootstrap-tagsinput.js" />"></script>
+	<script src="<c:url value="/resources/js/main.js" />"></script>
 </head>
 
 <body>
