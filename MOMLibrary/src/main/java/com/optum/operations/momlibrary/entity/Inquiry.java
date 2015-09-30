@@ -6,6 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,26 +22,26 @@ public class Inquiry {
 	private int inqId;
 	@Column(name = "title", nullable = false)
 	private String title;
-	
+
 	@Column(name = "inquiryBody", nullable = false)
 	private String body;
-	
+
 	@Column(name = "createDate", nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate createDate;
-	
+
 	@Column(name = "updateDate", nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate updateDate;
-	
+
 	@ManyToOne(fetch=FetchType.EAGER)
-	@Column(name = "createUser", nullable = false)
+	@JoinColumn(name = "createUser")
 	private User createUser;
-	
+
 	@ManyToOne(fetch=FetchType.EAGER)
-	@Column(name = "updateUser", nullable = false)
+	@JoinColumn(name = "updateUser")
 	private User updateUser;
-	
+
 	@Column(name = "status", nullable = false)
 	private String status;
 

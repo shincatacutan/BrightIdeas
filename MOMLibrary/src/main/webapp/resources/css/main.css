@@ -217,14 +217,27 @@ input[type="button"], input[type="submit"], input[type="reset"] {
 }
 
 fieldset {
-  padding: 1em;
+	padding: 1em;
 }
 
 div#body_dv div.loading_img {
-  padding-top: 20%;
-  text-align: center;
+	padding-top: 20%;
+	text-align: center;
 }
 
-ul.ui-autocomplete li{
+ul.ui-autocomplete li {
 	text-align: left;
+}
+
+p {
+	color: #000;
+}
+
+p span{
+	color: #d45d00;
+	font-style: italic;
+}
+
+div#reply-dialog-form h4 {
+  margin: 0.5em 0;
 }

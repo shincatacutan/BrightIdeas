@@ -84,7 +84,7 @@ public class BaseMoMController {
 		update.setTitle(title);
 		update.setUpdateDate(new LocalDate());
 		User loggedUser = (User) request.getSession().getAttribute("employee");
-		logger.debug("[searchMOM] title: " + user.toString());
+		logger.debug("[addUpdate] loggedUser: " + loggedUser.toString());
 		update.setUploader(loggedUser);
 		momService.addMoM(update);
 		

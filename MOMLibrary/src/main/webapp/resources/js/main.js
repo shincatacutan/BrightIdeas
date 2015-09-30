@@ -10,8 +10,43 @@ $(function() {
 	jQuery.validator.setDefaults({
 		success : "valid"
 	});
+	
+	
+	var dialog = $("#reply-dialog-form").dialog({
+		autoOpen : false,
+		height : 500,
+		width : 550,
+		modal : true,
+		buttons : {
+			"Submit" : addReply,
+			Cancel : function() {
+				dialog.dialog("close");
+			}
+		},
+		close : function() {
+			form[0].reset();
+		}
+	});
+	
+	var form = dialog.find("form").on("submit", function(event) {
+		event.preventDefault();
+	});
+	
+	$("#reply_btn").button().on("click", function() {
+		var selected = $('#inquiry_grid').DataTable().rows('.selected').data();
+		var rowData = selected[0];
+		$("span#authorName").html(rowData.createUser);
+		$("span#createDate").html(rowData.createDate);
+		$("span#inquiryTitle").html(rowData.title);
+		$("span#inquiryBody").html(rowData.body);
+		dialog.dialog("open");
+	});
 });
 var userList = [];
+
+var addReply = function(){
+	
+}
 var initAddUpdate = function() {
 	$("#add_btn").click(function(event) {
 		var addTab = $("#add_tab");
@@ -151,38 +186,62 @@ var loadViewInquiries = function() {
 				table.rows.add(data);
 				table.draw();
 			} else {
-				var table = $('#inquiry_grid').dataTable(
-						{
-							"data" : data,
-							"columns" : [
-									{
-										"title" : "ID",
-										"data" : "inqId",
-										"class" : "dt-left"
-									},
-									{
-										"title" : "Title",
-										"data" : "title",
-										"class" : "dt-left"
-									},
-									{
-										"title" : "Message",
-										"data" : "body",
-										"class" : "dt-left"
-									},
-									{
-										"title" : "Author",
-										"data" : "createUser",
-										"class" : "dt-left"
-									},
-									{
-										"title" : "Create Date",
-										"data" : "createDate",
-										"class" : "dt-left",
-										"type" : "date"
-										}
-									} ]
-						});
+				var table = $('#inquiry_grid').dataTable({
+					"data" : data,
+					"columns" : [ {
+						"title" : "ID",
+						"data" : "id",
+						"class" : "dt-left"
+					}, {
+						"title" : "Title",
+						"data" : "title",
+						"class" : "dt-left"
+					}, {
+						"title" : "Message",
+						"data" : "body",
+						"class" : "dt-left"
+					}, {
+						"title" : "Author",
+						"data" : "createUser",
+						"class" : "dt-left"
+					}, {
+						"title" : "Create Date",
+						"data" : "createDate",
+						"class" : "dt-left",
+						"type" : "date"
+
+					}, {
+						"title" : "Update User",
+						"data" : "updateUser",
+						"class" : "dt-left"
+					}, {
+						"title" : "Update Date",
+						"data" : "updateDate",
+						"class" : "dt-left",
+						"type" : "date"
+
+					}, {
+						"title" : "Status",
+						"data" : "status",
+						"class" : "dt-left"
+
+					} ]
+				});
+				
+				$('#inquiry_grid tbody').on('click', 'tr', function() {
+					if ($(this).hasClass('selected')) {
+						$(this).removeClass('selected');
+					} else {
+						table.$('tr.selected').removeClass('selected');
+						$(this).addClass('selected');
+					}
+				});
+
+				$('#reply_btn').click(function() {
+					var newInstance = $('#inquiry_grid').DataTable();
+					var deletePayIds = newInstance.rows('.selected').data();
+					
+				});
 			}
 		},
 		error : function(e) {
@@ -190,13 +249,13 @@ var loadViewInquiries = function() {
 		}
 
 	});
+
+	
 }
 
-var parseDate = function(obj){
-	return '<span>' + obj.monthOfYear
-	+ '/' + obj.dayOfMonth
-	+ '/' + obj.year
-	+ '</span>'
+var parseDate = function(obj) {
+	return '<span>' + obj.monthOfYear + '/' + obj.dayOfMonth + '/' + obj.year
+			+ '</span>'
 }
 
 var handleAddInq = function() {
@@ -430,7 +489,7 @@ var paintTable = function(oData) {
 				"render" : function(obj) {
 					return '<a href="http://' + obj + '">' + obj + '</a>'
 				}
-			},{
+			}, {
 				"title" : "Author",
 				"data" : "author",
 				"class" : "dt-left",

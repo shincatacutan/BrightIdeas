@@ -1,6 +1,5 @@
 package com.optum.operations.momlibrary.vo;
 
-import com.optum.operations.momlibrary.entity.User;
 
 public class MomVO {
 	private int id;

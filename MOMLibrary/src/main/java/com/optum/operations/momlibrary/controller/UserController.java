@@ -31,9 +31,9 @@ public class UserController {
 		if(null == emp){
 			return null;
 		}
-		logger.debug(" [getUser] == registered user: " + emp.getFirstName()+" "+emp.getLastName());
 		model.addAttribute("employee", emp);
 		request.getSession().setAttribute("employee", emp);
+
 		return VIEW_INDEX;
 	}
 	
