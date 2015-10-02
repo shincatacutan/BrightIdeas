@@ -30,15 +30,15 @@ public class Inquiry {
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate createDate;
 
-	@Column(name = "updateDate", nullable = false)
+	@Column(name = "updateDate", nullable = true)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate updateDate;
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "createUser")
 	private User createUser;
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "updateUser")
 	private User updateUser;
 
@@ -108,4 +108,14 @@ public class Inquiry {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public Inquiry() {
+		super();
+	}
+
+	public Inquiry(int inqId) {
+		super();
+		this.inqId = inqId;
+	}
+
 }

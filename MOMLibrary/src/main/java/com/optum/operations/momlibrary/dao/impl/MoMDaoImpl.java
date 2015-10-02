@@ -26,14 +26,13 @@ public class MoMDaoImpl extends AbstractDao implements MoMDao {
 
 	@Override
 	public void updateMoM(MomUpdate mom) {
-		// TODO Auto-generated method stub
+		update(mom);
 		
 	}
 
 	@Override
 	public void deleteMoM(MomUpdate mom) {
-		// TODO Auto-generated method stub
-		
+		delete(mom);
 	}
 
 }

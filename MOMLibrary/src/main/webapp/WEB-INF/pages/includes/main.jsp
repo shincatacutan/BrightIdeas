@@ -11,11 +11,11 @@
 				<span class="addSpan"> <label class="addLbl">Category</label>
 					<select name="searchCat_in" id="searchCat_in"
 					class="bootstrap-tagsinput" required>
-						<option></option>`
+						<option></option>
 				</select>
 				</span> <span class="addSpan"> <label class="addLbl">Uploader</label>
 					<input type="text" id="uploader_search" class="bootstrap-tagsinput"></input>
-				</span> <span class="addSpan"> <label class="addLbl">Author</label>
+				</span> <span class="addSpan"> <label class="addLbl">Uploader</label>
 					<input type="text" id="author_search" class="bootstrap-tagsinput"></input>
 				</span> <span class="addSpan"> <label class="addLbl">Date
 						Cascaded</label> <input type="text" id="createDt_search"
@@ -107,26 +107,37 @@
 	<div id="tabs-3" class="tab_div">
 
 		<div id="inqTableSpace">
-			<table cellpadding="0" cellspacing="0" border="0" class="display"
-				id="inquiry_grid"></table>
+			<table class="display" id="inquiry_grid"></table>
 		</div>
-
+		<input type="button" id="view_btn" value="View" />
 		<input type="button" id="reply_btn" value="Reply" />
 
 		<div class="reply-dialog">
 			<div id="reply-dialog-form" title="Reply to Inquiry">
-				<p>Sender: <span id="authorName"></span> | Sent Date: <span id="createDate"></span></p>
+				<p>
+					Sender: <span id="authorName"></span> | 
+					Sent Date: <span id="createDate"></span> | 
+					Modified By: <span id="modifiedBy"></span> | 
+					Modified Date: <span id="modifiedDate"></span>
+				</p>
 				<h4>Title</h4>
 				<span id="inquiryTitle"></span>
 				<h4>Body</h4>
-				<span id="inquiryBody" ></span>
+				<span id="inquiryBody"></span>
 				<hr class="seperator">
-
 				<form>
 					<fieldset>
 						<span class="addSpan"> <label for="email" class="addLbl">Reply
-								</label> <textarea name="desc" id="desc_modal"
-								class="text ui-widget-content ui-corner-all" rows="5" cols="50"></textarea>
+						</label> <textarea name="reply_modal" id="reply_modal"
+								class="text ui-widget-content ui-corner-all" rows="7" cols="50"></textarea>
+						</span> <br /> <span class="addSpan"> <label class="addLbl">Status</label>
+							<select name="inq_status_in" id="inq_status_in"
+							class="bootstrap-tagsinput" required>
+								<option></option>
+								<option>Open</option>
+								<option>Pending</option>
+								<option>Close</option>
+						</select> <input type="hidden" id="inqId"></input>
 						</span>
 						<!-- Allow form submission with keyboard without duplicating the dialog button -->
 						<input type="submit" tabindex="-1"

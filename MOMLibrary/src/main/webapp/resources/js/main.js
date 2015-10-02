@@ -7,45 +7,118 @@ $(function() {
 	initAdminAddUser();
 	initAddUpdate();
 	initAutoComplete();
+	initInquiryReplyModal();
 	jQuery.validator.setDefaults({
 		success : "valid"
 	});
-	
-	
+
+});
+
+var replyButtons = function(){
+	return {
+		Submit : addReply,
+		Cancel : function() {
+			$("#reply-dialog-form").dialog("close");
+		}
+	}
+}
+
+var initInquiryReplyModal = function() {
 	var dialog = $("#reply-dialog-form").dialog({
 		autoOpen : false,
 		height : 500,
-		width : 550,
+		width : 580,
 		modal : true,
-		buttons : {
-			"Submit" : addReply,
-			Cancel : function() {
-				dialog.dialog("close");
-			}
-		},
+		buttons : replyButtons,
 		close : function() {
 			form[0].reset();
 		}
 	});
-	
+
 	var form = dialog.find("form").on("submit", function(event) {
 		event.preventDefault();
 	});
-	
-	$("#reply_btn").button().on("click", function() {
-		var selected = $('#inquiry_grid').DataTable().rows('.selected').data();
-		var rowData = selected[0];
-		$("span#authorName").html(rowData.createUser);
-		$("span#createDate").html(rowData.createDate);
-		$("span#inquiryTitle").html(rowData.title);
-		$("span#inquiryBody").html(rowData.body);
-		dialog.dialog("open");
-	});
+
+	$("#reply_btn").button().customModalClick(dialog, false);
+	$("#view_btn").button().customModalClick(dialog, true);
+}
+jQuery.extend(jQuery.fn, {
+	categories : function(data) {
+		var input = $(this);
+		input.find('option').remove().end();
+		input.append($('<option>', ""));
+		$.each(data, function(i, data) {
+			input.append($('<option>', {
+				value : data.id,
+				text : data.name
+			}));
+		});
+	},
+
+	customModalClick : function(dialog, readonly) {
+		var button = $(this);
+		button.on("click", function() {
+			var selected = $('#inquiry_grid').DataTable().rows('.selected')
+					.data();
+			var rowData = selected[0];
+			$("input#inqId").val(rowData.id);
+			$("span#authorName").html(rowData.createUser);
+			$("span#createDate").html(rowData.createDate);
+			$("span#modifiedBy").html(rowData.updateUser);
+			$("span#modifiedDate").html(rowData.updateDate);
+			$("span#inquiryTitle").html(rowData.title);
+			$("span#inquiryBody").html(rowData.body);
+			$("textarea#reply_modal").val(rowData.reply);
+			$("select#inq_status_in").val(rowData.status);
+			
+			if (readonly) {
+				$("textarea#reply_modal").prop('readonly', true);
+				$("select#inq_status_in").prop('disabled', true);
+				dialog.dialog('option', {
+					buttons : {
+						Close : function() {
+							dialog.dialog("close");
+						}
+					}
+				});
+			} else {
+				$("textarea#reply_modal").prop('readonly', false);
+				$("select#inq_status_in").prop('disabled', false);
+				dialog.dialog('option', {
+					buttons : replyButtons()
+					}
+				);
+			}
+			dialog.dialog("open");
+		})
+	}
+
 });
+
 var userList = [];
 
-var addReply = function(){
-	
+var addReply = function() {
+	var id = $("input#inqId").val();
+	var replyMsg = $("#reply_modal").val();
+	var status = $("#inq_status_in").val();
+
+	$.ajax({
+		url : "/MOMLibrary/addReply",
+		type : "POST",
+		accept : 'application/json',
+		data : {
+			'id' : id,
+			'reply' : replyMsg,
+			'status' : status
+		},
+		success : function(data) {
+			loadViewInquiries();
+			$("#reply-dialog-form").dialog("close");
+		},
+		error : function(e) {
+			// console.log(e);
+		}
+	});
 }
 var initAddUpdate = function() {
 	$("#add_btn").click(function(event) {
@@ -117,20 +190,6 @@ var initAutoComplete = function() {
 
 }
 
-jQuery.extend(jQuery.fn, {
-	categories : function(data) {
-		var input = $(this);
-		input.find('option').remove().end();
-		input.append($('<option>', ""));
-		$.each(data, function(i, data) {
-			input.append($('<option>', {
-				value : data.id,
-				text : data.name
-			}));
-		});
-
-	}
-});
 var initAdminAddUser = function() {
 	$("#addUser_btn").click(function(event) {
 		var username = $("#uname_user").val();
@@ -227,7 +286,7 @@ var loadViewInquiries = function() {
 
 					} ]
 				});
-				
+
 				$('#inquiry_grid tbody').on('click', 'tr', function() {
 					if ($(this).hasClass('selected')) {
 						$(this).removeClass('selected');
@@ -240,7 +299,7 @@ var loadViewInquiries = function() {
 				$('#reply_btn').click(function() {
 					var newInstance = $('#inquiry_grid').DataTable();
 					var deletePayIds = newInstance.rows('.selected').data();
-					
+
 				});
 			}
 		},
@@ -250,7 +309,6 @@ var loadViewInquiries = function() {
 
 	});
 
-	
 }
 
 var parseDate = function(obj) {
@@ -300,7 +358,7 @@ var handleSearch = function() {
 			// },
 			accept : 'application/json',
 			success : function(data) {
-				console.log(data);
+				// console.log(data);
 				paintTable(data)
 			},
 			error : function(e) {
@@ -490,7 +548,7 @@ var paintTable = function(oData) {
 					return '<a href="http://' + obj + '">' + obj + '</a>'
 				}
 			}, {
-				"title" : "Author",
+				"title" : "Uploader",
 				"data" : "author",
 				"class" : "dt-left",
 				"type" : "date"

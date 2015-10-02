@@ -11,14 +11,14 @@ import com.optum.operations.momlibrary.service.MoMService;
 
 @Service
 public class MoMServiceImpl implements MoMService {
-	
+
 	@Autowired
 	private MoMDao momDAO;
-	
+
 	@Override
 	public List<MomUpdate> searchMOM(MomUpdate mom) {
 		List<MomUpdate> updates = momDAO.searchMoM(mom);
-		
+
 		return updates;
 	}
 
@@ -29,14 +29,12 @@ public class MoMServiceImpl implements MoMService {
 
 	@Override
 	public void updateMoM(MomUpdate mom) {
-		// TODO Auto-generated method stub
-		
+		momDAO.updateMoM(mom);
 	}
 
 	@Override
 	public void deleteMoM(MomUpdate mom) {
-		// TODO Auto-generated method stub
-		
+		momDAO.deleteMoM(mom);
 	}
 
 }
