@@ -2,8 +2,6 @@ package com.uhg.optum.ssmo.otnd.service.impl;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +12,12 @@ import com.uhg.optum.ssmo.otnd.service.EmployeeService;
 @Service
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
-	private final static Logger logger = LoggerFactory
-			.getLogger(EmployeeServiceImpl.class);
+
 	@Autowired
 	private EmployeeDao employeeDao;
 
 	@Override
 	public Employee getEmployee(String ntID) {
-		logger.debug("[service layer] getEmployee : "+ntID);
 		return employeeDao.getEmployee(ntID);
 	}
 

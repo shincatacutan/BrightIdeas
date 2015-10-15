@@ -16,7 +16,7 @@ public class OTNDReportSheet implements ReportSheet {
 		int rownum = 0;
 		Row header = otnd.createRow(rownum++);
 		String headers[] = { "EMPLOYEE ID#", "EMPLOYEE NAME", "SEGMENT",
-				"PROCESS", "OT_ND CODE", "BILLABLE", "NON-BILLABLE", "HOURS",
+				"PROCESS", "OT_ND CODE", "BILLABLE", "NON-BILLABLE", "HOURS", "REMARKS",
 				"REASON FOR NON-PROD HOURS", "BUSINESS SPOC NAME" };
 		int headerCtr = 0;
 		headerCtr = ReportSheetUtils.createHeader(workbook,header, headers, headerCtr);
@@ -32,6 +32,7 @@ public class OTNDReportSheet implements ReportSheet {
 			ReportSheetUtils.createRow(workbook,row, rownum, item.getBillable(), cellCtr++);
 			ReportSheetUtils.createRow(workbook,row, rownum, item.getNonBillable(), cellCtr++);
 			ReportSheetUtils.createRow(workbook,row, rownum, item.getHours(), cellCtr++);
+			ReportSheetUtils.createRow(workbook,row, rownum, item.getRemarks(), cellCtr++);
 			ReportSheetUtils.createRow(workbook,row, rownum, item.getNonProdReason(), cellCtr++);
 			ReportSheetUtils.createRow(workbook,row, rownum, item.getBusSpocName(), cellCtr++);
 		}

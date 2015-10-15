@@ -64,6 +64,19 @@
 		<h2>Add Employee</h2>
 		<form id="addUser_form">
 			<fieldset>
+			
+				<span class="addSpan"> <label for="role" class="addLbl">Role</label>
+					<select id="role_user" name="role_user" required>
+						<option value="1">Admin</option>
+						<option value="2">Regular</option>
+					</select>
+				</span> 
+			
+				<span class="addSpan"> <label for="role" class="addLbl">Project</label>
+					<select id="user_project" name="user_project" required>
+					</select>
+				</span> 
+				
 				<span class="addSpan"> <label for="username" class="addLbl">Username</label>
 					<input type="text" name="username" id="uname_user" required/>
 				</span> <span class="addSpan"> <label for="empID" class="addLbl">Employee
@@ -75,18 +88,7 @@
 						Name</label> 
 						<input type="text" name="lastname" id="lastname_user" required />
 				</span> 
-				
-				<span class="addSpan"> <label for="role" class="addLbl">Project</label>
-					<select id="user_project" name="user_project" required>
-					</select>
-				</span> 
-				
-				<span class="addSpan"> <label for="role" class="addLbl">Role</label>
-					<select id="role_user" name="role_user" required>
-						<option value="1">Admin</option>
-						<option value="2">Regular</option>
-					</select>
-				</span> 
+
 
 				<!-- Allow form submission with keyboard without duplicating the dialog button -->
 				<input type="button" id="addUser_btn" value="Submit" name="addUser_btn"/>

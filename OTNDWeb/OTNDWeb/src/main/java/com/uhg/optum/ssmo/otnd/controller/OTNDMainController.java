@@ -60,7 +60,7 @@ public class OTNDMainController {
 	@RequestMapping(value = "/getOpenPayrolls", method = RequestMethod.POST)
 	public @ResponseBody List<PayrollPeriodVo> getOpenPayrolls() {
 		List<PayrollPeriod> openPeriods = periodService.getPayrolls("Open");
-		logger.debug("[getPayPeriods] fetched size: " + openPeriods.size());
+		logger.debug("[getOpenPayrolls] fetched size: " + openPeriods.size());
 		List<PayrollPeriodVo> vos = new ArrayList<PayrollPeriodVo>();
 		for (PayrollPeriod period : openPeriods) {
 			vos.add(new PayrollPeriodVo(period.getPeriod().toString(), period

@@ -12,11 +12,19 @@ $(function() {
 	initAddPayPeriod();
 	initPayrollTabs();
 	initPendingApprovals();
+	
+	
+	var amount = $("#amount_in");
+	amount.blur(function(e){
+		var x = $(this).val();
+		$(this).val(x.replace(",",""));
+    });
 });
 
 jQuery.extend(jQuery.fn, {
 	projects : function(data) {
-		var input = $(this)
+		var input = $(this);
+		input.find('option').remove().end();
 		$.each(data, function(i, data) {
 			input.append($('<option>', {
 				value : data.id,
@@ -26,6 +34,10 @@ jQuery.extend(jQuery.fn, {
 
 	}
 });
+
+var format = function(val){
+	return val.replace('\d+(\.\d{1,2})?')
+}
 
 var initPayrollTabs = function() {
 	$("#tabs").tabs({
@@ -275,7 +287,7 @@ var initAddPayDetails = function() {
 					rules : {
 						amount_in : {
 							required : true,
-							number : true
+							digits : true
 						}
 					}
 				});
@@ -600,6 +612,10 @@ var paintTable = function(oData, tableID) {
 						"title" : "Employee",
 						"class" : "dt-left",
 						"data" : "empId.networkID"
+					},{
+						"title" : "Team",
+						"class" : "dt-left",
+						"data" : "empId.project.code"
 					},
 					{
 						"title" : "Create Date",
