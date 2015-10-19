@@ -19,6 +19,7 @@ $(function() {
 		var x = $(this).val();
 		$(this).val(x.replace(",",""));
     });
+
 });
 
 jQuery.extend(jQuery.fn, {
@@ -216,7 +217,18 @@ var initLoadPayrollBtn = function() {
 		}
 
 		loadIncomePeriodDetails(0, '#resultGrid');
-		enableIncomeDetailForm(true);
+		
+		var selected = $("#pp_select option:selected").text();
+		var status = selected.indexOf('Closed');
+		if(status > 0){
+			alert("Payroll period is already closed.");
+			enableIncomeDetailForm(false);
+			showHideButtonDelete(false);
+		}else{
+			enableIncomeDetailForm(true);
+			showHideButtonDelete(true);
+		}
+		
 	});
 
 	$('#income_type').change(function(event) {
@@ -287,7 +299,7 @@ var initAddPayDetails = function() {
 					rules : {
 						amount_in : {
 							required : true,
-							digits : true
+							number : true
 						}
 					}
 				});
@@ -419,10 +431,10 @@ var getPayPeriods = function(id) {
 			$(id).empty();
 			$.each(data, function(i, data) {
 				if (id == "#pp_select") {
-					if (data.status == "Open")
+//					if (data.status == "Open")
 						$(id).append($('<option>', {
 							value : data.period,
-							text : data.period
+							text : data.period + " (" + data.status + ") "
 						}));
 				} else {
 					$(id).append($('<option>', {
@@ -642,8 +654,6 @@ var paintTable = function(oData, tableID) {
 			}
 		});
 	}
-
-	showHideButtonDelete(true);
 };
 
 var initFunctionBtns = function() {
