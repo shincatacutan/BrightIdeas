@@ -101,7 +101,9 @@ public class OTNDMainController {
 			@RequestParam String incomeCode, @RequestParam String detailValue,
 			@RequestParam String remarks, HttpServletRequest request) {
 
-		logger.debug("[addPayrollDetails] period: " + payPeriod);
+		logger.debug("[addPayrollDetails] incomeType: " + incomeType+
+				" incomeCode: "+incomeCode+" detailValue: " + detailValue+
+				" remarks: "+ remarks);
 		String[] localDate = payPeriod.split("-");
 		PayrollPeriod pp = periodService
 				.getPayroll(new PayrollPeriod(new LocalDate(Integer
@@ -120,8 +122,6 @@ public class OTNDMainController {
 	public @ResponseBody List<PayrollDetails> getIncomeDetails(
 			@RequestParam String payPeriod, @RequestParam String detailLevel,
 			HttpServletRequest request) {
-		logger.debug("[getIncomeDetails] getting payroll income details: "
-				+ detailLevel);
 		String[] localDate = payPeriod.split("-");
 		PayrollPeriod pp = periodService
 				.getPayroll(new PayrollPeriod(new LocalDate(Integer
