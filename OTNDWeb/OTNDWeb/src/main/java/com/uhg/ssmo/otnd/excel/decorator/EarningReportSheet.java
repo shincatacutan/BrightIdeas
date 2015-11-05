@@ -2,23 +2,24 @@ package com.uhg.ssmo.otnd.excel.decorator;
 
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.uhg.optum.ssmo.otnd.entity.VariableInputReport;
 
 public class EarningReportSheet implements ReportSheet {
 
 	@Override
-	public void generate(HSSFWorkbook workbook, List<VariableInputReport> items) {
-		HSSFSheet otnd = workbook.createSheet("EARNINGS");
+	public void generate(XSSFWorkbook workbook, List<VariableInputReport> items) {
+		XSSFSheet otnd = workbook.createSheet("EARNINGS");
 		int rownum = 0;
 		Row header = otnd.createRow(rownum++);
 		String headers[] = { "EMPLOYEE ID#", "EMPLOYEE NAME", "SEGMENT",
 				"PROCESS", "INCOME CODE", "AMOUNT", "REMARKS",
 				"BUSINESS SPOC NAME" };
 		int headerCtr = 0;
+		
 		headerCtr = ReportSheetUtils.createHeader(workbook, header, headers,
 				headerCtr);
 
@@ -26,22 +27,23 @@ public class EarningReportSheet implements ReportSheet {
 			int cellCtr = 0;
 			Row row = otnd.createRow(rownum++);
 			ReportSheetUtils.createRow(workbook, row, rownum, item.getEmpId(),
-					cellCtr++);
+					cellCtr++, false);
 			ReportSheetUtils.createRow(workbook, row, rownum,
-					item.getEmpName(), cellCtr++);
+					item.getEmpName(), cellCtr++, false);
 			ReportSheetUtils.createRow(workbook, row, rownum,
-					item.getSegment(), cellCtr++);
+					item.getSegment(), cellCtr++, false);
 			ReportSheetUtils.createRow(workbook, row, rownum,
-					item.getProcess(), cellCtr++);
+					item.getProcess(), cellCtr++, false);
 			ReportSheetUtils.createRow(workbook, row, rownum,
-					item.getOtndCode(), cellCtr++);
+					item.getOtndCode(), cellCtr++, false);
 			ReportSheetUtils.createRow(workbook, row, rownum, item.getAmount(),
-					cellCtr++);
+					cellCtr++, false);
 			ReportSheetUtils.createRow(workbook, row, rownum,
-					item.getRemarks(), cellCtr++);
+					item.getRemarks(), cellCtr++, true);
 			ReportSheetUtils.createRow(workbook, row, rownum,
-					item.getBusSpocName(), cellCtr++);
+					item.getBusSpocName(), cellCtr++, false);
 		}
+		otnd.setColumnWidth(6, 150);
 		ReportSheetUtils.autoSizeWidth(otnd, headers);
 
 	}

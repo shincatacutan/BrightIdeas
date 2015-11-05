@@ -42,7 +42,8 @@
 				</span> 
 				<span class="detailSpan detailRemarks">
 					<label class="detailsLbl">Remarks </label> 
-					<textarea id="txtRemarks" name="txtRemarks" class="text ui-widget-content" rows="3" cols="38"  disabled="disabled" required></textarea>
+					<textarea id="txtRemarks" name="txtRemarks" class="text ui-widget-content" maxlength="250" disabled="disabled" required></textarea>
+					<br/><span id="availableCharSpan">(<span id="availableChar">250</span>/250)</span>
 				</span> 
 				<br class="clearfix" /> 
 				<div id="action_btn">

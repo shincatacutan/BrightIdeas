@@ -283,3 +283,16 @@ div#body_dv div.loading_img {
   padding-top: 20%;
   text-align: center;
 }
+
+span#availableCharSpan {
+  display: inline-block;
+  width: 40em;
+  text-align: right;
+  font-style: italic;
+  font-size: smaller;
+  
+}
+textarea#txtRemarks {
+  width: 23em;
+  height: 5em;
+}

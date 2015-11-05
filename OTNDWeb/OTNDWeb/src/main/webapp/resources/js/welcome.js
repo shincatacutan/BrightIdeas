@@ -19,5 +19,4 @@ var getUser = function() {
 //	var networkId = "scatacut";
 	$("#empID").val(networkId)
 	$("#userForm").submit();
-
 }

@@ -8,21 +8,20 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.uhg.optum.ssmo.otnd.entity.PayrollDetails;
 import com.uhg.optum.ssmo.otnd.entity.VariableInputReport;
 import com.uhg.optum.ssmo.otnd.excel.helper.ExcelGeneratorHelperImpl;
 import com.uhg.ssmo.otnd.excel.decorator.EarningReportSheet;
-import com.uhg.ssmo.otnd.excel.decorator.LWOPReportSheet;
 import com.uhg.ssmo.otnd.excel.decorator.OTNDReportSheet;
 import com.uhg.ssmo.otnd.excel.decorator.ReportSheet;
 import com.uhg.ssmo.otnd.excel.decorator.TMAReportSheet;
 
 public class ExcelGenerator {
 	public String generate(List<PayrollDetails> details) {
-		HSSFWorkbook workbook = new HSSFWorkbook();
-
+//		HSSFWorkbook workbook = new HSSFWorkbook();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		List<VariableInputReport> otndItems = ExcelGeneratorHelperImpl.consolidate(details, "OT_ND");
 		ReportSheet otndSheet = new OTNDReportSheet();
 		otndSheet.generate(workbook, otndItems);
@@ -45,7 +44,7 @@ public class ExcelGenerator {
 		String timestamp = new Timestamp(date.getTime()).toString()
 				.replace(".", "-").replace(":", "-").replace(" ", "_")
 				.replace("-", "");
-		String fileName = "OTND_" + timestamp+".xls";
+		String fileName = "OTND_" + timestamp+".xlsx";
 		String path = "C:\\OTND\\";
 		try {
 
